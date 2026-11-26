@@ -3,29 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>A Special Day Counting For Nihu ❤️</title>
-
-  <!-- Google Fonts for English & Elegant Bengali Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Galada&family=Hind+Siliguri:wght@400;500;600;700&family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
+  <title>A Special Day Counting For Nihu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-deep: #14051e;
-      --bg-mid: #2a0836;
-      --bg-rose: #590d38;
-      --primary-pink: #ff2a7a;
-      --soft-pink: #ff85b3;
-      --gold: #ffd166;
-      --glass-bg: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 182, 213, 0.28);
+      --bg-dark-1: #0b0614;
+      --bg-dark-2: #1d092b;
+      --bg-dark-3: #360c38;
+      --gold: #ffd700;
+      --gold-light: #fff1a8;
+      --gold-deep: #ff9f1c;
+      --rose: #ff3b7f;
+      --rose-soft: #ff85b3;
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -33,1307 +30,1762 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
-      background: radial-gradient(circle at 50% 25%, #4a0e38 0%, #23062b 52%, #0e0214 100%);
+      background: radial-gradient(circle at 50% 20%, var(--bg-dark-3), var(--bg-dark-2) 52%, var(--bg-dark-1) 100%);
       color: #fff;
+      font-family: 'Fredoka', 'Hind Siliguri', sans-serif;
       user-select: none;
+      -webkit-user-select: none;
     }
 
-    /* Fullscreen Background Canvas for Hearts Rain & Fireworks */
-    #bgCanvas {
+    .screen {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.65s ease, visibility 0.65s ease;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* ==================== SCREEN 1: COUNTDOWN ==================== */
+    #screen-countdown {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 16px 18px;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255, 59, 127, 0.22), transparent 60%),
+        linear-gradient(165deg, #160722 0%, #2a0a36 55%, #110519 100%);
+    }
+
+    #heart-rain-canvas {
+      position: fixed;
+      inset: 0;
       width: 100%;
       height: 100%;
       z-index: 1;
       pointer-events: none;
     }
 
-    /* Interactive Game Canvas for Screen 2 */
-    #gameCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 5;
-      display: none;
-      touch-action: none;
-    }
-
-    /* Screen Container Management */
-    .screen {
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      opacity: 0;
-      visibility: hidden;
-      transform: scale(0.97);
-      transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s;
-    }
-
-    .screen.active {
-      opacity: 1;
-      visibility: visible;
-      transform: scale(1);
-    }
-
-    /* =========================================
-       SCREEN 1: COUNTDOWN & CUTE CHARACTER
-       ========================================= */
-    #screen1 {
-      justify-content: space-between;
-      padding-top: max(22px, 4vh);
-      padding-bottom: max(20px, 3vh);
-    }
-
-    /* Top Animated Title */
     .top-banner {
+      position: relative;
+      z-index: 4;
       text-align: center;
-      z-index: 12;
-      animation: floatTitle 3.5s ease-in-out infinite;
-    }
-
-    .top-banner h1 {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: clamp(1.25rem, 3.8vw, 2.5rem);
-      font-weight: 900;
-      letter-spacing: 2px;
-      background: linear-gradient(90deg, #ff9ebb, #ffffff, #ffd166, #ff6b9d, #ff9ebb);
-      background-size: 250% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmerText 4s linear infinite;
-      text-shadow: 0 0 25px rgba(255, 42, 122, 0.45);
-      padding: 0 10px;
-    }
-
-    .top-subtitle {
-      font-size: clamp(0.85rem, 2vw, 1.05rem);
-      color: #ffc2d9;
       margin-top: 6px;
-      letter-spacing: 1px;
-      opacity: 0.9;
+      padding: 6px 14px;
+    }
+
+    .animated-title {
+      font-size: clamp(1.25rem, 4.4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ff85b3, #ffd700, #fff, #ff5e99, #ffd700);
+      background-size: 240% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation:
+        shimmerText 3.6s linear infinite,
+        titleFloat 2.8s ease-in-out infinite,
+        titlePop 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+      filter: drop-shadow(0 4px 18px rgba(255, 77, 136, 0.45));
     }
 
     @keyframes shimmerText {
-      to { background-position: 250% center; }
+      0% { background-position: 0% center; }
+      100% { background-position: 240% center; }
     }
 
-    @keyframes floatTitle {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-7px); }
+    @keyframes titleFloat {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-6px) scale(1.025); }
     }
 
-    /* Center Stage: Heart Clock + Cute Character */
-    .countdown-stage {
+    @keyframes titlePop {
+      0% { opacity: 0; transform: scale(0.75) translateY(-16px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .target-subtitle {
+      margin-top: 6px;
+      font-size: clamp(0.8rem, 2.4vw, 1rem);
+      color: #ffd6e7;
+      letter-spacing: 0.6px;
+      opacity: 0.92;
+    }
+
+    .center-stage {
+      position: relative;
+      z-index: 4;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: clamp(12px, 4vw, 45px);
+      flex: 1;
       width: 100%;
-      max-width: 1050px;
-      flex-wrap: wrap;
-      z-index: 12;
     }
 
-    /* Glowing Heart-Shaped Clock Wrapper */
     .heart-clock-wrapper {
       position: relative;
-      width: min(86vw, 430px);
-      height: min(80vw, 400px);
+      width: min(370px, 86vw);
+      height: min(340px, 78vw);
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: heartBeatPulse 1s infinite ease-in-out;
-      filter: drop-shadow(0 0 28px rgba(255, 30, 105, 0.65));
+      animation: heartBeatOuter 1.9s ease-in-out infinite;
+      filter: drop-shadow(0 0 28px rgba(255, 45, 110, 0.55));
     }
 
-    @keyframes heartBeatPulse {
-      0% { transform: scale(1); }
-      14% { transform: scale(1.035); }
-      28% { transform: scale(1); }
-      42% { transform: scale(1.02); }
+    @keyframes heartBeatOuter {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.045); }
+      28% { transform: scale(0.99); }
+      42% { transform: scale(1.03); }
       70% { transform: scale(1); }
     }
 
-    .heart-svg-bg {
+    .heart-svg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      z-index: 1;
+      overflow: visible;
     }
 
-    /* Digital Timer Inside the Heart */
-    .heart-clock-content {
+    .heart-shape-path {
+      fill: url(#heartGrad);
+      stroke: url(#heartStrokeGrad);
+      stroke-width: 5;
+      filter: drop-shadow(0 12px 26px rgba(255, 25, 95, 0.5));
+    }
+
+    .clock-content {
       position: relative;
-      z-index: 3;
-      text-align: center;
-      margin-top: -12px;
-      width: 78%;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-12px);
+      padding: 10px 16px;
     }
 
-    .target-date-badge {
-      display: inline-block;
-      font-size: clamp(0.65rem, 1.8vw, 0.8rem);
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 209, 102, 0.5);
-      color: #ffe29a;
-      padding: 3px 12px;
-      border-radius: 999px;
-      margin-bottom: 10px;
-      letter-spacing: 0.5px;
-      backdrop-filter: blur(4px);
-    }
-
-    .timer-grid {
+    .clock-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: clamp(5px, 1.5vw, 10px);
+      grid-template-columns: repeat(4, auto);
+      gap: clamp(6px, 2vw, 12px);
       align-items: center;
     }
 
-    .time-box {
-      background: rgba(20, 4, 28, 0.62);
-      border: 1px solid rgba(255, 158, 198, 0.38);
-      border-radius: 14px;
-      padding: clamp(6px, 1.6vw, 10px) 4px;
-      box-shadow: inset 0 0 14px rgba(255, 42, 122, 0.35), 0 6px 15px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(6px);
+    .time-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: clamp(46px, 12vw, 64px);
+    }
+
+    .digit-box {
+      position: relative;
+      background: rgba(20, 4, 16, 0.65);
+      border: 1.5px solid rgba(255, 224, 130, 0.65);
+      border-radius: 12px;
+      padding: 6px 8px;
+      min-width: clamp(46px, 12vw, 62px);
+      text-align: center;
+      box-shadow:
+        inset 0 2px 8px rgba(255, 255, 255, 0.18),
+        0 6px 14px rgba(0, 0, 0, 0.35);
       overflow: hidden;
     }
 
-    .time-digit {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.15rem, 3.6vw, 1.85rem);
-      font-weight: 900;
-      color: #ffffff;
-      text-shadow: 0 0 12px #ff4d94, 0 0 22px #ff1a75;
-      display: block;
-      line-height: 1.15;
+    .digit-value {
+      display: inline-block;
+      font-size: clamp(1.25rem, 4.2vw, 1.95rem);
+      font-weight: 700;
+      color: #fff9db;
+      text-shadow: 0 2px 10px rgba(255, 215, 0, 0.65);
+      line-height: 1.1;
     }
 
-    /* Flip / Pop Digit Animation on Change */
-    .digit-pop {
-      animation: digitFlipPop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    .digit-value.tick-anim {
+      animation: digitFlipPop 0.42s cubic-bezier(0.2, 1.35, 0.4, 1);
     }
 
     @keyframes digitFlipPop {
       0% {
-        transform: translateY(-14px) scale(0.8);
-        opacity: 0.2;
-        color: #ffd166;
+        transform: translateY(-75%) scale(0.75) rotateX(65deg);
+        opacity: 0.25;
+        color: #ffd700;
       }
       60% {
-        transform: translateY(2px) scale(1.12);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(0) scale(1);
+        transform: translateY(8%) scale(1.1) rotateX(0deg);
         opacity: 1;
         color: #ffffff;
+      }
+      100% {
+        transform: translateY(0) scale(1) rotateX(0deg);
+        opacity: 1;
+        color: #fff9db;
       }
     }
 
     .time-label {
-      font-size: clamp(0.6rem, 1.4vw, 0.72rem);
-      text-transform: uppercase;
-      color: #ffb3d1;
-      letter-spacing: 0.8px;
-      margin-top: 3px;
-      display: block;
+      margin-top: 5px;
+      font-size: clamp(0.62rem, 1.8vw, 0.78rem);
       font-weight: 600;
+      color: #ffeaf2;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
     }
 
-    .heart-mini-note {
+    .surprise-note {
       margin-top: 10px;
-      font-size: clamp(0.72rem, 1.7vw, 0.85rem);
-      color: #ffe3ee;
-      font-weight: 500;
+      font-size: clamp(0.72rem, 2.1vw, 0.88rem);
+      color: #fff0c2;
+      background: rgba(0, 0, 0, 0.28);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      animation: pulseGlow 2.2s ease-in-out infinite;
     }
 
-    /* =========================================
-       CUTE IMPATIENT CARTOON CHARACTER
-       ========================================= */
-    .character-box {
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.25); }
+      50% { box-shadow: 0 0 18px rgba(255, 215, 0, 0.65); }
+    }
+
+    /* Pacing & Watch-Checking Cartoon on Screen 1 */
+    .pace-lane {
       position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: clamp(155px, 26vw, 220px);
-      animation: impatientBounce 1.4s ease-in-out infinite;
+      z-index: 5;
+      width: 100%;
+      max-width: 680px;
+      height: 112px;
+      margin-bottom: 4px;
     }
 
-    @keyframes impatientBounce {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      25% { transform: translateY(-6px) rotate(-2deg); }
-      50% { transform: translateY(0px) rotate(0deg); }
-      75% { transform: translateY(-4px) rotate(2deg); }
+    .pacer-actor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 96px;
+      height: 106px;
+      will-change: transform;
     }
 
-    .speech-bubble {
-      background: rgba(255, 255, 255, 0.94);
-      color: #4a092c;
-      padding: 8px 14px;
-      border-radius: 18px;
-      font-size: clamp(0.76rem, 1.8vw, 0.9rem);
+    .pacer-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.45));
+    }
+
+    .leg-left {
+      transform-origin: 42px 74px;
+    }
+    .leg-right {
+      transform-origin: 54px 74px;
+    }
+    .arm-watch {
+      transform-origin: 38px 54px;
+    }
+    .arm-other {
+      transform-origin: 58px 54px;
+    }
+    .pacer-head {
+      transform-origin: 48px 34px;
+    }
+
+    .pacer-actor.walking .leg-left {
+      animation: walkSwingA 0.36s ease-in-out infinite alternate;
+    }
+    .pacer-actor.walking .leg-right {
+      animation: walkSwingB 0.36s ease-in-out infinite alternate;
+    }
+    .pacer-actor.walking .arm-other {
+      animation: walkSwingA 0.36s ease-in-out infinite alternate;
+    }
+    .pacer-actor.walking .arm-watch {
+      animation: walkArmHold 0.36s ease-in-out infinite alternate;
+    }
+    .pacer-actor.walking .pacer-head {
+      animation: walkBob 0.36s ease-in-out infinite alternate;
+    }
+
+    .pacer-actor.checking .arm-watch {
+      animation: checkWatchLift 0.45s ease-out forwards;
+    }
+    .pacer-actor.checking .pacer-head {
+      animation: impatientGlance 1.3s ease-in-out infinite;
+    }
+    .pacer-actor.checking .leg-left,
+    .pacer-actor.checking .leg-right {
+      transform: rotate(0deg);
+    }
+
+    @keyframes walkSwingA {
+      0% { transform: rotate(-28deg); }
+      100% { transform: rotate(28deg); }
+    }
+    @keyframes walkSwingB {
+      0% { transform: rotate(28deg); }
+      100% { transform: rotate(-28deg); }
+    }
+    @keyframes walkArmHold {
+      0% { transform: rotate(-10deg); }
+      100% { transform: rotate(10deg); }
+    }
+    @keyframes walkBob {
+      0% { transform: translateY(0px) rotate(-2deg); }
+      100% { transform: translateY(-3px) rotate(2deg); }
+    }
+    @keyframes checkWatchLift {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-62deg); }
+    }
+    @keyframes impatientGlance {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      25% { transform: rotate(-8deg) translateY(1px); }
+      50% { transform: rotate(6deg) translateY(2px); }
+      75% { transform: rotate(-5deg) translateY(1px); }
+    }
+
+    .pacer-bubble {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff8e7;
+      color: #2b0938;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 0.74rem;
       font-weight: 700;
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 133, 179, 0.5);
-      margin-bottom: 10px;
+      padding: 3px 9px;
+      border-radius: 12px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .pacer-actor.checking .pacer-bubble {
+      opacity: 1;
+    }
+
+    .bottom-action-bar {
       position: relative;
-      min-height: 44px;
+      z-index: 6;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.3s ease;
-    }
-
-    .speech-bubble::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 8px 8px 0;
-      border-style: solid;
-      border-color: rgba(255, 255, 255, 0.94) transparent transparent;
-    }
-
-    .cute-character-svg {
-      width: clamp(120px, 20vw, 165px);
-      height: auto;
-      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
-    }
-
-    /* Character Watch-Checking Arm & Sweat Drop Animations */
-    .watch-arm {
-      transform-origin: 65px 128px;
-      animation: checkWatchArm 2.8s ease-in-out infinite;
-    }
-
-    @keyframes checkWatchArm {
-      0%, 100% { transform: rotate(0deg); }
-      35%, 65% { transform: rotate(-28deg) translateY(-4px); }
-    }
-
-    .sweat-drop {
-      animation: sweatDrip 2s ease-in-out infinite;
-      transform-origin: center;
-    }
-
-    @keyframes sweatDrip {
-      0%, 100% { opacity: 0; transform: translateY(-4px); }
-      40%, 70% { opacity: 1; transform: translateY(3px); }
-    }
-
-    .tap-foot {
-      transform-origin: 112px 176px;
-      animation: footTap 0.45s ease-in-out infinite alternate;
-    }
-
-    @keyframes footTap {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(-14deg); }
-    }
-
-    /* Bottom Action Bar on Screen 1 */
-    .bottom-bar {
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 0 12px;
-      z-index: 20;
+      padding-bottom: 6px;
     }
 
     .btn-preview {
-      background: linear-gradient(135deg, rgba(255, 42, 122, 0.85), rgba(168, 24, 96, 0.9));
-      color: #fff;
-      border: 1px solid rgba(255, 209, 102, 0.65);
-      padding: 10px 22px;
-      border-radius: 999px;
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: 0.98rem;
+      font-size: 1rem;
       font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #ff2e79, #ff7b00);
+      border: 2px solid rgba(255, 225, 130, 0.75);
+      border-radius: 999px;
+      padding: 10px 26px;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(255, 42, 122, 0.5);
-      backdrop-filter: blur(8px);
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      box-shadow: 0 8px 24px rgba(255, 46, 121, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn-preview:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 8px 26px rgba(255, 42, 122, 0.8);
-      background: linear-gradient(135deg, #ff3d87, #c9186b);
+      box-shadow: 0 12px 28px rgba(255, 215, 0, 0.45);
     }
 
     .btn-preview:active {
       transform: scale(0.96);
     }
 
-    /* =========================================
-       SCREEN 2: BOW & ARROW + CELEBRATION OVERLAY
-       ========================================= */
-    #screen2 {
+    /* ==================== SCREEN 2: BOW CHALLENGE & CLIMAX ==================== */
+    #screen-climax {
+      background: radial-gradient(circle at 70% 25%, #2b0c3d 0%, #12061c 55%, #07020c 100%);
+    }
+
+    #climax-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
       pointer-events: none;
-      justify-content: space-between;
-      padding: 24px 16px 36px;
     }
 
-    .shoot-instruction {
-      background: rgba(25, 6, 36, 0.72);
-      border: 1px solid rgba(255, 158, 198, 0.45);
-      padding: 10px 22px;
-      border-radius: 999px;
-      font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+    .challenge-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+
+    .challenge-layer.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .challenge-hint {
+      position: fixed;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 8;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(0.88rem, 2.6vw, 1.08rem);
       font-weight: 600;
-      color: #ffe0ec;
+      color: #ffe9f3;
+      background: rgba(25, 8, 38, 0.72);
+      border: 1px solid rgba(255, 215, 0, 0.45);
+      padding: 7px 18px;
+      border-radius: 999px;
       text-align: center;
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px);
-      animation: pulseHint 1.8s infinite ease-in-out;
-      transition: opacity 0.4s ease;
+      white-space: nowrap;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     }
 
-    @keyframes pulseHint {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
+    /* Top-right mischievous heart target */
+    #target-heart-box {
+      position: fixed;
+      top: clamp(58px, 10vh, 95px);
+      right: clamp(18px, 5vw, 68px);
+      width: clamp(92px, 20vw, 134px);
+      height: clamp(86px, 19vw, 124px);
+      z-index: 6;
+      pointer-events: none;
+      animation: targetTease 2.4s ease-in-out infinite;
+      filter: drop-shadow(0 0 22px rgba(255, 45, 115, 0.65));
     }
 
-    /* Birthday Blast Message Box (Appears after Heart Bursts) */
-    .birthday-blast-box {
+    @keyframes targetTease {
+      0%, 100% { transform: translate(0, 0) scale(1) rotate(4deg); }
+      33% { transform: translate(-8px, 7px) scale(1.06) rotate(-3deg); }
+      66% { transform: translate(6px, -6px) scale(0.96) rotate(8deg); }
+    }
+
+    /* Bottom-left bow & draggable arrow */
+    #bow-rig {
+      position: fixed;
+      bottom: clamp(18px, 4vh, 42px);
+      left: clamp(18px, 4vw, 56px);
+      width: 150px;
+      height: 150px;
+      z-index: 9;
+      pointer-events: auto;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    #bow-rig:active {
+      cursor: grabbing;
+    }
+
+    #bow-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    #flying-arrow-svg {
+      position: fixed;
+      width: 96px;
+      height: 28px;
+      z-index: 10;
+      pointer-events: none;
       display: none;
+      transform-origin: center center;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.85));
+    }
+
+    /* Fast front-rushing heart before burst (no static text on it) */
+    #rushing-heart {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 140px;
+      height: 130px;
+      z-index: 15;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.18);
+      filter: drop-shadow(0 0 34px rgba(255, 215, 0, 0.85));
+    }
+
+    #rushing-heart.rush-active {
+      opacity: 1;
+      animation: rushTowardFront 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes rushTowardFront {
+      0% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(0.16) rotate(-10deg);
+      }
+      75% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(2.35) rotate(4deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(3.2) rotate(0deg);
+      }
+    }
+
+    /* Floating "Happy Birthday" heart balloons across screen */
+    #heart-balloons-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hb-balloon {
+      position: absolute;
+      bottom: -140px;
+      display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
-      max-width: 820px;
-      padding: 28px 22px;
-      border-radius: 28px;
-      background: radial-gradient(circle at center, rgba(65, 10, 48, 0.78), rgba(20, 4, 28, 0.85));
-      border: 1.5px solid rgba(255, 209, 102, 0.55);
-      box-shadow: 0 0 50px rgba(255, 42, 122, 0.65), inset 0 0 25px rgba(255, 209, 102, 0.2);
-      backdrop-filter: blur(10px);
-      pointer-events: auto;
-      animation: blastReveal 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      pointer-events: none;
+      will-change: transform, opacity;
+      animation: floatHeartBalloon var(--dur, 8.5s) linear forwards;
     }
 
-    @keyframes blastReveal {
-      0% { opacity: 0; transform: scale(0.4) translateY(30px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
+    @keyframes floatHeartBalloon {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(var(--rot-start, -5deg));
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.96;
+      }
+      50% {
+        transform: translate3d(var(--sway, 26px), -55vh, 0) rotate(var(--rot-end, 6deg));
+      }
+      90% {
+        opacity: 0.92;
+      }
+      100% {
+        transform: translate3d(calc(var(--sway, 26px) * -0.4), -122vh, 0) rotate(var(--rot-start, -5deg));
+        opacity: 0;
+      }
     }
 
-    .birthday-blast-title {
-      font-family: 'Cinzel Decorative', 'Poppins', sans-serif;
-      font-size: clamp(1.35rem, 4.2vw, 2.55rem);
-      font-weight: 900;
-      line-height: 1.35;
-      background: linear-gradient(90deg, #ffd166, #ff85b3, #ffffff, #ffd166);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmerText 3s linear infinite;
-      filter: drop-shadow(0 2px 12px rgba(255, 42, 122, 0.7));
-      margin-bottom: 22px;
+    .hb-balloon-body {
+      position: relative;
+      width: var(--b-size, 74px);
+      height: var(--b-size, 74px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
     }
 
-    /* =========================================
-       SHARED ROMANTIC GLOW BUTTON
-       ========================================= */
-    .btn-romantic {
-      background: linear-gradient(135deg, #ff2a7a 0%, #ff6b6b 50%, #f59e0b 100%);
-      background-size: 200% auto;
-      color: #fff;
-      border: none;
-      padding: 14px 32px;
-      border-radius: 999px;
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(1.05rem, 2.6vw, 1.22rem);
+    .hb-balloon-body svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hb-balloon-label {
+      position: relative;
+      z-index: 2;
+      font-family: 'Fredoka', sans-serif;
+      font-size: calc(var(--b-size, 74px) * 0.145);
       font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 28px rgba(255, 42, 122, 0.65), 0 0 0 3px rgba(255, 255, 255, 0.18);
-      transition: all 0.35s ease;
+      line-height: 1.05;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(110, 0, 45, 0.85);
+      transform: translateY(-4px);
+      padding: 0 4px;
+    }
+
+    .hb-string {
+      width: 1.5px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(255, 215, 0, 0.85), rgba(255, 255, 255, 0.2));
+    }
+
+    /* Line-by-line puffy letter-balloons with curly hanging strings */
+    #letter-balloons-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 12;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .balloon-line-group {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: clamp(4px, 1.3vw, 10px);
+      width: min(94vw, 820px);
+      opacity: 0;
+      transform: translate(-50%, 36vh) scale(0.86);
+      transition:
+        opacity 0.65s ease,
+        transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .balloon-line-group.line-enter {
+      opacity: 1;
+      transform: translate(-50%, -56%) scale(1);
+    }
+
+    .balloon-line-group.line-drift {
+      opacity: 1;
+      animation: lineGentleFly 3.2s ease-in-out infinite alternate;
+    }
+
+    .balloon-line-group.line-exit {
+      opacity: 0;
+      transform: translate(-50%, -115vh) scale(0.92);
+      transition:
+        opacity 0.65s ease,
+        transform 0.95s cubic-bezier(0.4, 0, 0.8, 0.6);
+    }
+
+    @keyframes lineGentleFly {
+      0% {
+        transform: translate(-50%, -58%) translateX(-8px) rotate(-1.2deg);
+      }
+      100% {
+        transform: translate(-50%, -52%) translateX(8px) rotate(1.2deg);
+      }
+    }
+
+    .letter-balloon-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: charBob 2.1s ease-in-out infinite;
+      animation-delay: var(--cdelay, 0s);
+    }
+
+    .letter-balloon-unit.space-gap {
+      width: clamp(10px, 2.6vw, 22px);
+    }
+
+    @keyframes charBob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-9px); }
+    }
+
+    .puffy-char {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      min-width: clamp(28px, 6.2vw, 48px);
+      height: clamp(34px, 7.2vw, 56px);
+      padding: 0 5px;
+      border-radius: 36% 42% 38% 40% / 44% 38% 42% 36%;
+      background: radial-gradient(circle at 30% 25%, #ffffff 0%, var(--c-main, #ff85b3) 48%, var(--c-shade, #d81b60) 100%);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.05rem, 3.6vw, 1.85rem);
+      font-weight: 700;
+      text-shadow:
+        0 2px 0 rgba(120, 10, 55, 0.65),
+        0 0 12px rgba(255, 255, 255, 0.45);
+      box-shadow:
+        inset -3px -4px 8px rgba(0, 0, 0, 0.22),
+        inset 3px 3px 8px rgba(255, 255, 255, 0.7),
+        0 8px 16px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+
+    .puffy-char::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--c-shade, #d81b60);
+    }
+
+    .curly-string-svg {
+      width: 14px;
+      height: 38px;
+      margin-top: 2px;
+      overflow: visible;
+      transform-origin: top center;
+      animation: stringSway 1.7s ease-in-out infinite alternate;
+      animation-delay: var(--cdelay, 0s);
+    }
+
+    @keyframes stringSway {
+      0% { transform: rotate(-11deg); }
+      100% { transform: rotate(11deg); }
+    }
+
+    /* Compact "LET'S FORWORD" button pinned cleanly at the very bottom */
+    .lets-forward-wrap {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .lets-forward-wrap.visible {
+      opacity: 1;
       pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
     }
 
-    .btn-romantic:hover {
-      background-position: right center;
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 12px 35px rgba(255, 42, 122, 0.85), 0 0 0 4px rgba(255, 209, 102, 0.45);
+    .btn-lets-forward {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      color: #24062b;
+      background: linear-gradient(135deg, #ffd700, #ffae00);
+      border: 1.5px solid #fff5b8;
+      border-radius: 999px;
+      padding: 6px 15px;
+      cursor: pointer;
+      box-shadow: 0 5px 16px rgba(255, 215, 0, 0.45);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      white-space: nowrap;
     }
 
-    .btn-romantic:active {
-      transform: scale(0.97);
+    .btn-lets-forward:hover {
+      transform: scale(1.06);
+      box-shadow: 0 7px 22px rgba(255, 215, 0, 0.7);
     }
 
-    /* =========================================
-       SCREEN 3: BENGALI HEARTFELT LETTER
-       ========================================= */
-    #screen3 {
+    .btn-lets-forward:active {
+      transform: scale(0.95);
+    }
+
+    /* ==================== SCREEN 3: BANGLA LETTER ==================== */
+    #screen-letter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 18px;
+      background:
+        radial-gradient(circle at 50% 25%, rgba(255, 215, 0, 0.12), transparent 55%),
+        linear-gradient(160deg, #190724 0%, #2b0d38 55%, #12041a 100%);
       overflow-y: auto;
-      padding: 20px 14px;
     }
 
     .letter-card {
       position: relative;
-      width: 100%;
-      max-width: 720px;
-      background: linear-gradient(160deg, rgba(45, 10, 42, 0.86) 0%, rgba(22, 5, 28, 0.92) 100%);
-      border: 1.5px solid rgba(255, 182, 213, 0.4);
-      border-radius: 28px;
-      padding: clamp(24px, 5vw, 44px) clamp(20px, 5vw, 42px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(255, 42, 122, 0.3);
-      backdrop-filter: blur(14px);
-      text-align: center;
-      my: auto;
-    }
-
-    .letter-crown {
-      font-size: 2.3rem;
-      margin-bottom: 8px;
-      display: inline-block;
-      animation: floatTitle 3s ease-in-out infinite;
-    }
-
-    .letter-heading {
-      font-family: 'Galada', cursive;
-      font-size: clamp(1.7rem, 4.5vw, 2.4rem);
-      color: #ffd166;
-      text-shadow: 0 0 15px rgba(255, 209, 102, 0.45);
-      margin-bottom: 18px;
-    }
-
-    .letter-divider {
-      height: 2px;
-      width: 140px;
-      margin: 0 auto 22px;
-      background: linear-gradient(90deg, transparent, #ff4d94, #ffd166, #ff4d94, transparent);
-    }
-
-    .letter-body {
+      z-index: 4;
+      width: min(640px, 94vw);
+      max-height: 78vh;
+      overflow-y: auto;
+      background: rgba(255, 248, 252, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      border-radius: 24px;
+      padding: clamp(20px, 4.5vw, 34px);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(1.05rem, 2.6vw, 1.26rem);
-      line-height: 1.9;
-      color: #fff0f6;
-      text-align: justify;
-      text-align-last: center;
-      font-weight: 500;
     }
 
     .letter-line {
+      font-size: clamp(1rem, 2.9vw, 1.24rem);
+      line-height: 1.85;
+      color: #fff6fa;
+      margin-bottom: 12px;
       opacity: 0;
       transform: translateY(14px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
-      margin-bottom: 14px;
+      transition: opacity 0.65s ease, transform 0.65s ease;
     }
 
-    .letter-line.visible {
+    .letter-line.show {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .fi-amanillah {
-      font-family: 'Galada', cursive;
-      font-size: clamp(1.35rem, 3.4vw, 1.75rem);
-      color: #ff9ebb;
-      margin-top: 10px;
-      margin-bottom: 26px;
-      text-shadow: 0 0 14px rgba(255, 133, 179, 0.5);
+    .letter-line.signoff {
+      margin-top: 8px;
+      font-weight: 700;
+      color: #ffd700;
+      font-size: clamp(1.1rem, 3.2vw, 1.38rem);
     }
 
-    /* =========================================
-       CUSTOM MODAL FOR "চলো সামনে যাই" NEXT STEP
-       ========================================= */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      background: rgba(10, 2, 16, 0.8);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+    .letter-next-wrap {
+      position: relative;
+      z-index: 5;
+      margin-top: 18px;
       opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s ease;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
     }
 
-    .modal-backdrop.open {
+    .letter-next-wrap.visible {
       opacity: 1;
-      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
-    .modal-card {
-      background: linear-gradient(145deg, #360932, #1b0422);
-      border: 1.5px solid rgba(255, 209, 102, 0.5);
-      border-radius: 24px;
-      padding: 30px 24px;
-      max-width: 440px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 15px 45px rgba(255, 42, 122, 0.45);
-      transform: scale(0.9);
-      transition: transform 0.4s ease;
+    .btn-cholo-samne {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1f0526;
+      background: linear-gradient(135deg, #ffd700, #ff9f1c);
+      border: 2px solid #fff3b0;
+      border-radius: 999px;
+      padding: 10px 28px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(255, 195, 0, 0.45);
+      transition: transform 0.2s ease;
     }
 
-    .modal-backdrop.open .modal-card {
-      transform: scale(1);
-    }
-
-    .modal-card h3 {
-      font-family: 'Galada', cursive;
-      font-size: 1.8rem;
-      color: #ffd166;
-      margin-bottom: 10px;
-    }
-
-    .modal-card p {
-      font-size: 1.05rem;
-      color: #ffe3ee;
-      line-height: 1.6;
-      margin-bottom: 22px;
-    }
-
-    /* Responsive Adjustments for Small Phones */
-    @media (max-width: 600px) {
-      .countdown-stage {
-        flex-direction: column;
-        gap: 10px;
-      }
-      .heart-clock-wrapper {
-        width: min(88vw, 330px);
-        height: min(82vw, 305px);
-      }
-      .character-box {
-        flex-direction: row;
-        width: 92%;
-        max-width: 340px;
-        justify-content: center;
-        gap: 10px;
-      }
-      .speech-bubble {
-        margin-bottom: 0;
-        order: 2;
-        font-size: 0.78rem;
-      }
-      .speech-bubble::after {
-        left: -8px;
-        bottom: 50%;
-        transform: translateY(50%);
-        border-width: 8px 8px 8px 0;
-        border-color: transparent rgba(255, 255, 255, 0.94) transparent transparent;
-      }
-      .cute-character-svg {
-        width: 95px;
-        order: 1;
-      }
+    .btn-cholo-samne:hover {
+      transform: translateY(-2px) scale(1.04);
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Hearts Rain & Celebration Fireworks Canvas -->
-  <canvas id="bgCanvas"></canvas>
+  <!-- ==================== SCREEN 1: COUNTDOWN ==================== -->
+  <section id="screen-countdown" class="screen active">
+    <canvas id="heart-rain-canvas"></canvas>
 
-  <!-- Interactive Bow & Arrow Canvas (Screen 2) -->
-  <canvas id="gameCanvas"></canvas>
-
-  <!-- =========================================================
-       SCREEN 1: HEART DIGITAL COUNTDOWN & CUTE IMPATIENT EMOJI
-       ========================================================= -->
-  <section id="screen1" class="screen active">
     <div class="top-banner">
-      <h1>A SPECIAL DAY COUNTING FOR NIHU</h1>
-      <p class="top-subtitle">✨ অপেক্ষার প্রতিটি সেকেন্ড শুধু তোমার জন্য... ✨</p>
+      <h1 class="animated-title">A SPECIAL DAY COUNTING FOR NIHU</h1>
+      <p class="target-subtitle">০১/১২/২০২৬ রাত ১২:০০ (৩০/১১/২০২৬ রাত ১১:৫৯-এর পর বিশেষ মুহূর্ত)</p>
     </div>
 
-    <div class="countdown-stage">
-      <!-- Heart-Shaped Digital Clock -->
+    <div class="center-stage">
       <div class="heart-clock-wrapper">
-        <svg class="heart-svg-bg" viewBox="0 0 512 470" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="heart-svg" viewBox="0 0 400 370">
           <defs>
-            <linearGradient id="heartGrad" x1="60" y1="30" x2="450" y2="440" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#ff2a7a" stop-opacity="0.88" />
-              <stop offset="50%" stop-color="#b51763" stop-opacity="0.85" />
-              <stop offset="100%" stop-color="#4a0736" stop-opacity="0.92" />
+            <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff5e99" />
+              <stop offset="50%" stop-color="#e61965" />
+              <stop offset="100%" stop-color="#9e0943" />
             </linearGradient>
-            <linearGradient id="heartStroke" x1="0" y1="0" x2="512" y2="470" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#ffd166" />
-              <stop offset="50%" stop-color="#ff85b3" />
-              <stop offset="100%" stop-color="#ff2a7a" />
+            <linearGradient id="heartStrokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fff0a8" />
+              <stop offset="50%" stop-color="#ffd700" />
+              <stop offset="100%" stop-color="#ff85b3" />
             </linearGradient>
           </defs>
-          <path d="M256 445C256 445 36 312 36 162C36 88 94 32 166 32C209 32 242 54 256 82C270 54 303 32 346 32C418 32 476 88 476 162C476 312 256 445 256 445Z"
-                fill="url(#heartGrad)" stroke="url(#heartStroke)" stroke-width="8" />
-          <path d="M256 425C256 425 56 300 56 164C56 99 106 50 168 50C206 50 237 70 256 98C275 70 306 50 344 50C406 50 456 99 456 164C456 300 256 425 256 425Z"
-                stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-dasharray="6 6" />
+          <path
+            class="heart-shape-path"
+            d="M200 345
+               C200 345 32 238 32 118
+               C32 58 78 20 128 20
+               C162 20 188 38 200 66
+               C212 38 238 20 272 20
+               C322 20 368 58 368 118
+               C368 238 200 345 200 345 Z"
+          />
         </svg>
 
-        <div class="heart-clock-content">
-          <div class="target-date-badge">🎯 01 Dec 2026 • 12:00 AM</div>
-          <div class="timer-grid">
-            <div class="time-box">
-              <span id="days" class="time-digit">00</span>
+        <div class="clock-content">
+          <div class="clock-grid">
+            <div class="time-unit">
+              <div class="digit-box"><span id="cd-days" class="digit-value">00</span></div>
               <span class="time-label">Days</span>
             </div>
-            <div class="time-box">
-              <span id="hours" class="time-digit">00</span>
+            <div class="time-unit">
+              <div class="digit-box"><span id="cd-hours" class="digit-value">00</span></div>
               <span class="time-label">Hours</span>
             </div>
-            <div class="time-box">
-              <span id="minutes" class="time-digit">00</span>
+            <div class="time-unit">
+              <div class="digit-box"><span id="cd-mins" class="digit-value">00</span></div>
               <span class="time-label">Mins</span>
             </div>
-            <div class="time-box">
-              <span id="seconds" class="time-digit">00</span>
+            <div class="time-unit">
+              <div class="digit-box"><span id="cd-secs" class="digit-value">00</span></div>
               <span class="time-label">Secs</span>
             </div>
           </div>
-          <p class="heart-mini-note">❤️ নিহুর জন্মদিনের প্রহর গোনা চলছে ❤️</p>
+          <div id="cd-status" class="surprise-note">✨ বিশেষ দিনের কাউন্টডাউন চলছে ✨</div>
         </div>
       </div>
+    </div>
 
-      <!-- Cute Impatient/Excited Cartoon Character Watching Clock -->
-      <div class="character-box">
-        <div id="characterSpeech" class="speech-bubble">
-          উফফ! ঘড়ি এত আস্তে চলছে কেন?! ⌚🥺
-        </div>
-
-        <!-- Custom Animated Chibi Bear/Bunny Character with Wristwatch -->
-        <svg class="cute-character-svg" viewBox="0 0 180 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Soft Shadow -->
-          <ellipse cx="90" cy="188" rx="48" ry="9" fill="rgba(0,0,0,0.4)" />
-
-          <!-- Cute Ears -->
-          <circle cx="48" cy="46" r="20" fill="#ffccd5" stroke="#ff758f" stroke-width="3" />
-          <circle cx="48" cy="46" r="11" fill="#ff8fa3" />
-          <circle cx="132" cy="46" r="20" fill="#ffccd5" stroke="#ff758f" stroke-width="3" />
-          <circle cx="132" cy="46" r="11" fill="#ff8fa3" />
-
-          <!-- Chibi Body -->
-          <rect x="56" y="114" width="68" height="58" rx="28" fill="#ff8fa3" stroke="#fff" stroke-width="2.5" />
-          <!-- Belly Heart -->
-          <path d="M90 153C90 153 74 142 74 132C74 126 79 122 84 122C87 122 89 124 90 126C91 124 93 122 96 122C101 122 106 126 106 132C106 142 90 153 90 153Z" fill="#fff0f3" />
-
-          <!-- Feet (Right foot tapping impatiently) -->
-          <ellipse cx="72" cy="176" rx="14" ry="9" fill="#ffccd5" stroke="#ff758f" stroke-width="2.5" />
-          <ellipse class="tap-foot" cx="110" cy="176" rx="14" ry="9" fill="#ffccd5" stroke="#ff758f" stroke-width="2.5" />
-
-          <!-- Chibi Head -->
-          <circle cx="90" cy="78" r="46" fill="#fff0f3" stroke="#ff8fa3" stroke-width="3" />
-
-          <!-- Rosy Blushing Cheeks -->
-          <ellipse cx="62" cy="88" rx="9" ry="5.5" fill="#ff758f" opacity="0.65" />
-          <ellipse cx="118" cy="88" rx="9" ry="5.5" fill="#ff758f" opacity="0.65" />
-
-          <!-- Expressive Excited/Pouty Eyes -->
-          <g id="charEyes">
-            <circle cx="72" cy="76" r="7.5" fill="#2b0924" />
-            <circle cx="70" cy="73" r="2.8" fill="#ffffff" />
-            <circle cx="75" cy="78" r="1.3" fill="#ffffff" />
-
-            <circle cx="108" cy="76" r="7.5" fill="#2b0924" />
-            <circle cx="106" cy="73" r="2.8" fill="#ffffff" />
-            <circle cx="111" cy="78" r="1.3" fill="#ffffff" />
+    <div class="pace-lane" id="pace-lane">
+      <div id="pacer-actor" class="pacer-actor walking">
+        <div id="pacer-bubble" class="pacer-bubble">ঘড়িতে এখনো সময় বাকি! ⌚😤</div>
+        <svg class="pacer-svg" viewBox="0 0 100 106">
+          <g class="leg-left">
+            <line x1="42" y1="74" x2="36" y2="98" stroke="#ffd6e7" stroke-width="5" stroke-linecap="round" />
+            <ellipse cx="34" cy="100" rx="7" ry="3.5" fill="#ffd700" />
+          </g>
+          <g class="leg-right">
+            <line x1="54" y1="74" x2="60" y2="98" stroke="#ffd6e7" stroke-width="5" stroke-linecap="round" />
+            <ellipse cx="62" cy="100" rx="7" ry="3.5" fill="#ffd700" />
           </g>
 
-          <!-- Cute Impatient Eyebrows -->
-          <path d="M62 63L79 67" stroke="#590d22" stroke-width="3" stroke-linecap="round" />
-          <path d="M118 63L101 67" stroke="#590d22" stroke-width="3" stroke-linecap="round" />
+          <rect x="37" y="48" width="22" height="28" rx="9" fill="#ff4d8d" />
 
-          <!-- Cute Pouty / Excited Mouth -->
-          <path d="M83 92Q90 86 97 92Q90 99 83 92Z" fill="#ff4d6d" />
+          <g class="arm-other">
+            <line x1="58" y1="53" x2="69" y2="68" stroke="#ffe3ec" stroke-width="4.5" stroke-linecap="round" />
+          </g>
 
-          <!-- Animated Sweat Drop (Shows excitement & impatience) -->
-          <path class="sweat-drop" d="M133 62C133 62 139 71 139 75C139 78.5 136.3 81 133 81C129.7 81 127 78.5 127 75C127 71 133 62 133 62Z" fill="#72efdd" />
+          <g class="arm-watch">
+            <line x1="38" y1="53" x2="26" y2="66" stroke="#ffe3ec" stroke-width="4.5" stroke-linecap="round" />
+            <circle cx="25" cy="67" r="4.5" fill="#ffd700" stroke="#2a0936" stroke-width="1.5" />
+          </g>
 
-          <!-- Right Arm -->
-          <path d="M122 126C136 132 140 148 128 152" stroke="#ffccd5" stroke-width="12" stroke-linecap="round" />
-
-          <!-- Left Arm with Wristwatch (Animated to check time!) -->
-          <g class="watch-arm">
-            <path d="M58 128C40 128 34 114 48 106" stroke="#ffccd5" stroke-width="12" stroke-linecap="round" />
-            <!-- Tiny Golden Wristwatch -->
-            <circle cx="46" cy="107" r="9" fill="#ffd166" stroke="#b51763" stroke-width="2.5" />
-            <circle cx="46" cy="107" r="6" fill="#ffffff" />
-            <path d="M46 107V103M46 107L49 108" stroke="#14051e" stroke-width="1.5" stroke-linecap="round" />
+          <g class="pacer-head">
+            <circle cx="48" cy="30" r="17" fill="#ffe5ec" stroke="#ff85b3" stroke-width="2" />
+            <path d="M32 25 Q48 10 64 25 Q56 18 48 20 Q39 18 32 25 Z" fill="#ffd700" />
+            <circle cx="42" cy="29" r="2.4" fill="#23072c" />
+            <circle cx="54" cy="29" r="2.4" fill="#23072c" />
+            <path d="M43 37 Q48 34 53 37" stroke="#c2185b" stroke-width="2.2" fill="none" stroke-linecap="round" />
           </g>
         </svg>
       </div>
     </div>
 
-    <!-- Bottom Bar with Creator Preview Button -->
-    <div class="bottom-bar">
-      <button id="btnPreviewWork" class="btn-preview" title="পরবর্তী পেজ প্রিভিউ দেখুন">
-        <span>কাজ দেখি</span>
-        <span>➔</span>
-      </button>
+    <div class="bottom-action-bar">
+      <button id="btn-kaj-dekhi" class="btn-preview" type="button">কাজ দেখি</button>
     </div>
   </section>
 
-  <!-- =========================================================
-       SCREEN 2: BOW & ARROW + HEART BURST + FIREWORKS
-       ========================================================= -->
-  <section id="screen2" class="screen">
-    <div id="shootHint" class="shoot-instruction">
-      🏹 তীরটি টেনে বড় লাভের দিকে মারো! (টেনে ছেড়ে দাও অথবা ট্যাপ করো) ❤️
-    </div>
+  <!-- ==================== SCREEN 2: BOW CHALLENGE & CLIMAX ==================== -->
+  <section id="screen-climax" class="screen">
+    <canvas id="climax-canvas"></canvas>
 
-    <!-- Celebration Text Revealed After Heart Explodes -->
-    <div id="birthdayBlastBox" class="birthday-blast-box">
-      <div class="birthday-blast-title">
-        HAPPY BIRTHDAY TO NIHU❤. MANY MANY HAPPY RRETURN OF THE DAY.LET'S FORWORD
-      </div>
-      <button id="btnToLetter" class="btn-romantic">
-        <span>সামনে আগাই</span>
-        <span>➔</span>
-      </button>
-    </div>
-
-    <div style="height: 20px;"></div>
-  </section>
-
-  <!-- =========================================================
-       SCREEN 3: HEARTFELT BENGALI BIRTHDAY WISH
-       ========================================================= -->
-  <section id="screen3" class="screen">
-    <div class="letter-card">
-      <div class="letter-crown">👑💖</div>
-      <h2 class="letter-heading">শুভ জন্মদিন প্রিয় নিহু</h2>
-      <div class="letter-divider"></div>
-
-      <div id="letterLines" class="letter-body">
-        <p class="letter-line">
-          শুভ জন্মদিন প্রিয় নিহু । আজকে তোমার জিবনের অনেক আলাদা একটা দিন । সারা বছর আমিও অপেক্ষা করি তোমার এই দিনটার জন্য,তোমাকে সারপ্রাইজ করার জন্য ।
-        </p>
-        <p class="letter-line">
-          ইনশাআল্লাহ, প্রতি বছর তোমার এই দিনটা কে আমি নতুন ভাবে উৎযাপন করবো । তোমার এই অবস্থার দ্রুতই অবসান ঘটুক । আগামির রাস্তা মসৃণ হোক । অনেক বেশি পরিমাণ সুখ পাওয়ার যোগ্য তুমি ।
-        </p>
-        <p class="letter-line">
-          আমার রব তোমাকে এত সুখি রাখুক যে এই জিবনের পরের জীবন দুঃখী না থাকার লোভী হয়ে যাও এবং আমার রবের প্রিয় হওয়ার জন্য ব্যাকুল হয়ে যাও ।
-        </p>
-        <p class="letter-line fi-amanillah">
-          ফি আমানিল্লাহ...
-        </p>
+    <div id="challenge-layer" class="challenge-layer">
+      <div id="challenge-hint" class="challenge-hint">
+        নিচের কোণ থেকে তীর পিছে টেনে ছেড়ে উপরের কোণের লাভে মারো! 🎯💘
       </div>
 
-      <button id="btnNextChapter" class="btn-romantic">
-        <span>চলো সামনে যাই</span>
-        <span>✨</span>
-      </button>
+      <div id="target-heart-box">
+        <svg viewBox="0 0 200 185" width="100%" height="100%">
+          <defs>
+            <radialGradient id="targetGrad" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#ff9ebb" />
+              <stop offset="55%" stop-color="#ff246d" />
+              <stop offset="100%" stop-color="#9b0539" />
+            </radialGradient>
+          </defs>
+          <path
+            d="M100 172 C100 172 16 118 16 58 C16 28 39 10 64 10 C81 10 94 20 100 34 C106 20 119 10 136 10 C161 10 184 28 184 58 C184 118 100 172 100 172 Z"
+            fill="url(#targetGrad)"
+            stroke="#ffd700"
+            stroke-width="4"
+          />
+        </svg>
+      </div>
+
+      <div id="bow-rig" title="তীর পিছনে টেনে ছেড়ে দিন">
+        <svg id="bow-svg" viewBox="0 0 150 150">
+          <path
+            id="bow-string"
+            d="M 32 22 L 32 128"
+            stroke="#fff3b0"
+            stroke-width="2.2"
+            fill="none"
+          />
+          <path
+            d="M 32 22 C 88 42, 88 108, 32 128"
+            stroke="#ffd700"
+            stroke-width="7"
+            stroke-linecap="round"
+            fill="none"
+          />
+          <g id="bow-arrow-group">
+            <line id="bow-arrow-shaft" x1="32" y1="75" x2="112" y2="75" stroke="#fff8dc" stroke-width="3.5" stroke-linecap="round" />
+            <polygon id="bow-arrow-tip" points="122,75 106,68 109,75 106,82" fill="#ffd700" />
+            <polygon id="bow-arrow-fletch-top" points="32,75 23,68 28,75" fill="#ff4d8d" />
+            <polygon id="bow-arrow-fletch-bot" points="32,75 23,82 28,75" fill="#ff4d8d" />
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <svg id="flying-arrow-svg" viewBox="0 0 100 28">
+      <line x1="8" y1="14" x2="82" y2="14" stroke="#fff9db" stroke-width="3.5" stroke-linecap="round" />
+      <polygon points="96,14 78,6 82,14 78,22" fill="#ffd700" />
+      <polygon points="8,14 0,6 5,14 0,22" fill="#ff4d8d" />
+    </svg>
+
+    <div id="rushing-heart">
+      <svg viewBox="0 0 200 185" width="100%" height="100%">
+        <defs>
+          <radialGradient id="rushHeartGrad" cx="35%" cy="30%" r="72%">
+            <stop offset="0%" stop-color="#ffd700" />
+            <stop offset="45%" stop-color="#ff3b7f" />
+            <stop offset="100%" stop-color="#8c0432" />
+          </radialGradient>
+        </defs>
+        <path
+          d="M100 172 C100 172 16 118 16 58 C16 28 39 10 64 10 C81 10 94 20 100 34 C106 20 119 10 136 10 C161 10 184 28 184 58 C184 118 100 172 100 172 Z"
+          fill="url(#rushHeartGrad)"
+          stroke="#fff0a8"
+          stroke-width="4"
+        />
+      </svg>
+    </div>
+
+    <div id="heart-balloons-layer"></div>
+    <div id="letter-balloons-stage"></div>
+
+    <div id="lets-forward-wrap" class="lets-forward-wrap">
+      <button id="btn-lets-forward" class="btn-lets-forward" type="button">LET'S FORWORD</button>
     </div>
   </section>
 
-  <!-- Custom Modal for Next Step Placeholder -->
-  <div id="nextModal" class="modal-backdrop">
-    <div class="modal-card">
-      <h3>পরবর্তী সারপ্রাইজ আসছে! 🎁</h3>
-      <p>
-        নিহুর জন্য পরের অংশের কাজ শীঘ্রই যুক্ত করা হবে। ততক্ষণ জন্মদিনের এই বিশেষ মুহূর্তটি উপভোগ করো! ❤️
-      </p>
-      <button id="btnCloseModal" class="btn-romantic" style="padding: 10px 26px; font-size: 1rem;">
-        ঠিক আছে 💖
-      </button>
+  <!-- ==================== SCREEN 3: BANGLA LETTER ==================== -->
+  <section id="screen-letter" class="screen">
+    <div class="letter-card" id="letter-card">
+      <p class="letter-line">শুভ জন্মদিন প্রিয় নিহু ।</p>
+      <p class="letter-line">আজকে তোমার জিবনের অনেক আলাদা একটা দিন ।</p>
+      <p class="letter-line">সারা বছর আমিও অপেক্ষা করি তোমার এই দিনটার জন্য,তোমাকে সারপ্রাইজ করার জন্য ।</p>
+      <p class="letter-line">ইনশাআল্লাহ, প্রতি বছর তোমার এই দিনটা কে আমি নতুন ভাবে উৎযাপন করবো ।</p>
+      <p class="letter-line">তোমার এই অবস্থার দ্রুতই অবসান ঘটুক ।</p>
+      <p class="letter-line">আগামির রাস্তা মসৃণ হোক ।</p>
+      <p class="letter-line">অনেক বেশি পরিমাণ সুখ পাওয়ার যোগ্য তুমি ।</p>
+      <p class="letter-line">আমার রব তোমাকে এত সুখি রাখুক যে এই জিবনের পরের জীবন দুঃখী না থাকার লোভী হয়ে যাও এবং আমার রবের প্রিয় হওয়ার জন্য ব্যাকুল হয়ে যাও ।</p>
+      <p class="letter-line signoff">ফি আমানিল্লাহ...</p>
     </div>
-  </div>
+
+    <div id="letter-next-wrap" class="letter-next-wrap">
+      <button id="btn-cholo-samne" class="btn-cholo-samne" type="button">চলো সামনে যাই</button>
+    </div>
+  </section>
 
   <script>
-    /* =========================================================================
-       1. BACKGROUND CANVAS: CONTINUOUS FALLING HEARTS RAIN & FIREWORKS SYSTEM
-       ========================================================================= */
-    const bgCanvas = document.getElementById('bgCanvas');
-    const bgCtx = bgCanvas.getContext('2d');
+    (function () {
+      const screenCountdown = document.getElementById("screen-countdown");
+      const screenClimax = document.getElementById("screen-climax");
+      const screenLetter = document.getElementById("screen-letter");
 
-    let width = bgCanvas.width = window.innerWidth;
-    let height = bgCanvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-      width = bgCanvas.width = window.innerWidth;
-      height = bgCanvas.height = window.innerHeight;
-      if (gameActive) setupGamePositions();
-    });
-
-    // Helper to draw a smooth heart shape at (x, y)
-    function drawHeartShape(ctx, x, y, size, color, alpha = 1, glow = 0) {
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.translate(x, y);
-      if (glow > 0) {
-        ctx.shadowColor = color;
-        ctx.shadowBlur = glow;
-      }
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      const topCurveHeight = size * 0.3;
-      ctx.moveTo(0, topCurveHeight);
-      ctx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
-      ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, (size + topCurveHeight) / 1.35, 0, size);
-      ctx.bezierCurveTo(0, (size + topCurveHeight) / 1.35, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
-      ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    // Falling Tiny Hearts Rain
-    const heartColors = ['#ff2a7a', '#ff6b9d', '#ff9ebb', '#ffd166', '#ff477e', '#f72585'];
-    const fallingHearts = [];
-    const totalHearts = Math.min(85, Math.floor(window.innerWidth / 14));
-
-    class FallingHeart {
-      constructor(initial = false) {
-        this.reset(initial);
-      }
-      reset(initial = false) {
-        this.x = Math.random() * width;
-        this.y = initial ? Math.random() * height : -25;
-        this.size = 7 + Math.random() * 14;
-        this.speedY = 0.8 + Math.random() * 1.9;
-        this.swayAmp = 0.4 + Math.random() * 1.2;
-        this.swaySpeed = 0.015 + Math.random() * 0.025;
-        this.angle = Math.random() * Math.PI * 2;
-        this.color = heartColors[Math.floor(Math.random() * heartColors.length)];
-        this.alpha = 0.35 + Math.random() * 0.55;
-      }
-      update() {
-        this.y += this.speedY;
-        this.angle += this.swaySpeed;
-        this.x += Math.sin(this.angle) * this.swayAmp;
-        if (this.y > height + 30) {
-          this.reset(false);
-        }
-      }
-      draw() {
-        drawHeartShape(bgCtx, this.x, this.y, this.size, this.color, this.alpha, 8);
-      }
-    }
-
-    for (let i = 0; i < totalHearts; i++) {
-      fallingHearts.push(new FallingHeart(true));
-    }
-
-    // Fireworks & Heart Burst Particles
-    let fireworks = [];
-    let particles = [];
-    let fireworksEnabled = false;
-
-    class FireworkRocket {
-      constructor(targetX, targetY) {
-        this.x = width * (0.2 + Math.random() * 0.6);
-        this.y = height;
-        this.targetX = targetX || width * (0.15 + Math.random() * 0.7);
-        this.targetY = targetY || height * (0.12 + Math.random() * 0.42);
-        const angle = Math.atan2(this.targetY - this.y, this.targetX - this.x);
-        const speed = 7 + Math.random() * 4;
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
-        this.color = heartColors[Math.floor(Math.random() * heartColors.length)];
-        this.trail = [];
-      }
-      update() {
-        this.trail.push({ x: this.x, y: this.y });
-        if (this.trail.length > 6) this.trail.shift();
-        this.x += this.vx;
-        this.y += this.vy;
-        const dist = Math.hypot(this.targetX - this.x, this.targetY - this.y);
-        if (dist < 14 || this.y <= this.targetY) {
-          createExplosion(this.x, this.y, this.color, 55, false);
-          return false;
-        }
-        return true;
-      }
-      draw() {
-        bgCtx.save();
-        for (let i = 0; i < this.trail.length; i++) {
-          const pt = this.trail[i];
-          bgCtx.globalAlpha = i / this.trail.length;
-          bgCtx.fillStyle = this.color;
-          bgCtx.beginPath();
-          bgCtx.arc(pt.x, pt.y, 2.5, 0, Math.PI * 2);
-          bgCtx.fill();
-        }
-        bgCtx.restore();
-      }
-    }
-
-    class SparkParticle {
-      constructor(x, y, color, isHeart = false) {
-        this.x = x;
-        this.y = y;
-        const angle = Math.random() * Math.PI * 2;
-        const speed = isHeart ? (2 + Math.random() * 9) : (1.5 + Math.random() * 6.5);
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
-        this.gravity = 0.08;
-        this.friction = 0.97;
-        this.alpha = 1;
-        this.decay = 0.011 + Math.random() * 0.014;
-        this.color = color;
-        this.isHeart = isHeart;
-        this.size = isHeart ? (10 + Math.random() * 14) : (2 + Math.random() * 2.5);
-      }
-      update() {
-        this.vx *= this.friction;
-        this.vy *= this.friction;
-        this.vy += this.gravity;
-        this.x += this.vx;
-        this.y += this.vy;
-        this.alpha -= this.decay;
-        return this.alpha > 0;
-      }
-      draw() {
-        if (this.isHeart) {
-          drawHeartShape(bgCtx, this.x, this.y, this.size, this.color, this.alpha, 12);
-        } else {
-          bgCtx.save();
-          bgCtx.globalAlpha = this.alpha;
-          bgCtx.shadowColor = this.color;
-          bgCtx.shadowBlur = 10;
-          bgCtx.fillStyle = this.color;
-          bgCtx.beginPath();
-          bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          bgCtx.fill();
-          bgCtx.restore();
-        }
-      }
-    }
-
-    function createExplosion(x, y, baseColor, count = 60, heartBurst = false) {
-      const palette = ['#ff2a7a', '#ffd166', '#ff85b3', '#ffffff', '#00f5d4', '#ff5400'];
-      for (let i = 0; i < count; i++) {
-        const c = palette[Math.floor(Math.random() * palette.length)];
-        particles.push(new SparkParticle(x, y, c, heartBurst && i % 2 === 0));
-      }
-    }
-
-    // Main Background Animation Loop
-    function animateBackground() {
-      bgCtx.clearRect(0, 0, width, height);
-
-      // Draw Falling Hearts
-      for (const h of fallingHearts) {
-        h.update();
-        h.draw();
-      }
-
-      // Launch random fireworks during celebration
-    function animateBackground() {
-      bgCtx.clearRect(0, 0, width, height);
-
-      // Draw Falling Hearts
-      for (const h of fallingHearts) {
-        h.update();
-        h.draw();
-      }
-
-      // Launch intense multi-layered fireworks during celebration
-      if (fireworksEnabled && Math.random() < 0.14) {
-        fireworks.push(new FireworkRocket());
-        if (Math.random() < 0.45) {
-          fireworks.push(new FireworkRocket());
-        }
-      }
-
-      fireworks = fireworks.filter(fw => {
-        const alive = fw.update();
-        if (alive) fw.draw();
-        return alive;
-      });
-
-      particles = particles.filter(p => {
-        const alive = p.update();
-        if (alive) p.draw();
-        return alive;
-      });
-
-      requestAnimationFrame(animateBackground);
-    }
-    animateBackground();
-// ... existing code ... -->
-    let gameActive = false;
-    let heartPopped = false;
-    let bowPos = { x: 0, y: 0 };
-    let bigHeart = { x: 0, y: 0, baseSize: 175, pulse: 0 };
-    let scatteredHearts = [];
-    let heroZoomHeart = null;
-    let isDragging = false;
-    let dragPos = { x: 0, y: 0 };
-    let arrow = {
-      x: 0,
-      y: 0,
-      vx: 0,
-      vy: 0,
-      angle: 0,
-      flying: false
-    };
-
-    function setupGamePositions() {
-      gameCanvas.width = window.innerWidth;
-      gameCanvas.height = window.innerHeight;
-
-      const isMobile = width < 700;
-      if (isMobile) {
-        bigHeart.x = width * 0.5;
-        bigHeart.y = height * 0.41;
-        bigHeart.baseSize = Math.min(width * 0.44, 175);
-
-        bowPos.x = width * 0.5;
-        bowPos.y = height * 0.82;
-      } else {
-        bowPos.x = width * 0.18;
-        bowPos.y = height * 0.68;
-
-        bigHeart.x = width * 0.54;
-        bigHeart.y = height * 0.46;
-        bigHeart.baseSize = Math.min(width * 0.22, 225);
-      }
-
-      if (!arrow.flying) {
-        arrow.x = bowPos.x;
-        arrow.y = bowPos.y;
-        arrow.angle = Math.atan2(bigHeart.y - bowPos.y, bigHeart.x - bowPos.x);
-      }
-    }
-
-    function goToScreen2() {
-      screen1.classList.remove('active');
-      screen2.classList.add('active');
-      gameCanvas.style.display = 'block';
-      gameActive = true;
-      heartPopped = false;
-      scatteredHearts = [];
-      heroZoomHeart = null;
-      arrow.flying = false;
-      document.getElementById('shootHint').style.opacity = '1';
-      document.getElementById('birthdayBlastBox').style.display = 'none';
-      setupGamePositions();
-      requestAnimationFrame(gameLoop);
-    }
-
-    document.getElementById('btnPreviewWork').addEventListener('click', goToScreen2);
-
-    // Draw Big Glowing 3D-Style Heart Target
-    function drawTargetHeart(x, y, size) {
-      gCtx.save();
-      gCtx.translate(x, y - size * 0.45);
-      gCtx.shadowColor = '#ff1a75';
-      gCtx.shadowBlur = 45;
-
-      const grad = gCtx.createRadialGradient(-size * 0.18, size * 0.22, size * 0.08, 0, size * 0.5, size);
-      grad.addColorStop(0, '#ff9ebb');
-      grad.addColorStop(0.4, '#ff1e6e');
-      grad.addColorStop(0.8, '#b50749');
-      grad.addColorStop(1, '#590024');
-
-      gCtx.fillStyle = grad;
-      gCtx.beginPath();
-      const topCurve = size * 0.3;
-      gCtx.moveTo(0, topCurve);
-      gCtx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurve);
-      gCtx.bezierCurveTo(-size / 2, (size + topCurve) / 2, 0, (size + topCurve) / 1.35, 0, size);
-      gCtx.bezierCurveTo(0, (size + topCurve) / 1.35, size / 2, (size + topCurve) / 2, size / 2, topCurve);
-      gCtx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurve);
-      gCtx.closePath();
-      gCtx.fill();
-
-      // Golden Outer Rim Glow
-      gCtx.strokeStyle = 'rgba(255, 209, 102, 0.55)';
-      gCtx.lineWidth = 3;
-      gCtx.stroke();
-
-      // Glossy Shine Highlight
-      gCtx.fillStyle = 'rgba(255, 255, 255, 0.35)';
-      gCtx.beginPath();
-      gCtx.ellipse(-size * 0.22, size * 0.25, size * 0.11, size * 0.055, -0.5, 0, Math.PI * 2);
-      gCtx.fill();
-
-      // Label inside target heart
-      gCtx.shadowBlur = 10;
-      gCtx.shadowColor = 'rgba(0,0,0,0.6)';
-      gCtx.fillStyle = '#fff';
-      gCtx.font = `700 ${Math.max(18, Math.floor(size * 0.16))}px "Hind Siliguri", sans-serif`;
-      gCtx.textAlign = 'center';
-      gCtx.fillText('NIHU ❤️', 0, size * 0.56);
-      gCtx.restore();
-    }
-// ... existing code ... -->
-    function triggerHeartExplosion() {
-      heartPopped = true;
-      arrow.flying = false;
-      fireworksEnabled = true;
-
-      document.getElementById('shootHint').style.opacity = '0';
-
-      // Stage 1: Giant Heart Shatters into Sparks & 45 Flying Mini-Hearts + Intense Fireworks
-      createExplosion(bigHeart.x, bigHeart.y, '#ff2a7a', 130, true);
-      setTimeout(() => createExplosion(bigHeart.x - 80, bigHeart.y + 30, '#ffd166', 85, true), 150);
-      setTimeout(() => createExplosion(bigHeart.x + 80, bigHeart.y - 30, '#ff85b3', 85, true), 280);
-
-      // Spawn 45 small hearts scattering outward across the screen
-      scatteredHearts = [];
-      for (let i = 0; i < 45; i++) {
-        const angle = (Math.PI * 2 * i) / 45 + (Math.random() - 0.5) * 0.25;
-        const speed = 2.5 + Math.random() * 8.5;
-        scatteredHearts.push({
-          x: bigHeart.x,
-          y: bigHeart.y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 1.5,
-          size: 14 + Math.random() * 18,
-          color: heartColors[Math.floor(Math.random() * heartColors.length)],
-          alpha: 1,
-          wobble: Math.random() * Math.PI * 2
+      function showScreen(targetScreen) {
+        [screenCountdown, screenClimax, screenLetter].forEach((sc) => {
+          sc.classList.toggle("active", sc === targetScreen);
         });
       }
 
-      // Launch immediate salvo of colorful fireworks
-      for (let i = 0; i < 12; i++) {
+      /* ---------------- 1. COUNTDOWN & HEART RAIN ---------------- */
+      const targetDate = new Date(2026, 11, 1, 0, 0, 0, 0).getTime();
+      const els = {
+        days: document.getElementById("cd-days"),
+        hours: document.getElementById("cd-hours"),
+        mins: document.getElementById("cd-mins"),
+        secs: document.getElementById("cd-secs"),
+        status: document.getElementById("cd-status")
+      };
+      const prevVals = { days: "", hours: "", mins: "", secs: "" };
+
+      function setDigit(el, key, valStr) {
+        if (!el) return;
+        if (prevVals[key] !== valStr) {
+          el.textContent = valStr;
+          el.classList.remove("tick-anim");
+          void el.offsetWidth;
+          el.classList.add("tick-anim");
+          prevVals[key] = valStr;
+        }
+      }
+
+      function updateCountdown() {
+        const now = Date.now();
+        let diff = targetDate - now;
+
+        if (diff <= 0) {
+          setDigit(els.days, "days", "00");
+          setDigit(els.hours, "hours", "00");
+          setDigit(els.mins, "mins", "00");
+          setDigit(els.secs, "secs", "00");
+          if (els.status) els.status.textContent = "🎉 বিশেষ দিন শুরু হয়ে গেছে! শুভ জন্মদিন নিহু! 🎉";
+          return;
+        }
+
+        const totalSecs = Math.floor(diff / 1000);
+        const days = Math.floor(totalSecs / 86400);
+        const hours = Math.floor((totalSecs % 86400) / 3600);
+        const mins = Math.floor((totalSecs % 3600) / 60);
+        const secs = totalSecs % 60;
+
+        setDigit(els.days, "days", String(days).padStart(2, "0"));
+        setDigit(els.hours, "hours", String(hours).padStart(2, "0"));
+        setDigit(els.mins, "mins", String(mins).padStart(2, "0"));
+        setDigit(els.secs, "secs", String(secs).padStart(2, "0"));
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 500);
+
+      const rainCanvas = document.getElementById("heart-rain-canvas");
+      const rainCtx = rainCanvas.getContext("2d");
+      let rainHearts = [];
+
+      function resizeRainCanvas() {
+        rainCanvas.width = window.innerWidth;
+        rainCanvas.height = window.innerHeight;
+      }
+      resizeRainCanvas();
+      window.addEventListener("resize", resizeRainCanvas);
+
+      function drawHeartPath(ctx, x, y, size, rot) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rot);
+        const s = size * 0.5;
+        ctx.beginPath();
+        ctx.moveTo(0, s * 0.85);
+        ctx.bezierCurveTo(-s * 1.4, -s * 0.1, -s * 1.1, -s * 1.2, 0, -s * 0.45);
+        ctx.bezierCurveTo(s * 1.1, -s * 1.2, s * 1.4, -s * 0.1, 0, s * 0.85);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      const heartPalette = [
+        "rgba(255, 77, 136, 0.72)",
+        "rgba(255, 143, 177, 0.68)",
+        "rgba(255, 215, 0, 0.62)",
+        "rgba(244, 63, 94, 0.7)"
+      ];
+
+      function initHeartRain() {
+        const count = Math.min(85, Math.floor((window.innerWidth * window.innerHeight) / 11000));
+        rainHearts = Array.from({ length: count }, () => ({
+          x: Math.random() * rainCanvas.width,
+          y: Math.random() * rainCanvas.height,
+          size: 10 + Math.random() * 16,
+          speedY: 1.2 + Math.random() * 2.4,
+          swaySpeed: 0.015 + Math.random() * 0.025,
+          swayAmp: 0.6 + Math.random() * 1.4,
+          phase: Math.random() * Math.PI * 2,
+          rot: (Math.random() - 0.5) * 0.5,
+          color: heartPalette[Math.floor(Math.random() * heartPalette.length)]
+        }));
+      }
+      initHeartRain();
+
+      function tickHeartRain() {
+        if (screenCountdown.classList.contains("active")) {
+          rainCtx.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
+          for (const h of rainHearts) {
+            h.phase += h.swaySpeed;
+            h.x += Math.sin(h.phase) * h.swayAmp;
+            h.y += h.speedY;
+            if (h.y > rainCanvas.height + 30) {
+              h.y = -25;
+              h.x = Math.random() * rainCanvas.width;
+            }
+            rainCtx.fillStyle = h.color;
+            drawHeartPath(rainCtx, h.x, h.y, h.size, h.rot + Math.sin(h.phase) * 0.18);
+          }
+        }
+        requestAnimationFrame(tickHeartRain);
+      }
+      tickHeartRain();
+
+      /* ---------------- 2. PACING & WATCH-CHECKING CARTOON ---------------- */
+      const paceLane = document.getElementById("pace-lane");
+      const pacerActor = document.getElementById("pacer-actor");
+      const pacerBubble = document.getElementById("pacer-bubble");
+
+      let pacerX = 12;
+      let pacerDir = 1;
+      let pacerState = "walking";
+      let stateTimer = 0;
+      let lastFrameTime = performance.now();
+
+      const watchPhrases = [
+        "ঘড়িতে এখনো সময় বাকি! ⌚😤",
+        "কখন যে ১২টা বাজবে! 😒🕰️",
+        "আরে সময় কি থেমে গেল নাকি? 😤"
+      ];
+
+      function tickPacer(now) {
+        const dt = Math.min(0.05, (now - lastFrameTime) / 1000);
+        lastFrameTime = now;
+
+        if (screenCountdown.classList.contains("active") && paceLane && pacerActor) {
+          const maxX = Math.max(24, paceLane.clientWidth - 96);
+          stateTimer -= dt;
+
+          if (pacerState === "walking") {
+            pacerActor.classList.add("walking");
+            pacerActor.classList.remove("checking");
+            pacerX += pacerDir * 88 * dt;
+
+            if (pacerX >= maxX) {
+              pacerX = maxX;
+              pacerDir = -1;
+              pacerState = "checking";
+              stateTimer = 1.65;
+              pacerBubble.textContent = watchPhrases[Math.floor(Math.random() * watchPhrases.length)];
+            } else if (pacerX <= 8) {
+              pacerX = 8;
+              pacerDir = 1;
+              pacerState = "checking";
+              stateTimer = 1.65;
+              pacerBubble.textContent = watchPhrases[Math.floor(Math.random() * watchPhrases.length)];
+            } else if (stateTimer <= 0) {
+              pacerState = "checking";
+              stateTimer = 1.5;
+              pacerBubble.textContent = watchPhrases[Math.floor(Math.random() * watchPhrases.length)];
+            }
+          } else {
+            pacerActor.classList.remove("walking");
+            pacerActor.classList.add("checking");
+            if (stateTimer <= 0) {
+              pacerState = "walking";
+              stateTimer = 1.8 + Math.random() * 1.4;
+            }
+          }
+
+          const flipScale = pacerDir === 1 ? 1 : -1;
+          pacerActor.style.transform = `translate3d(${pacerX}px, 0, 0) scaleX(${flipScale})`;
+          pacerBubble.style.transform = `translateX(-50%) scaleX(${flipScale})`;
+        }
+
+        requestAnimationFrame(tickPacer);
+      }
+      requestAnimationFrame(tickPacer);
+
+      /* ---------------- 3. BOW CHALLENGE & GOLDEN FIREWORKS CLIMAX ---------------- */
+      const btnKajDekhi = document.getElementById("btn-kaj-dekhi");
+      const challengeLayer = document.getElementById("challenge-layer");
+      const challengeHint = document.getElementById("challenge-hint");
+      const targetHeartBox = document.getElementById("target-heart-box");
+      const bowRig = document.getElementById("bow-rig");
+      const bowString = document.getElementById("bow-string");
+      const bowArrowGroup = document.getElementById("bow-arrow-group");
+      const flyingArrowSvg = document.getElementById("flying-arrow-svg");
+      const rushingHeart = document.getElementById("rushing-heart");
+      const heartBalloonsLayer = document.getElementById("heart-balloons-layer");
+      const letterBalloonsStage = document.getElementById("letter-balloons-stage");
+      const letsForwardWrap = document.getElementById("lets-forward-wrap");
+      const btnLetsForward = document.getElementById("btn-lets-forward");
+
+      const climaxCanvas = document.getElementById("climax-canvas");
+      const climaxCtx = climaxCanvas.getContext("2d");
+
+      function resizeClimaxCanvas() {
+        climaxCanvas.width = window.innerWidth;
+        climaxCanvas.height = window.innerHeight;
+      }
+      resizeClimaxCanvas();
+      window.addEventListener("resize", resizeClimaxCanvas);
+
+      let isDraggingBow = false;
+      let pullVecX = 0;
+      let pullVecY = 0;
+      let climaxTriggered = false;
+      let fireworkLoopActive = false;
+      let balloonRainInterval = null;
+      let lineLoopTimeout = null;
+      let lineSequenceRunning = false;
+
+      const MAX_PULL = 56;
+
+      function getBowCenter() {
+        const r = bowRig.getBoundingClientRect();
+        return { x: r.left + r.width * 0.35, y: r.top + r.height * 0.55 };
+      }
+
+      function resetBowVisual() {
+        pullVecX = 0;
+        pullVecY = 0;
+        bowString.setAttribute("d", "M 32 22 L 32 128");
+        bowArrowGroup.style.transform = "translate(0px, 0px) rotate(0deg)";
+        bowArrowGroup.style.transformOrigin = "32px 75px";
+      }
+
+      function updateBowVisual() {
+        const pullMag = Math.hypot(pullVecX, pullVecY);
+        if (pullMag < 3) {
+          resetBowVisual();
+          return;
+        }
+        const aimAngleRad = Math.atan2(-pullVecY, -pullVecX);
+        const aimAngleDeg = (aimAngleRad * 180) / Math.PI;
+        const clampedPull = Math.min(MAX_PULL, pullMag);
+        const backX = -Math.cos(aimAngleRad) * (clampedPull * 0.55);
+        const backY = -Math.sin(aimAngleRad) * (clampedPull * 0.55);
+
+        const nockX = 32 + backX;
+        const nockY = 75 + backY;
+        bowString.setAttribute("d", `M 32 22 L ${nockX.toFixed(1)} ${nockY.toFixed(1)} L 32 128`);
+
+        bowArrowGroup.style.transformOrigin = "32px 75px";
+        bowArrowGroup.style.transform = `translate(${backX.toFixed(1)}px, ${backY.toFixed(1)}px) rotate(${aimAngleDeg.toFixed(1)}deg)`;
+      }
+
+      function onBowPointerDown(e) {
+        if (climaxTriggered) return;
+        e.preventDefault();
+        isDraggingBow = true;
+        bowRig.setPointerCapture(e.pointerId);
+      }
+
+      function onBowPointerMove(e) {
+        if (!isDraggingBow || climaxTriggered) return;
+        const center = getBowCenter();
+        const dx = e.clientX - center.x;
+        const dy = e.clientY - center.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist > MAX_PULL) {
+          pullVecX = (dx / dist) * MAX_PULL;
+          pullVecY = (dy / dist) * MAX_PULL;
+        } else {
+          pullVecX = dx;
+          pullVecY = dy;
+        }
+        updateBowVisual();
+      }
+
+      function onBowPointerUp(e) {
+        if (!isDraggingBow) return;
+        isDraggingBow = false;
+        if (bowRig.hasPointerCapture(e.pointerId)) {
+          bowRig.releasePointerCapture(e.pointerId);
+        }
+
+        const pullMag = Math.hypot(pullVecX, pullVecY);
+        if (pullMag < 16 || climaxTriggered) {
+          resetBowVisual();
+          return;
+        }
+
+        const aimAngleRad = Math.atan2(-pullVecY, -pullVecX);
+        const power = Math.min(1, pullMag / MAX_PULL);
+        resetBowVisual();
+        launchArrow(aimAngleRad, power);
+      }
+
+      bowRig.addEventListener("pointerdown", onBowPointerDown);
+      bowRig.addEventListener("pointermove", onBowPointerMove);
+      bowRig.addEventListener("pointerup", onBowPointerUp);
+      bowRig.addEventListener("pointercancel", onBowPointerUp);
+
+      function launchArrow(angleRad, power) {
+        const start = getBowCenter();
+        const speed = 1150 + power * 750;
+        const vx = Math.cos(angleRad) * speed;
+        const vy = Math.sin(angleRad) * speed;
+
+        let ax = start.x;
+        let ay = start.y;
+        let prevTime = performance.now();
+
+        flyingArrowSvg.style.display = "block";
+
+        function stepArrow(now) {
+          if (climaxTriggered) {
+            flyingArrowSvg.style.display = "none";
+            return;
+          }
+          const dt = Math.min(0.04, (now - prevTime) / 1000);
+          prevTime = now;
+
+          ax += vx * dt;
+          ay += vy * dt;
+
+          const deg = (angleRad * 180) / Math.PI;
+          flyingArrowSvg.style.left = `${ax - 48}px`;
+          flyingArrowSvg.style.top = `${ay - 14}px`;
+          flyingArrowSvg.style.transform = `rotate(${deg}deg)`;
+
+          const targetRect = targetHeartBox.getBoundingClientRect();
+          const tCx = targetRect.left + targetRect.width * 0.5;
+          const tCy = targetRect.top + targetRect.height * 0.5;
+          const hitRadius = Math.max(targetRect.width, targetRect.height) * 0.52;
+
+          const tipX = ax + Math.cos(angleRad) * 44;
+          const tipY = ay + Math.sin(angleRad) * 44;
+
+          if (Math.hypot(tipX - tCx, tipY - tCy) <= hitRadius) {
+            flyingArrowSvg.style.display = "none";
+            triggerHeartClimax();
+            return;
+          }
+
+          if (ax < -120 || ax > window.innerWidth + 120 || ay < -120 || ay > window.innerHeight + 120) {
+            flyingArrowSvg.style.display = "none";
+            challengeHint.textContent = "ওহো মিস! আরেকটু নিশানা ঠিক করে টেনে মারো 😉🎯";
+            return;
+          }
+
+          requestAnimationFrame(stepArrow);
+        }
+
+        requestAnimationFrame(stepArrow);
+      }
+
+      /* Golden Realistic Fireworks Engine */
+      const sparks = [];
+      const goldColors = ["#FFD700", "#FFE566", "#FFAE00", "#FFF3B0", "#FFA500", "#FFFFFF"];
+
+      function spawnGoldenFirework(x, y, count = 75, speedScale = 1) {
+        for (let i = 0; i < count; i++) {
+          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.25;
+          const speed = (90 + Math.random() * 290) * speedScale;
+          sparks.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            decay: 0.75 + Math.random() * 0.75,
+            size: 1.8 + Math.random() * 2.8,
+            color: goldColors[Math.floor(Math.random() * goldColors.length)],
+            history: []
+          });
+        }
+      }
+
+      let lastFireworkTick = performance.now();
+      let autoSkyTimer = 0;
+
+      function tickGoldenFireworks(now) {
+        const dt = Math.min(0.05, (now - lastFireworkTick) / 1000);
+        lastFireworkTick = now;
+
+        if (screenClimax.classList.contains("active")) {
+          climaxCtx.fillStyle = "rgba(10, 4, 18, 0.22)";
+          climaxCtx.fillRect(0, 0, climaxCanvas.width, climaxCanvas.height);
+
+          if (fireworkLoopActive) {
+            autoSkyTimer -= dt;
+            if (autoSkyTimer <= 0) {
+              autoSkyTimer = 0.42 + Math.random() * 0.45;
+              const fx = climaxCanvas.width * (0.15 + Math.random() * 0.7);
+              const fy = climaxCanvas.height * (0.14 + Math.random() * 0.45);
+              spawnGoldenFirework(fx, fy, 65, 0.95);
+            }
+          }
+
+          for (let i = sparks.length - 1; i >= 0; i--) {
+            const p = sparks[i];
+            p.history.push({ x: p.x, y: p.y });
+            if (p.history.length > 5) p.history.shift();
+
+            p.vy += 125 * dt;
+            p.vx *= 0.985;
+            p.vy *= 0.985;
+            p.x += p.vx * dt;
+            p.y += p.vy * dt;
+            p.alpha -= p.decay * dt;
+
+            if (p.alpha <= 0) {
+              sparks.splice(i, 1);
+              continue;
+            }
+
+            if (p.history.length > 1) {
+              climaxCtx.beginPath();
+              climaxCtx.moveTo(p.history[0].x, p.history[0].y);
+              for (let k = 1; k < p.history.length; k++) {
+                climaxCtx.lineTo(p.history[k].x, p.history[k].y);
+              }
+              climaxCtx.lineTo(p.x, p.y);
+              climaxCtx.strokeStyle = p.color;
+              climaxCtx.globalAlpha = Math.max(0, p.alpha * 0.55);
+              climaxCtx.lineWidth = p.size * 0.75;
+              climaxCtx.stroke();
+            }
+
+            climaxCtx.beginPath();
+            climaxCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            climaxCtx.fillStyle = p.color;
+            climaxCtx.globalAlpha = Math.max(0, p.alpha);
+            climaxCtx.shadowBlur = 12;
+            climaxCtx.shadowColor = "#FFD700";
+            climaxCtx.fill();
+            climaxCtx.shadowBlur = 0;
+          }
+          climaxCtx.globalAlpha = 1;
+        }
+
+        requestAnimationFrame(tickGoldenFireworks);
+      }
+      requestAnimationFrame(tickGoldenFireworks);
+
+      /* Floating "Happy Birthday" Heart Balloons */
+      const balloonColors = [
+        ["#ff4d8d", "#b51753"],
+        ["#ff75a0", "#c9184a"],
+        ["#ffb703", "#d97706"],
+        ["#f72585", "#9d0208"],
+        ["#ff8fab", "#c9184a"]
+      ];
+
+      function createSingleHeartBalloon() {
+        if (!screenClimax.classList.contains("active")) return;
+        const size = Math.round(62 + Math.random() * 28);
+        const [c1, c2] = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+        const leftPct = 4 + Math.random() * 88;
+        const dur = (7.2 + Math.random() * 4.2).toFixed(2) + "s";
+        const sway = Math.round((Math.random() - 0.5) * 70) + "px";
+
+        const el = document.createElement("div");
+        el.className = "hb-balloon";
+        el.style.left = `${leftPct}%`;
+        el.style.setProperty("--b-size", `${size}px`);
+        el.style.setProperty("--dur", dur);
+        el.style.setProperty("--sway", sway);
+
+        el.innerHTML = `
+          <div class="hb-balloon-body">
+            <svg viewBox="0 0 100 95">
+              <defs>
+                <radialGradient id="hbg_${Math.random().toString(36).slice(2, 7)}" cx="32%" cy="28%" r="70%">
+                  <stop offset="0%" stop-color="${c1}" />
+                  <stop offset="100%" stop-color="${c2}" />
+                </radialGradient>
+              </defs>
+              <path
+                d="M50 88 C50 88 8 60 8 30 C8 14 20 5 33 5 C41 5 47 10 50 17 C53 10 59 5 67 5 C80 5 92 14 92 30 C92 60 50 88 50 88 Z"
+                fill="url(#hbg_${Math.random().toString(36).slice(2, 7)})"
+                stroke="rgba(255,215,0,0.65)"
+                stroke-width="2.5"
+              />
+            </svg>
+            <span class="hb-balloon-label">Happy<br/>Birthday</span>
+          </div>
+          <div class="hb-string"></div>
+        `;
+
+        heartBalloonsLayer.appendChild(el);
         setTimeout(() => {
-          fireworks.push(new FireworkRocket());
-        }, i * 160);
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, parseFloat(dur) * 1000 + 300);
       }
 
-      // Stage 2: After 0.9s, one special glowing small heart zooms straight to the front center!
-      setTimeout(() => {
-        heroZoomHeart = {
-          x: bigHeart.x,
-          y: bigHeart.y,
-          targetX: width * 0.5,
-          targetY: height * 0.48,
-          size: 24,
-          maxSize: Math.min(width * 0.36, 165),
-          progress: 0,
-          burstDone: false
-        };
-      }, 850);
-    }
+      /* Line-by-Line Puffy Letter-Balloons with Curly Strings & Gaps */
+      const messageLines = [
+        "HAPPY BIRTHDAY",
+        "TO",
+        "NIHU",
+        "MANY MANY HAPPY RETURNS OF THE DAY"
+      ];
 
-    function gameLoop() {
-      if (!gameActive) return;
-      gCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+      const puffyColors = [
+        ["#ff85b3", "#d81b60"],
+        ["#ffd166", "#e07a00"],
+        ["#a8e6cf", "#2a9d8f"],
+        ["#ffaaa5", "#d62828"],
+        ["#c3b1e1", "#6a4c93"],
+        ["#90e0ef", "#0077b6"]
+      ];
 
-      // 1. Draw Giant Heart Target (if not yet popped)
-      if (!heartPopped) {
-        bigHeart.pulse += 0.06;
-        const currentSize = bigHeart.baseSize + Math.sin(bigHeart.pulse) * 8;
-        drawTargetHeart(bigHeart.x, bigHeart.y, currentSize);
-      }
+      function buildLineGroup(lineText) {
+        const group = document.createElement("div");
+        group.className = "balloon-line-group";
 
-      // 1B. Update & Draw Scattered Mini-Hearts after Giant Heart Bursts
-      if (scatteredHearts.length > 0) {
-        scatteredHearts.forEach(sh => {
-          sh.x += sh.vx;
-          sh.y += sh.vy;
-          sh.vx *= 0.985;
-          sh.vy *= 0.985;
-          sh.vy += 0.03; // Gentle float gravity
-          sh.wobble += 0.08;
-          sh.x += Math.sin(sh.wobble) * 0.6;
-          if (sh.alpha > 0.01) {
-            sh.alpha -= 0.0045;
-            drawHeartShape(gCtx, sh.x, sh.y - sh.size * 0.4, sh.size, sh.color, Math.max(0, sh.alpha), 14);
+        const chars = Array.from(lineText);
+        chars.forEach((ch, idx) => {
+          if (ch === " ") {
+            const spacer = document.createElement("div");
+            spacer.className = "letter-balloon-unit space-gap";
+            group.appendChild(spacer);
+            return;
           }
+
+          const unit = document.createElement("div");
+          unit.className = "letter-balloon-unit";
+          unit.style.setProperty("--cdelay", `${(idx * 0.08).toFixed(2)}s`);
+
+          const [cMain, cShade] = puffyColors[(idx + lineText.length) % puffyColors.length];
+          const bubble = document.createElement("div");
+          bubble.className = "puffy-char";
+          bubble.style.setProperty("--c-main", cMain);
+          bubble.style.setProperty("--c-shade", cShade);
+          bubble.textContent = ch;
+
+          const curlySvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          curlySvg.setAttribute("class", "curly-string-svg");
+          curlySvg.setAttribute("viewBox", "0 0 16 40");
+          curlySvg.style.setProperty("--cdelay", `${(idx * 0.09).toFixed(2)}s`);
+
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path.setAttribute("d", "M 8 0 C 14 7, 2 14, 8 21 C 14 28, 2 34, 8 40");
+          path.setAttribute("fill", "none");
+          path.setAttribute("stroke", "rgba(255, 240, 175, 0.85)");
+          path.setAttribute("stroke-width", "1.6");
+          path.setAttribute("stroke-linecap", "round");
+
+          curlySvg.appendChild(path);
+          unit.appendChild(bubble);
+          unit.appendChild(curlySvg);
+          group.appendChild(unit);
+        });
+
+        return group;
+      }
+
+      function runLineByLineLoop(lineIdx = 0) {
+        if (!screenClimax.classList.contains("active")) {
+          lineSequenceRunning = false;
+          return;
+        }
+        lineSequenceRunning = true;
+
+        if (lineIdx >= messageLines.length) {
+          /* Gap after finishing all lines before repeating from line 1 */
+          lineLoopTimeout = setTimeout(() => {
+            runLineByLineLoop(0);
+          }, 1600);
+          return;
+        }
+
+        letterBalloonsStage.innerHTML = "";
+        const group = buildLineGroup(messageLines[lineIdx]);
+        letterBalloonsStage.appendChild(group);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            group.classList.add("line-enter");
+            setTimeout(() => {
+              if (!group.parentNode) return;
+              group.classList.add("line-drift");
+            }, 950);
+          });
+        });
+
+        const holdDuration = lineIdx === messageLines.length - 1 ? 3400 : 2500;
+
+        lineLoopTimeout = setTimeout(() => {
+          group.classList.remove("line-drift");
+          group.classList.add("line-exit");
+
+          setTimeout(() => {
+            if (group.parentNode) group.parentNode.removeChild(group);
+            /* Gap between lines */
+            lineLoopTimeout = setTimeout(() => {
+              runLineByLineLoop(lineIdx + 1);
+            }, 650);
+          }, 850);
+        }, holdDuration);
+      }
+
+      function triggerHeartClimax() {
+        if (climaxTriggered) return;
+        climaxTriggered = true;
+
+        challengeLayer.classList.add("hidden");
+
+        /* Fast front-rushing heart with no static text box */
+        rushingHeart.classList.remove("rush-active");
+        void rushingHeart.offsetWidth;
+        rushingHeart.classList.add("rush-active");
+
+        setTimeout(() => {
+          const cx = window.innerWidth * 0.5;
+          const cy = window.innerHeight * 0.45;
+          spawnGoldenFirework(cx, cy, 110, 1.25);
+          spawnGoldenFirework(cx * 0.65, cy * 0.85, 70, 1.0);
+          spawnGoldenFirework(cx * 1.35, cy * 0.85, 70, 1.0);
+          fireworkLoopActive = true;
+
+          for (let i = 0; i < 12; i++) {
+            setTimeout(createSingleHeartBalloon, i * 160);
+          }
+          balloonRainInterval = setInterval(createSingleHeartBalloon, 520);
+
+          if (!lineSequenceRunning) {
+            runLineByLineLoop(0);
+          }
+
+          setTimeout(() => {
+            letsForwardWrap.classList.add("visible");
+          }, 900);
+        }, 480);
+      }
+
+      function resetClimaxState() {
+        climaxTriggered = false;
+        fireworkLoopActive = false;
+        lineSequenceRunning = false;
+        clearTimeout(lineLoopTimeout);
+        clearInterval(balloonRainInterval);
+        heartBalloonsLayer.innerHTML = "";
+        letterBalloonsStage.innerHTML = "";
+        letsForwardWrap.classList.remove("visible");
+        rushingHeart.classList.remove("rush-active");
+        challengeLayer.classList.remove("hidden");
+        challengeHint.textContent = "নিচের কোণ থেকে তীর পিছে টেনে ছেড়ে উপরের কোণের লাভে মারো! 🎯💘";
+        resetBowVisual();
+      }
+
+      btnKajDekhi.addEventListener("click", () => {
+        resetClimaxState();
+        showScreen(screenClimax);
+      });
+
+      /* ---------------- 4. BANGLA LETTER SCREEN ---------------- */
+      const letterLines = Array.from(document.querySelectorAll("#letter-card .letter-line"));
+      const letterNextWrap = document.getElementById("letter-next-wrap");
+      const btnCholoSamne = document.getElementById("btn-cholo-samne");
+      let letterTimers = [];
+
+      function revealBanglaLetter() {
+        letterTimers.forEach((t) => clearTimeout(t));
+        letterTimers = [];
+        letterLines.forEach((line) => line.classList.remove("show"));
+        letterNextWrap.classList.remove("visible");
+
+        letterLines.forEach((line, idx) => {
+          const timer = setTimeout(() => {
+            line.classList.add("show");
+            if (idx === letterLines.length - 1) {
+              const btnTimer = setTimeout(() => {
+                letterNextWrap.classList.add("visible");
+              }, 550);
+              letterTimers.push(btnTimer);
+            }
+          }, idx * 520);
+          letterTimers.push(timer);
         });
       }
 
-      // 1C. Hero Small Heart Zooms Forward to Front Center & Pops to Reveal Birthday Message
-      if (heroZoomHeart && !heroZoomHeart.burstDone) {
-        heroZoomHeart.progress += 0.022;
-        const t = Math.min(1, heroZoomHeart.progress);
-        // Smooth ease-out cubic zoom toward viewer
-        const ease = 1 - Math.pow(1 - t, 3);
+      btnLetsForward.addEventListener("click", () => {
+        fireworkLoopActive = false;
+        lineSequenceRunning = false;
+        clearTimeout(lineLoopTimeout);
+        clearInterval(balloonRainInterval);
+        showScreen(screenLetter);
+        revealBanglaLetter();
+      });
 
-        const curX = heroZoomHeart.x + (heroZoomHeart.targetX - heroZoomHeart.x) * ease;
-        const curY = heroZoomHeart.y + (heroZoomHeart.targetY - heroZoomHeart.y) * ease;
-        const curSize = heroZoomHeart.size + (heroZoomHeart.maxSize - heroZoomHeart.size) * ease;
-
-        drawTargetHeart(curX, curY, curSize);
-
-        if (t >= 1) {
-          heroZoomHeart.burstDone = true;
-          // Pop right in front of the camera with golden & pink heart sparks!
-          createExplosion(curX, curY, '#ffd166', 120, true);
-          createExplosion(curX, curY, '#ff2a7a', 90, false);
-          for (let k = 0; k < 5; k++) {
-            fireworks.push(new FireworkRocket());
-          }
-          // Stage 3: Reveal Birthday Message & "সামনে আগাই" Button
-          document.getElementById('birthdayBlastBox').style.display = 'flex';
-        }
-      }
-
-      // 2. Calculate Bow Angle & Draw Trajectory Dotted Line while dragging
-      let aimAngle = Math.atan2(bigHeart.y - bowPos.y, bigHeart.x - bowPos.x);
-      let pullDist = 0;
-
-      if (isDragging) {
-        const dx = bowPos.x - dragPos.x;
-        const dy = bowPos.y - dragPos.y;
-        pullDist = Math.min(85, Math.hypot(dx, dy));
-        if (pullDist > 12) {
-          aimAngle = Math.atan2(dy, dx);
-        }
-
-        // Dotted Aim Line
-        gCtx.save();
-        gCtx.setLineDash([8, 8]);
-        gCtx.strokeStyle = 'rgba(255, 209, 102, 0.75)';
-        gCtx.lineWidth = 2.5;
-        gCtx.beginPath();
-        gCtx.moveTo(bowPos.x, bowPos.y);
-        gCtx.lineTo(bowPos.x + Math.cos(aimAngle) * 260, bowPos.y + Math.sin(aimAngle) * 260);
-        gCtx.stroke();
-        gCtx.restore();
-      }
-
-      // 3. Draw Bow
-      if (!heartPopped) {
-        drawBow(bowPos.x, bowPos.y, aimAngle, pullDist);
-      }
-
-      // 4. Update & Draw Arrow
-      if (!heartPopped) {
-        if (arrow.flying) {
-          arrow.x += arrow.vx;
-          arrow.y += arrow.vy;
-          drawArrow(arrow.x, arrow.y, arrow.angle);
-
-          // Check Collision with Giant Heart
-          const distToHeart = Math.hypot(arrow.x - bigHeart.x, arrow.y - bigHeart.y);
-          if (distToHeart < bigHeart.baseSize * 0.55) {
-            triggerHeartExplosion();
-          } else if (
-            arrow.x < -100 || arrow.x > width + 100 ||
-            arrow.y < -100 || arrow.y > height + 100
-          ) {
-            // Reset arrow if missed so user can try again effortlessly
-            arrow.flying = false;
-            arrow.x = bowPos.x;
-            arrow.y = bowPos.y;
-          }
-        } else {
-          // Arrow resting on bow
-          const offset = isDragging ? -pullDist + 35 : 35;
-          const ax = bowPos.x + Math.cos(aimAngle) * offset;
-          const ay = bowPos.y + Math.sin(aimAngle) * offset;
-          drawArrow(ax, ay, aimAngle);
-        }
-      }
-
-      requestAnimationFrame(gameLoop);
-    }
-// ... existing code ... -->
+      btnCholoSamne.addEventListener("click", () => {
+        /* Placeholder hook for the next part when ready */
+        showScreen(screenCountdown);
+      });
+    })();
+  </script>
+</body>
+</html>
