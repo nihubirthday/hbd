@@ -1031,8 +1031,21 @@
       }
 
       // Launch random fireworks during celebration
-      if (fireworksEnabled && Math.random() < 0.065) {
+    function animateBackground() {
+      bgCtx.clearRect(0, 0, width, height);
+
+      // Draw Falling Hearts
+      for (const h of fallingHearts) {
+        h.update();
+        h.draw();
+      }
+
+      // Launch intense multi-layered fireworks during celebration
+      if (fireworksEnabled && Math.random() < 0.14) {
         fireworks.push(new FireworkRocket());
+        if (Math.random() < 0.45) {
+          fireworks.push(new FireworkRocket());
+        }
       }
 
       fireworks = fireworks.filter(fw => {
@@ -1050,97 +1063,13 @@
       requestAnimationFrame(animateBackground);
     }
     animateBackground();
-
-
-    /* =========================================================================
-       2. SCREEN 1: DIGITAL COUNTDOWN TO 01 DEC 2026 00:00:00 + CUTE CHARACTER
-       ========================================================================= */
-    // Target: December 1, 2026 at 00:00:00 (Midnight right after 30 Nov 2026 11:59:59 PM)
-    const targetTimestamp = new Date(2026, 11, 1, 0, 0, 0).getTime();
-
-    const elDays = document.getElementById('days');
-    const elHours = document.getElementById('hours');
-    const elMinutes = document.getElementById('minutes');
-    const elSeconds = document.getElementById('seconds');
-
-    let prevValues = { d: '', h: '', m: '', s: '' };
-    let countdownFinished = false;
-
-    function updateDigitWithAnim(el, newVal, key) {
-      if (prevValues[key] !== newVal) {
-        el.textContent = newVal;
-        el.classList.remove('digit-pop');
-        void el.offsetWidth; // Trigger reflow for animation restart
-        el.classList.add('digit-pop');
-        prevValues[key] = newVal;
-      }
-    }
-
-    function updateCountdown() {
-      const now = Date.now();
-      const diff = targetTimestamp - now;
-
-      if (diff <= 0) {
-        updateDigitWithAnim(elDays, '00', 'd');
-        updateDigitWithAnim(elHours, '00', 'h');
-        updateDigitWithAnim(elMinutes, '00', 'm');
-        updateDigitWithAnim(elSeconds, '00', 's');
-
-        if (!countdownFinished) {
-          countdownFinished = true;
-          goToScreen2();
-        }
-        return;
-      }
-
-      const d = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-      const h = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
-      const m = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
-      const s = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
-
-      updateDigitWithAnim(elDays, d, 'd');
-      updateDigitWithAnim(elHours, h, 'h');
-      updateDigitWithAnim(elMinutes, m, 'm');
-      updateDigitWithAnim(elSeconds, s, 's');
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-
-    // Cute Cartoon Character Impatient / Excited Thought Rotation
-    const speechMessages = [
-      "উফফ! ঘড়ি এত আস্তে চলছে কেন?! ⌚🥺",
-      "আর কতক্ষণ বাকি নিহুর জন্মদিনের?! 💓",
-      "সময় যেন থমকে আছে... তাড়াতাড়ি হোক! 😤✨",
-      "৩০ নভেম্বর রাত ১২টার অপেক্ষায়! 🎂🎉",
-      "একটু পর পর ঘড়ি দেখছি, শেষই হচ্ছে না! ⏰😢"
-    ];
-    let speechIdx = 0;
-    const speechEl = document.getElementById('characterSpeech');
-
-    setInterval(() => {
-      speechIdx = (speechIdx + 1) % speechMessages.length;
-      speechEl.style.transform = 'scale(0.85)';
-      setTimeout(() => {
-        speechEl.textContent = speechMessages[speechIdx];
-        speechEl.style.transform = 'scale(1)';
-      }, 200);
-    }, 3400);
-
-
-    /* =========================================================================
-       3. SCREEN TRANSITIONS & SCREEN 2: INTERACTIVE BOW & ARROW GAME
-       ========================================================================= */
-    const screen1 = document.getElementById('screen1');
-    const screen2 = document.getElementById('screen2');
-    const screen3 = document.getElementById('screen3');
-    const gameCanvas = document.getElementById('gameCanvas');
-    const gCtx = gameCanvas.getContext('2d');
-
+// ... existing code ... -->
     let gameActive = false;
     let heartPopped = false;
     let bowPos = { x: 0, y: 0 };
-    let bigHeart = { x: 0, y: 0, baseSize: 95, pulse: 0 };
+    let bigHeart = { x: 0, y: 0, baseSize: 175, pulse: 0 };
+    let scatteredHearts = [];
+    let heroZoomHeart = null;
     let isDragging = false;
     let dragPos = { x: 0, y: 0 };
     let arrow = {
@@ -1159,18 +1088,18 @@
       const isMobile = width < 700;
       if (isMobile) {
         bigHeart.x = width * 0.5;
-        bigHeart.y = height * 0.30;
-        bigHeart.baseSize = Math.min(width * 0.25, 92);
+        bigHeart.y = height * 0.41;
+        bigHeart.baseSize = Math.min(width * 0.44, 175);
 
         bowPos.x = width * 0.5;
-        bowPos.y = height * 0.76;
+        bowPos.y = height * 0.82;
       } else {
-        bowPos.x = width * 0.24;
-        bowPos.y = height * 0.62;
+        bowPos.x = width * 0.18;
+        bowPos.y = height * 0.68;
 
-        bigHeart.x = width * 0.74;
-        bigHeart.y = height * 0.42;
-        bigHeart.baseSize = Math.min(width * 0.11, 115);
+        bigHeart.x = width * 0.54;
+        bigHeart.y = height * 0.46;
+        bigHeart.baseSize = Math.min(width * 0.22, 225);
       }
 
       if (!arrow.flying) {
@@ -1186,6 +1115,8 @@
       gameCanvas.style.display = 'block';
       gameActive = true;
       heartPopped = false;
+      scatteredHearts = [];
+      heroZoomHeart = null;
       arrow.flying = false;
       document.getElementById('shootHint').style.opacity = '1';
       document.getElementById('birthdayBlastBox').style.display = 'none';
@@ -1200,12 +1131,13 @@
       gCtx.save();
       gCtx.translate(x, y - size * 0.45);
       gCtx.shadowColor = '#ff1a75';
-      gCtx.shadowBlur = 35;
+      gCtx.shadowBlur = 45;
 
-      const grad = gCtx.createRadialGradient(-size * 0.15, size * 0.2, size * 0.1, 0, size * 0.5, size);
-      grad.addColorStop(0, '#ff85b3');
-      grad.addColorStop(0.45, '#ff1e6e');
-      grad.addColorStop(1, '#800033');
+      const grad = gCtx.createRadialGradient(-size * 0.18, size * 0.22, size * 0.08, 0, size * 0.5, size);
+      grad.addColorStop(0, '#ff9ebb');
+      grad.addColorStop(0.4, '#ff1e6e');
+      grad.addColorStop(0.8, '#b50749');
+      grad.addColorStop(1, '#590024');
 
       gCtx.fillStyle = grad;
       gCtx.beginPath();
@@ -1218,158 +1150,27 @@
       gCtx.closePath();
       gCtx.fill();
 
+      // Golden Outer Rim Glow
+      gCtx.strokeStyle = 'rgba(255, 209, 102, 0.55)';
+      gCtx.lineWidth = 3;
+      gCtx.stroke();
+
       // Glossy Shine Highlight
-      gCtx.fillStyle = 'rgba(255, 255, 255, 0.32)';
+      gCtx.fillStyle = 'rgba(255, 255, 255, 0.35)';
       gCtx.beginPath();
-      gCtx.ellipse(-size * 0.22, size * 0.25, size * 0.1, size * 0.05, -0.5, 0, Math.PI * 2);
+      gCtx.ellipse(-size * 0.22, size * 0.25, size * 0.11, size * 0.055, -0.5, 0, Math.PI * 2);
       gCtx.fill();
 
       // Label inside target heart
-      gCtx.shadowBlur = 0;
+      gCtx.shadowBlur = 10;
+      gCtx.shadowColor = 'rgba(0,0,0,0.6)';
       gCtx.fillStyle = '#fff';
-      gCtx.font = `700 ${Math.max(13, Math.floor(size * 0.16))}px "Hind Siliguri", sans-serif`;
+      gCtx.font = `700 ${Math.max(18, Math.floor(size * 0.16))}px "Hind Siliguri", sans-serif`;
       gCtx.textAlign = 'center';
-      gCtx.fillText('NIHU ❤️', 0, size * 0.55);
+      gCtx.fillText('NIHU ❤️', 0, size * 0.56);
       gCtx.restore();
     }
-
-    // Draw Cupid's Bow & Elastic String
-    function drawBow(bx, by, angle, pullDist, stringTailX, stringTailY) {
-      gCtx.save();
-      gCtx.translate(bx, by);
-      gCtx.rotate(angle);
-
-      const bowRadius = 68;
-
-      // Bow Wooden/Golden Arc
-      gCtx.strokeStyle = '#ffd166';
-      gCtx.lineWidth = 6;
-      gCtx.lineCap = 'round';
-      gCtx.shadowColor = '#ff9f1c';
-      gCtx.shadowBlur = 15;
-      gCtx.beginPath();
-      gCtx.arc(0, 0, bowRadius, -Math.PI * 0.44, Math.PI * 0.44);
-      gCtx.stroke();
-
-      // Decorative Pink Grip
-      gCtx.strokeStyle = '#ff2a7a';
-      gCtx.lineWidth = 8;
-      gCtx.beginPath();
-      gCtx.arc(0, 0, bowRadius, -0.18, 0.18);
-      gCtx.stroke();
-
-      // Bowstring
-      const topTipX = Math.cos(-Math.PI * 0.44) * bowRadius;
-      const topTipY = Math.sin(-Math.PI * 0.44) * bowRadius;
-      const botTipX = Math.cos(Math.PI * 0.44) * bowRadius;
-      const botTipY = Math.sin(Math.PI * 0.44) * bowRadius;
-
-      const nockX = isDragging ? -pullDist : 10;
-
-      gCtx.shadowBlur = 6;
-      gCtx.strokeStyle = '#ffffff';
-      gCtx.lineWidth = 2.2;
-      gCtx.beginPath();
-      gCtx.moveTo(topTipX, topTipY);
-      gCtx.lineTo(nockX, 0);
-      gCtx.lineTo(botTipX, botTipY);
-      gCtx.stroke();
-
-      gCtx.restore();
-    }
-
-    // Draw Glowing Golden-Pink Arrow
-    function drawArrow(ax, ay, angle) {
-      gCtx.save();
-      gCtx.translate(ax, ay);
-      gCtx.rotate(angle);
-
-      const len = 88;
-      gCtx.shadowColor = '#ffd166';
-      gCtx.shadowBlur = 14;
-
-      // Arrow Shaft
-      gCtx.strokeStyle = '#ffe599';
-      gCtx.lineWidth = 3.5;
-      gCtx.beginPath();
-      gCtx.moveTo(-len * 0.5, 0);
-      gCtx.lineTo(len * 0.5, 0);
-      gCtx.stroke();
-
-      // Heart-Shaped Arrowhead
-      gCtx.fillStyle = '#ff2a7a';
-      gCtx.beginPath();
-      gCtx.moveTo(len * 0.5 + 12, 0);
-      gCtx.lineTo(len * 0.5 - 6, -9);
-      gCtx.lineTo(len * 0.5 - 2, 0);
-      gCtx.lineTo(len * 0.5 - 6, 9);
-      gCtx.closePath();
-      gCtx.fill();
-
-      // Feather Fletching
-      gCtx.fillStyle = '#ff85b3';
-      gCtx.beginPath();
-      gCtx.moveTo(-len * 0.5, 0);
-      gCtx.lineTo(-len * 0.5 - 12, -8);
-      gCtx.lineTo(-len * 0.5 + 4, 0);
-      gCtx.lineTo(-len * 0.5 - 12, 8);
-      gCtx.closePath();
-      gCtx.fill();
-
-      gCtx.restore();
-    }
-
-    // Fire the Arrow toward the Big Heart
-    function launchArrow(customAngle, power = 18) {
-      if (arrow.flying || heartPopped) return;
-      arrow.flying = true;
-      arrow.x = bowPos.x;
-      arrow.y = bowPos.y;
-      arrow.angle = customAngle;
-      arrow.vx = Math.cos(customAngle) * power;
-      arrow.vy = Math.sin(customAngle) * power;
-    }
-
-    // Pointer / Touch Events for Bow Dragging
-    function getPointerCoords(e) {
-      if (e.touches && e.touches.length > 0) {
-        return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }
-      return { x: e.clientX, y: e.clientY };
-    }
-
-    gameCanvas.addEventListener('pointerdown', (e) => {
-      if (!gameActive || heartPopped || arrow.flying) return;
-      const pt = getPointerCoords(e);
-      isDragging = true;
-      dragPos = pt;
-    });
-
-    window.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      dragPos = getPointerCoords(e);
-    });
-
-    window.addEventListener('pointerup', () => {
-      if (!isDragging) return;
-      isDragging = false;
-
-      const dx = bowPos.x - dragPos.x;
-      const dy = bowPos.y - dragPos.y;
-      const pullDist = Math.hypot(dx, dy);
-
-      // If user pulled back enough, shoot in aimed direction; otherwise auto-aim assist toward heart!
-      if (pullDist > 22) {
-        const aimAngle = Math.atan2(dy, dx);
-        const speed = Math.min(26, Math.max(15, pullDist * 0.18));
-        launchArrow(aimAngle, speed);
-      } else {
-        // Easy tap fallback: shoots straight at the big heart!
-        const directAngle = Math.atan2(bigHeart.y - bowPos.y, bigHeart.x - bowPos.x);
-        launchArrow(directAngle, 20);
-      }
-    });
-
+// ... existing code ... -->
     function triggerHeartExplosion() {
       heartPopped = true;
       arrow.flying = false;
@@ -1377,33 +1178,102 @@
 
       document.getElementById('shootHint').style.opacity = '0';
 
-      // Massive Heart & Spark Explosion at the Big Heart's position
-      createExplosion(bigHeart.x, bigHeart.y, '#ff2a7a', 110, true);
-      setTimeout(() => createExplosion(bigHeart.x - 60, bigHeart.y + 20, '#ffd166', 65, true), 180);
-      setTimeout(() => createExplosion(bigHeart.x + 60, bigHeart.y - 20, '#ff85b3', 65, true), 340);
+      // Stage 1: Giant Heart Shatters into Sparks & 45 Flying Mini-Hearts + Intense Fireworks
+      createExplosion(bigHeart.x, bigHeart.y, '#ff2a7a', 130, true);
+      setTimeout(() => createExplosion(bigHeart.x - 80, bigHeart.y + 30, '#ffd166', 85, true), 150);
+      setTimeout(() => createExplosion(bigHeart.x + 80, bigHeart.y - 30, '#ff85b3', 85, true), 280);
 
-      // Launch immediate celebratory fireworks
-      for (let i = 0; i < 6; i++) {
-        setTimeout(() => {
-          fireworks.push(new FireworkRocket());
-        }, i * 250);
+      // Spawn 45 small hearts scattering outward across the screen
+      scatteredHearts = [];
+      for (let i = 0; i < 45; i++) {
+        const angle = (Math.PI * 2 * i) / 45 + (Math.random() - 0.5) * 0.25;
+        const speed = 2.5 + Math.random() * 8.5;
+        scatteredHearts.push({
+          x: bigHeart.x,
+          y: bigHeart.y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 1.5,
+          size: 14 + Math.random() * 18,
+          color: heartColors[Math.floor(Math.random() * heartColors.length)],
+          alpha: 1,
+          wobble: Math.random() * Math.PI * 2
+        });
       }
 
-      // Reveal Birthday Text & "সামনে আগাই" Button
+      // Launch immediate salvo of colorful fireworks
+      for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+          fireworks.push(new FireworkRocket());
+        }, i * 160);
+      }
+
+      // Stage 2: After 0.9s, one special glowing small heart zooms straight to the front center!
       setTimeout(() => {
-        document.getElementById('birthdayBlastBox').style.display = 'flex';
-      }, 550);
+        heroZoomHeart = {
+          x: bigHeart.x,
+          y: bigHeart.y,
+          targetX: width * 0.5,
+          targetY: height * 0.48,
+          size: 24,
+          maxSize: Math.min(width * 0.36, 165),
+          progress: 0,
+          burstDone: false
+        };
+      }, 850);
     }
 
     function gameLoop() {
       if (!gameActive) return;
       gCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-      // 1. Draw Big Heart Target (if not yet popped)
+      // 1. Draw Giant Heart Target (if not yet popped)
       if (!heartPopped) {
         bigHeart.pulse += 0.06;
-        const currentSize = bigHeart.baseSize + Math.sin(bigHeart.pulse) * 6;
+        const currentSize = bigHeart.baseSize + Math.sin(bigHeart.pulse) * 8;
         drawTargetHeart(bigHeart.x, bigHeart.y, currentSize);
+      }
+
+      // 1B. Update & Draw Scattered Mini-Hearts after Giant Heart Bursts
+      if (scatteredHearts.length > 0) {
+        scatteredHearts.forEach(sh => {
+          sh.x += sh.vx;
+          sh.y += sh.vy;
+          sh.vx *= 0.985;
+          sh.vy *= 0.985;
+          sh.vy += 0.03; // Gentle float gravity
+          sh.wobble += 0.08;
+          sh.x += Math.sin(sh.wobble) * 0.6;
+          if (sh.alpha > 0.01) {
+            sh.alpha -= 0.0045;
+            drawHeartShape(gCtx, sh.x, sh.y - sh.size * 0.4, sh.size, sh.color, Math.max(0, sh.alpha), 14);
+          }
+        });
+      }
+
+      // 1C. Hero Small Heart Zooms Forward to Front Center & Pops to Reveal Birthday Message
+      if (heroZoomHeart && !heroZoomHeart.burstDone) {
+        heroZoomHeart.progress += 0.022;
+        const t = Math.min(1, heroZoomHeart.progress);
+        // Smooth ease-out cubic zoom toward viewer
+        const ease = 1 - Math.pow(1 - t, 3);
+
+        const curX = heroZoomHeart.x + (heroZoomHeart.targetX - heroZoomHeart.x) * ease;
+        const curY = heroZoomHeart.y + (heroZoomHeart.targetY - heroZoomHeart.y) * ease;
+        const curSize = heroZoomHeart.size + (heroZoomHeart.maxSize - heroZoomHeart.size) * ease;
+
+        drawTargetHeart(curX, curY, curSize);
+
+        if (t >= 1) {
+          heroZoomHeart.burstDone = true;
+          // Pop right in front of the camera with golden & pink heart sparks!
+          createExplosion(curX, curY, '#ffd166', 120, true);
+          createExplosion(curX, curY, '#ff2a7a', 90, false);
+          for (let k = 0; k < 5; k++) {
+            fireworks.push(new FireworkRocket());
+          }
+          // Stage 3: Reveal Birthday Message & "সামনে আগাই" Button
+          document.getElementById('birthdayBlastBox').style.display = 'flex';
+        }
       }
 
       // 2. Calculate Bow Angle & Draw Trajectory Dotted Line while dragging
@@ -1442,9 +1312,9 @@
           arrow.y += arrow.vy;
           drawArrow(arrow.x, arrow.y, arrow.angle);
 
-          // Check Collision with Big Heart
+          // Check Collision with Giant Heart
           const distToHeart = Math.hypot(arrow.x - bigHeart.x, arrow.y - bigHeart.y);
-          if (distToHeart < bigHeart.baseSize * 0.65) {
+          if (distToHeart < bigHeart.baseSize * 0.55) {
             triggerHeartExplosion();
           } else if (
             arrow.x < -100 || arrow.x > width + 100 ||
@@ -1466,35 +1336,4 @@
 
       requestAnimationFrame(gameLoop);
     }
-
-
-    /* =========================================================================
-       4. TRANSITION TO SCREEN 3: BENGALI BIRTHDAY LETTER & MODAL
-       ========================================================================= */
-    document.getElementById('btnToLetter').addEventListener('click', () => {
-      gameActive = false;
-      gameCanvas.style.display = 'none';
-      screen2.classList.remove('active');
-      screen3.classList.add('active');
-
-      // Reveal Bengali letter paragraphs smoothly line-by-line
-      const lines = document.querySelectorAll('.letter-line');
-      lines.forEach((line, index) => {
-        setTimeout(() => {
-          line.classList.add('visible');
-        }, 350 + index * 650);
-      });
-    });
-
-    // Next Step Button ("চলো সামনে যাই")
-    const nextModal = document.getElementById('nextModal');
-    document.getElementById('btnNextChapter').addEventListener('click', () => {
-      nextModal.classList.add('open');
-    });
-
-    document.getElementById('btnCloseModal').addEventListener('click', () => {
-      nextModal.classList.remove('open');
-    });
-  </script>
-</body>
-</html>
+// ... existing code ... -->
