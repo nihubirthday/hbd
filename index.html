@@ -9,9 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-dark-1: #0b0614;
-      --bg-dark-2: #1d092b;
-      --bg-dark-3: #360c38;
+      --bg-dark-1: #06040a;
+      --bg-dark-2: #0e0716;
+      --bg-dark-3: #1a0924;
       --gold: #ffd700;
       --gold-light: #fff1a8;
       --gold-deep: #ff9f1c;
@@ -30,7 +30,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: radial-gradient(circle at 50% 20%, var(--bg-dark-3), var(--bg-dark-2) 52%, var(--bg-dark-1) 100%);
+      background: #06040a;
       color: #fff;
       font-family: 'Fredoka', 'Hind Siliguri', sans-serif;
       user-select: none;
@@ -63,8 +63,8 @@
       justify-content: space-between;
       padding: 24px 16px 18px;
       background:
-        radial-gradient(circle at 50% 35%, rgba(255, 59, 127, 0.22), transparent 60%),
-        linear-gradient(165deg, #160722 0%, #2a0a36 55%, #110519 100%);
+        radial-gradient(circle at 50% 35%, rgba(255, 59, 127, 0.14), transparent 60%),
+        linear-gradient(165deg, #07040c 0%, #11071a 55%, #050308 100%);
     }
 
     #heart-rain-canvas {
@@ -417,7 +417,16 @@
 
     /* ==================== SCREEN 2: BOW CHALLENGE & CLIMAX ==================== */
     #screen-climax {
-      background: radial-gradient(circle at 70% 25%, #2b0c3d 0%, #12061c 55%, #07020c 100%);
+      background: #040207;
+    }
+
+    #climax-rain-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
     }
 
     #climax-canvas {
@@ -452,14 +461,14 @@
       font-size: clamp(0.88rem, 2.6vw, 1.08rem);
       font-weight: 600;
       color: #ffe9f3;
-      background: rgba(25, 8, 38, 0.72);
+      background: rgba(12, 8, 18, 0.82);
       border: 1px solid rgba(255, 215, 0, 0.45);
       padding: 7px 18px;
       border-radius: 999px;
       text-align: center;
       white-space: nowrap;
       backdrop-filter: blur(6px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
     }
 
     /* Top-right mischievous heart target */
@@ -596,7 +605,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
     }
 
     .hb-balloon-body svg {
@@ -715,7 +724,7 @@
       box-shadow:
         inset -3px -4px 8px rgba(0, 0, 0, 0.22),
         inset 3px 3px 8px rgba(255, 255, 255, 0.7),
-        0 8px 16px rgba(0, 0, 0, 0.35);
+        0 8px 16px rgba(0, 0, 0, 0.45);
       position: relative;
     }
 
@@ -798,8 +807,8 @@
       justify-content: center;
       padding: 24px 18px;
       background:
-        radial-gradient(circle at 50% 25%, rgba(255, 215, 0, 0.12), transparent 55%),
-        linear-gradient(160deg, #190724 0%, #2b0d38 55%, #12041a 100%);
+        radial-gradient(circle at 50% 25%, rgba(255, 215, 0, 0.08), transparent 55%),
+        linear-gradient(160deg, #07040c 0%, #12081c 55%, #040208 100%);
       overflow-y: auto;
     }
 
@@ -809,12 +818,12 @@
       width: min(640px, 94vw);
       max-height: 78vh;
       overflow-y: auto;
-      background: rgba(255, 248, 252, 0.08);
+      background: rgba(255, 248, 252, 0.07);
       border: 1px solid rgba(255, 215, 0, 0.35);
       border-radius: 24px;
       padding: clamp(20px, 4.5vw, 34px);
       backdrop-filter: blur(12px);
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.65);
       font-family: 'Hind Siliguri', sans-serif;
     }
 
@@ -979,6 +988,7 @@
 
   <!-- ==================== SCREEN 2: BOW CHALLENGE & CLIMAX ==================== -->
   <section id="screen-climax" class="screen">
+    <canvas id="climax-rain-canvas"></canvas>
     <canvas id="climax-canvas"></canvas>
 
     <div id="challenge-layer" class="challenge-layer">
@@ -1143,17 +1153,6 @@
       updateCountdown();
       setInterval(updateCountdown, 500);
 
-      const rainCanvas = document.getElementById("heart-rain-canvas");
-      const rainCtx = rainCanvas.getContext("2d");
-      let rainHearts = [];
-
-      function resizeRainCanvas() {
-        rainCanvas.width = window.innerWidth;
-        rainCanvas.height = window.innerHeight;
-      }
-      resizeRainCanvas();
-      window.addEventListener("resize", resizeRainCanvas);
-
       function drawHeartPath(ctx, x, y, size, rot) {
         ctx.save();
         ctx.translate(x, y);
@@ -1175,40 +1174,59 @@
         "rgba(244, 63, 94, 0.7)"
       ];
 
-      function initHeartRain() {
-        const count = Math.min(85, Math.floor((window.innerWidth * window.innerHeight) / 11000));
-        rainHearts = Array.from({ length: count }, () => ({
-          x: Math.random() * rainCanvas.width,
-          y: Math.random() * rainCanvas.height,
-          size: 10 + Math.random() * 16,
-          speedY: 1.2 + Math.random() * 2.4,
-          swaySpeed: 0.015 + Math.random() * 0.025,
-          swayAmp: 0.6 + Math.random() * 1.4,
-          phase: Math.random() * Math.PI * 2,
-          rot: (Math.random() - 0.5) * 0.5,
-          color: heartPalette[Math.floor(Math.random() * heartPalette.length)]
-        }));
-      }
-      initHeartRain();
+      function createHeartRainSystem(canvas, isActiveFn) {
+        const ctx = canvas.getContext("2d");
+        let hearts = [];
 
-      function tickHeartRain() {
-        if (screenCountdown.classList.contains("active")) {
-          rainCtx.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
-          for (const h of rainHearts) {
-            h.phase += h.swaySpeed;
-            h.x += Math.sin(h.phase) * h.swayAmp;
-            h.y += h.speedY;
-            if (h.y > rainCanvas.height + 30) {
-              h.y = -25;
-              h.x = Math.random() * rainCanvas.width;
-            }
-            rainCtx.fillStyle = h.color;
-            drawHeartPath(rainCtx, h.x, h.y, h.size, h.rot + Math.sin(h.phase) * 0.18);
-          }
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 11500));
+          hearts = Array.from({ length: count }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: 9 + Math.random() * 15,
+            speedY: 1.2 + Math.random() * 2.2,
+            swaySpeed: 0.015 + Math.random() * 0.025,
+            swayAmp: 0.6 + Math.random() * 1.35,
+            phase: Math.random() * Math.PI * 2,
+            rot: (Math.random() - 0.5) * 0.5,
+            color: heartPalette[Math.floor(Math.random() * heartPalette.length)]
+          }));
         }
-        requestAnimationFrame(tickHeartRain);
+
+        resize();
+        window.addEventListener("resize", resize);
+
+        function tick() {
+          if (isActiveFn()) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const h of hearts) {
+              h.phase += h.swaySpeed;
+              h.x += Math.sin(h.phase) * h.swayAmp;
+              h.y += h.speedY;
+              if (h.y > canvas.height + 30) {
+                h.y = -25;
+                h.x = Math.random() * canvas.width;
+              }
+              ctx.fillStyle = h.color;
+              drawHeartPath(ctx, h.x, h.y, h.size, h.rot + Math.sin(h.phase) * 0.18);
+            }
+          }
+          requestAnimationFrame(tick);
+        }
+        tick();
       }
-      tickHeartRain();
+
+      createHeartRainSystem(
+        document.getElementById("heart-rain-canvas"),
+        () => screenCountdown.classList.contains("active")
+      );
+
+      createHeartRainSystem(
+        document.getElementById("climax-rain-canvas"),
+        () => screenClimax.classList.contains("active")
+      );
 
       /* ---------------- 2. PACING & WATCH-CHECKING CARTOON ---------------- */
       const paceLane = document.getElementById("pace-lane");
@@ -1475,8 +1493,7 @@
         lastFireworkTick = now;
 
         if (screenClimax.classList.contains("active")) {
-          climaxCtx.fillStyle = "rgba(10, 4, 18, 0.22)";
-          climaxCtx.fillRect(0, 0, climaxCanvas.width, climaxCanvas.height);
+          climaxCtx.clearRect(0, 0, climaxCanvas.width, climaxCanvas.height);
 
           if (fireworkLoopActive) {
             autoSkyTimer -= dt;
@@ -1655,7 +1672,6 @@
         lineSequenceRunning = true;
 
         if (lineIdx >= messageLines.length) {
-          /* Gap after finishing all lines before repeating from line 1 */
           lineLoopTimeout = setTimeout(() => {
             runLineByLineLoop(0);
           }, 1600);
@@ -1684,7 +1700,6 @@
 
           setTimeout(() => {
             if (group.parentNode) group.parentNode.removeChild(group);
-            /* Gap between lines */
             lineLoopTimeout = setTimeout(() => {
               runLineByLineLoop(lineIdx + 1);
             }, 650);
@@ -1698,7 +1713,6 @@
 
         challengeLayer.classList.add("hidden");
 
-        /* Fast front-rushing heart with no static text box */
         rushingHeart.classList.remove("rush-active");
         void rushingHeart.offsetWidth;
         rushingHeart.classList.add("rush-active");
@@ -1782,7 +1796,6 @@
       });
 
       btnCholoSamne.addEventListener("click", () => {
-        /* Placeholder hook for the next part when ready */
         showScreen(screenCountdown);
       });
     })();
