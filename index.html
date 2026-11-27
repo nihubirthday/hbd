@@ -6,7 +6,7 @@
   <title>A Special Day Counting For Nihu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg-dark-1: #06040a;
@@ -290,48 +290,22 @@
       filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.45));
     }
 
-    .leg-left {
-      transform-origin: 42px 74px;
-    }
-    .leg-right {
-      transform-origin: 54px 74px;
-    }
-    .arm-watch {
-      transform-origin: 38px 54px;
-    }
-    .arm-other {
-      transform-origin: 58px 54px;
-    }
-    .pacer-head {
-      transform-origin: 48px 34px;
-    }
+    .leg-left { transform-origin: 42px 74px; }
+    .leg-right { transform-origin: 54px 74px; }
+    .arm-watch { transform-origin: 38px 54px; }
+    .arm-other { transform-origin: 58px 54px; }
+    .pacer-head { transform-origin: 48px 34px; }
 
-    .pacer-actor.walking .leg-left {
-      animation: walkSwingA 0.36s ease-in-out infinite alternate;
-    }
-    .pacer-actor.walking .leg-right {
-      animation: walkSwingB 0.36s ease-in-out infinite alternate;
-    }
-    .pacer-actor.walking .arm-other {
-      animation: walkSwingA 0.36s ease-in-out infinite alternate;
-    }
-    .pacer-actor.walking .arm-watch {
-      animation: walkArmHold 0.36s ease-in-out infinite alternate;
-    }
-    .pacer-actor.walking .pacer-head {
-      animation: walkBob 0.36s ease-in-out infinite alternate;
-    }
+    .pacer-actor.walking .leg-left { animation: walkSwingA 0.36s ease-in-out infinite alternate; }
+    .pacer-actor.walking .leg-right { animation: walkSwingB 0.36s ease-in-out infinite alternate; }
+    .pacer-actor.walking .arm-other { animation: walkSwingA 0.36s ease-in-out infinite alternate; }
+    .pacer-actor.walking .arm-watch { animation: walkArmHold 0.36s ease-in-out infinite alternate; }
+    .pacer-actor.walking .pacer-head { animation: walkBob 0.36s ease-in-out infinite alternate; }
 
-    .pacer-actor.checking .arm-watch {
-      animation: checkWatchLift 0.45s ease-out forwards;
-    }
-    .pacer-actor.checking .pacer-head {
-      animation: impatientGlance 1.3s ease-in-out infinite;
-    }
+    .pacer-actor.checking .arm-watch { animation: checkWatchLift 0.45s ease-out forwards; }
+    .pacer-actor.checking .pacer-head { animation: impatientGlance 1.3s ease-in-out infinite; }
     .pacer-actor.checking .leg-left,
-    .pacer-actor.checking .leg-right {
-      transform: rotate(0deg);
-    }
+    .pacer-actor.checking .leg-right { transform: rotate(0deg); }
 
     @keyframes walkSwingA {
       0% { transform: rotate(-28deg); }
@@ -379,9 +353,7 @@
       pointer-events: none;
     }
 
-    .pacer-actor.checking .pacer-bubble {
-      opacity: 1;
-    }
+    .pacer-actor.checking .pacer-bubble { opacity: 1; }
 
     .bottom-action-bar {
       position: relative;
@@ -411,9 +383,7 @@
       box-shadow: 0 12px 28px rgba(255, 215, 0, 0.45);
     }
 
-    .btn-preview:active {
-      transform: scale(0.96);
-    }
+    .btn-preview:active { transform: scale(0.96); }
 
     /* ==================== SCREEN 2: BOW CHALLENGE & CLIMAX ==================== */
     #screen-climax {
@@ -471,7 +441,6 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
     }
 
-    /* Top-right mischievous heart target */
     #target-heart-box {
       position: fixed;
       top: clamp(58px, 10vh, 95px);
@@ -490,7 +459,6 @@
       66% { transform: translate(6px, -6px) scale(0.96) rotate(8deg); }
     }
 
-    /* Bottom-left bow & draggable arrow */
     #bow-rig {
       position: fixed;
       bottom: clamp(18px, 4vh, 42px);
@@ -503,9 +471,7 @@
       cursor: grab;
     }
 
-    #bow-rig:active {
-      cursor: grabbing;
-    }
+    #bow-rig:active { cursor: grabbing; }
 
     #bow-svg {
       width: 100%;
@@ -524,7 +490,6 @@
       filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.85));
     }
 
-    /* Fast front-rushing heart before burst (no static text on it) */
     #rushing-heart {
       position: fixed;
       left: 50%;
@@ -558,7 +523,6 @@
       }
     }
 
-    /* Floating "Happy Birthday" heart balloons across screen */
     #heart-balloons-layer {
       position: fixed;
       inset: 0;
@@ -583,15 +547,11 @@
         transform: translate3d(0, 0, 0) rotate(var(--rot-start, -5deg));
         opacity: 0;
       }
-      10% {
-        opacity: 0.96;
-      }
+      10% { opacity: 0.96; }
       50% {
         transform: translate3d(var(--sway, 26px), -55vh, 0) rotate(var(--rot-end, 6deg));
       }
-      90% {
-        opacity: 0.92;
-      }
+      90% { opacity: 0.92; }
       100% {
         transform: translate3d(calc(var(--sway, 26px) * -0.4), -122vh, 0) rotate(var(--rot-start, -5deg));
         opacity: 0;
@@ -635,7 +595,7 @@
       background: linear-gradient(to bottom, rgba(255, 215, 0, 0.85), rgba(255, 255, 255, 0.2));
     }
 
-    /* Line-by-line puffy letter-balloons with curly hanging strings */
+    /* Heart-Shaped Letter-Balloons with Curly Hanging Strings */
     #letter-balloons-stage {
       position: fixed;
       inset: 0;
@@ -652,13 +612,13 @@
       flex-wrap: wrap;
       align-items: flex-start;
       justify-content: center;
-      gap: clamp(4px, 1.3vw, 10px);
-      width: min(94vw, 820px);
+      gap: clamp(3px, 0.9vw, 8px);
+      width: min(96vw, 900px);
       opacity: 0;
-      transform: translate(-50%, 36vh) scale(0.86);
+      transform: translate(-50%, 36vh) scale(0.88);
       transition:
         opacity 0.65s ease,
-        transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+        transform 1.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .balloon-line-group.line-enter {
@@ -680,12 +640,8 @@
     }
 
     @keyframes lineGentleFly {
-      0% {
-        transform: translate(-50%, -58%) translateX(-8px) rotate(-1.2deg);
-      }
-      100% {
-        transform: translate(-50%, -52%) translateX(8px) rotate(1.2deg);
-      }
+      0% { transform: translate(-50%, -58%) translateX(-8px) rotate(-1.2deg); }
+      100% { transform: translate(-50%, -52%) translateX(8px) rotate(1.2deg); }
     }
 
     .letter-balloon-unit {
@@ -697,7 +653,7 @@
     }
 
     .letter-balloon-unit.space-gap {
-      width: clamp(10px, 2.6vw, 22px);
+      width: clamp(10px, 2.2vw, 20px);
     }
 
     @keyframes charBob {
@@ -705,46 +661,41 @@
       50% { transform: translateY(-9px); }
     }
 
-    .puffy-char {
-      display: inline-flex;
+    .heart-char-balloon {
+      position: relative;
+      width: var(--h-size, 42px);
+      height: var(--h-size, 40px);
+      display: flex;
       align-items: center;
       justify-content: center;
-      min-width: clamp(28px, 6.2vw, 48px);
-      height: clamp(34px, 7.2vw, 56px);
-      padding: 0 5px;
-      border-radius: 36% 42% 38% 40% / 44% 38% 42% 36%;
-      background: radial-gradient(circle at 30% 25%, #ffffff 0%, var(--c-main, #ff85b3) 48%, var(--c-shade, #d81b60) 100%);
-      color: #fff;
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(1.05rem, 3.6vw, 1.85rem);
-      font-weight: 700;
-      text-shadow:
-        0 2px 0 rgba(120, 10, 55, 0.65),
-        0 0 12px rgba(255, 255, 255, 0.45);
-      box-shadow:
-        inset -3px -4px 8px rgba(0, 0, 0, 0.22),
-        inset 3px 3px 8px rgba(255, 255, 255, 0.7),
-        0 8px 16px rgba(0, 0, 0, 0.45);
-      position: relative;
+      filter: drop-shadow(0 7px 14px rgba(0, 0, 0, 0.45));
     }
 
-    .puffy-char::after {
-      content: "";
+    .heart-char-balloon svg {
       position: absolute;
-      bottom: -4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-top: 5px solid var(--c-shade, #d81b60);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .heart-char-text {
+      position: relative;
+      z-index: 2;
+      font-family: 'Fredoka', sans-serif;
+      font-size: calc(var(--h-size, 42px) * 0.43);
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      transform: translateY(-3px);
+      text-shadow:
+        0 1.5px 0 rgba(105, 5, 45, 0.75),
+        0 0 8px rgba(255, 255, 255, 0.4);
     }
 
     .curly-string-svg {
       width: 14px;
-      height: 38px;
-      margin-top: 2px;
+      height: 36px;
+      margin-top: 1px;
       overflow: visible;
       transform-origin: top center;
       animation: stringSway 1.7s ease-in-out infinite alternate;
@@ -795,64 +746,183 @@
       box-shadow: 0 7px 22px rgba(255, 215, 0, 0.7);
     }
 
-    .btn-lets-forward:active {
-      transform: scale(0.95);
-    }
+    .btn-lets-forward:active { transform: scale(0.95); }
 
-    /* ==================== SCREEN 3: BANGLA LETTER ==================== */
+    /* ==================== SCREEN 3: ENVELOPE -> UNFOLD PAPER -> HANDWRITING BANGLA ==================== */
     #screen-letter {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px 18px;
+      padding: 20px 14px;
       background:
         radial-gradient(circle at 50% 25%, rgba(255, 215, 0, 0.08), transparent 55%),
-        linear-gradient(160deg, #07040c 0%, #12081c 55%, #040208 100%);
+        linear-gradient(160deg, #06030a 0%, #100718 55%, #040207 100%);
       overflow-y: auto;
     }
 
-    .letter-card {
+    .letter-stage-box {
       position: relative;
       z-index: 4;
-      width: min(640px, 94vw);
-      max-height: 78vh;
-      overflow-y: auto;
-      background: rgba(255, 248, 252, 0.07);
-      border: 1px solid rgba(255, 215, 0, 0.35);
-      border-radius: 24px;
-      padding: clamp(20px, 4.5vw, 34px);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.65);
-      font-family: 'Hind Siliguri', sans-serif;
+      width: min(640px, 95vw);
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .letter-line {
-      font-size: clamp(1rem, 2.9vw, 1.24rem);
-      line-height: 1.85;
-      color: #fff6fa;
-      margin-bottom: 12px;
+    /* Envelope phase */
+    .envelope-wrap {
+      position: relative;
+      width: min(310px, 80vw);
+      height: 195px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, transform 0.7s ease;
+    }
+
+    .envelope-wrap.done {
       opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
+      transform: scale(0.85) translateY(-20px);
+      pointer-events: none;
+      position: absolute;
     }
 
-    .letter-line.show {
+    .envelope-body {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #f5deb3, #e6c280);
+      border: 2px solid #ffd700;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+      overflow: visible;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 105px;
+      background: linear-gradient(180deg, #ffe7b3, #deb468);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 4;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .envelope-wrap.open .envelope-flap {
+      transform: rotateX(175deg);
+      z-index: 1;
+    }
+
+    .envelope-heart-seal {
+      position: absolute;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      font-size: 1.5rem;
+      color: #e11d48;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+      transition: opacity 0.35s ease;
+    }
+
+    .envelope-wrap.open .envelope-heart-seal {
+      opacity: 0;
+    }
+
+    .envelope-label {
+      position: absolute;
+      bottom: 18px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #4a2500;
+      z-index: 3;
+    }
+
+    /* Emerging & unfolding paper */
+    .paper-sheet {
+      position: relative;
+      width: 100%;
+      max-height: 76vh;
+      overflow-y: auto;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 31px,
+          rgba(180, 130, 70, 0.14) 32px
+        ),
+        linear-gradient(180deg, #fffdf5 0%, #fbf3dc 100%);
+      color: #2b1608;
+      border: 2px solid #e6c478;
+      border-radius: 16px;
+      padding: clamp(20px, 4.5vw, 34px);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.75),
+        inset 0 0 28px rgba(218, 178, 92, 0.22);
+      font-family: 'Noto Serif Bengali', 'Hind Siliguri', cursive, sans-serif;
+      opacity: 0;
+      transform: translateY(70px) scaleY(0.18);
+      transform-origin: center top;
+      transition:
+        opacity 0.55s ease,
+        transform 1.05s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .paper-sheet.emerged {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0px) scaleY(1);
+      pointer-events: auto;
     }
 
-    .letter-line.signoff {
+    .handwriting-line {
+      font-size: clamp(1rem, 2.85vw, 1.24rem);
+      line-height: 1.9;
+      font-weight: 600;
+      font-style: italic;
+      color: #2a1308;
+      margin-bottom: 10px;
+      min-height: 1.4em;
+      letter-spacing: 0.2px;
+      text-shadow: 0.4px 0.4px 0 rgba(42, 19, 8, 0.18);
+    }
+
+    .handwriting-line.signoff {
       margin-top: 8px;
       font-weight: 700;
-      color: #ffd700;
-      font-size: clamp(1.1rem, 3.2vw, 1.38rem);
+      color: #9f1239;
+      font-size: clamp(1.12rem, 3.1vw, 1.38rem);
+    }
+
+    .writing-caret {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: #9f1239;
+      margin-left: 2px;
+      vertical-align: -2px;
+      animation: caretBlink 0.7s infinite;
+    }
+
+    @keyframes caretBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
     }
 
     .letter-next-wrap {
       position: relative;
       z-index: 5;
-      margin-top: 18px;
+      margin-top: 16px;
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.6s ease, transform 0.6s ease;
@@ -1072,18 +1142,28 @@
     </div>
   </section>
 
-  <!-- ==================== SCREEN 3: BANGLA LETTER ==================== -->
+  <!-- ==================== SCREEN 3: ENVELOPE -> PAPER -> BANGLA LETTER ==================== -->
   <section id="screen-letter" class="screen">
-    <div class="letter-card" id="letter-card">
-      <p class="letter-line">শুভ জন্মদিন প্রিয় নিহু ।</p>
-      <p class="letter-line">আজকে তোমার জিবনের অনেক আলাদা একটা দিন ।</p>
-      <p class="letter-line">সারা বছর আমিও অপেক্ষা করি তোমার এই দিনটার জন্য,তোমাকে সারপ্রাইজ করার জন্য ।</p>
-      <p class="letter-line">ইনশাআল্লাহ, প্রতি বছর তোমার এই দিনটা কে আমি নতুন ভাবে উৎযাপন করবো ।</p>
-      <p class="letter-line">তোমার এই অবস্থার দ্রুতই অবসান ঘটুক ।</p>
-      <p class="letter-line">আগামির রাস্তা মসৃণ হোক ।</p>
-      <p class="letter-line">অনেক বেশি পরিমাণ সুখ পাওয়ার যোগ্য তুমি ।</p>
-      <p class="letter-line">আমার রব তোমাকে এত সুখি রাখুক যে এই জিবনের পরের জীবন দুঃখী না থাকার লোভী হয়ে যাও এবং আমার রবের প্রিয় হওয়ার জন্য ব্যাকুল হয়ে যাও ।</p>
-      <p class="letter-line signoff">ফি আমানিল্লাহ...</p>
+    <div class="letter-stage-box">
+      <div id="envelope-wrap" class="envelope-wrap">
+        <div class="envelope-body">
+          <div class="envelope-flap"></div>
+          <div class="envelope-heart-seal">❤</div>
+          <div class="envelope-label">নিহুর জন্য চিঠি...</div>
+        </div>
+      </div>
+
+      <div id="paper-sheet" class="paper-sheet">
+        <p class="handwriting-line" data-text="শুভ জন্মদিন প্রিয় নিহু ।"></p>
+        <p class="handwriting-line" data-text="আজকে তোমার জিবনের অনেক আলাদা একটা দিন ।"></p>
+        <p class="handwriting-line" data-text="সারা বছর আমিও অপেক্ষা করি তোমার এই দিনটার জন্য,তোমাকে সারপ্রাইজ করার জন্য ।"></p>
+        <p class="handwriting-line" data-text="ইনশাআল্লাহ, প্রতি বছর তোমার এই দিনটা কে আমি নতুন ভাবে উৎযাপন করবো ।"></p>
+        <p class="handwriting-line" data-text="তোমার এই অবস্থার দ্রুতই অবসান ঘটুক ।"></p>
+        <p class="handwriting-line" data-text="আগামির রাস্তা মসৃণ হোক ।"></p>
+        <p class="handwriting-line" data-text="অনেক বেশি পরিমাণ সুখ পাওয়ার যোগ্য তুমি ।"></p>
+        <p class="handwriting-line" data-text="আমার রব তোমাকে এত সুখি রাখুক যে এই জিবনের পরের জীবন দুঃখী না থাকার লোভী হয়ে যাও এবং আমার রবের প্রিয় হওয়ার জন্য ব্যাকুল হয়ে যাও ।"></p>
+        <p class="handwriting-line signoff" data-text="ফি আমানিল্লাহ..."></p>
+      </div>
     </div>
 
     <div id="letter-next-wrap" class="letter-next-wrap">
@@ -1567,6 +1647,7 @@
         const leftPct = 4 + Math.random() * 88;
         const dur = (7.2 + Math.random() * 4.2).toFixed(2) + "s";
         const sway = Math.round((Math.random() - 0.5) * 70) + "px";
+        const gradId = `hbg_${Math.random().toString(36).slice(2, 8)}`;
 
         const el = document.createElement("div");
         el.className = "hb-balloon";
@@ -1579,14 +1660,14 @@
           <div class="hb-balloon-body">
             <svg viewBox="0 0 100 95">
               <defs>
-                <radialGradient id="hbg_${Math.random().toString(36).slice(2, 7)}" cx="32%" cy="28%" r="70%">
+                <radialGradient id="${gradId}" cx="32%" cy="28%" r="70%">
                   <stop offset="0%" stop-color="${c1}" />
                   <stop offset="100%" stop-color="${c2}" />
                 </radialGradient>
               </defs>
               <path
                 d="M50 88 C50 88 8 60 8 30 C8 14 20 5 33 5 C41 5 47 10 50 17 C53 10 59 5 67 5 C80 5 92 14 92 30 C92 60 50 88 50 88 Z"
-                fill="url(#hbg_${Math.random().toString(36).slice(2, 7)})"
+                fill="url(#${gradId})"
                 stroke="rgba(255,215,0,0.65)"
                 stroke-width="2.5"
               />
@@ -1602,26 +1683,31 @@
         }, parseFloat(dur) * 1000 + 300);
       }
 
-      /* Line-by-Line Puffy Letter-Balloons with Curly Strings & Gaps */
+      /* Heart-Shaped Letter-Balloons with Curly Strings:
+         Line 1: "HAPPY BIRTHDAY TO NIHU" together
+         Line 2: "MANY MANY HAPPY RETURNS OF THE DAY" together */
       const messageLines = [
-        "HAPPY BIRTHDAY",
-        "TO",
-        "NIHU",
+        "HAPPY BIRTHDAY TO NIHU",
         "MANY MANY HAPPY RETURNS OF THE DAY"
       ];
 
-      const puffyColors = [
-        ["#ff85b3", "#d81b60"],
-        ["#ffd166", "#e07a00"],
-        ["#a8e6cf", "#2a9d8f"],
-        ["#ffaaa5", "#d62828"],
-        ["#c3b1e1", "#6a4c93"],
-        ["#90e0ef", "#0077b6"]
+      const heartCharColors = [
+        ["#ff75a0", "#be123c"],
+        ["#ffd166", "#d97706"],
+        ["#ff85b3", "#9d174d"],
+        ["#fb7185", "#be185d"],
+        ["#fcd34d", "#b45309"],
+        ["#f472b6", "#9f1239"]
       ];
 
       function buildLineGroup(lineText) {
         const group = document.createElement("div");
         group.className = "balloon-line-group";
+
+        const isLongLine = lineText.length > 26;
+        const baseHeartSize = isLongLine
+          ? Math.max(26, Math.min(36, Math.floor(window.innerWidth / 38)))
+          : Math.max(32, Math.min(46, Math.floor(window.innerWidth / 25)));
 
         const chars = Array.from(lineText);
         chars.forEach((ch, idx) => {
@@ -1634,19 +1720,37 @@
 
           const unit = document.createElement("div");
           unit.className = "letter-balloon-unit";
-          unit.style.setProperty("--cdelay", `${(idx * 0.08).toFixed(2)}s`);
+          unit.style.setProperty("--cdelay", `${(idx * 0.05).toFixed(2)}s`);
 
-          const [cMain, cShade] = puffyColors[(idx + lineText.length) % puffyColors.length];
-          const bubble = document.createElement("div");
-          bubble.className = "puffy-char";
-          bubble.style.setProperty("--c-main", cMain);
-          bubble.style.setProperty("--c-shade", cShade);
-          bubble.textContent = ch;
+          const [c1, c2] = heartCharColors[idx % heartCharColors.length];
+          const gradId = `hcb_${idx}_${Math.random().toString(36).slice(2, 7)}`;
+
+          const heartBody = document.createElement("div");
+          heartBody.className = "heart-char-balloon";
+          heartBody.style.setProperty("--h-size", `${baseHeartSize}px`);
+
+          heartBody.innerHTML = `
+            <svg viewBox="0 0 100 95">
+              <defs>
+                <radialGradient id="${gradId}" cx="32%" cy="28%" r="72%">
+                  <stop offset="0%" stop-color="${c1}" />
+                  <stop offset="100%" stop-color="${c2}" />
+                </radialGradient>
+              </defs>
+              <path
+                d="M50 88 C50 88 8 60 8 30 C8 14 20 5 33 5 C41 5 47 10 50 17 C53 10 59 5 67 5 C80 5 92 14 92 30 C92 60 50 88 50 88 Z"
+                fill="url(#${gradId})"
+                stroke="rgba(255, 240, 175, 0.8)"
+                stroke-width="3"
+              />
+            </svg>
+            <span class="heart-char-text">${ch}</span>
+          `;
 
           const curlySvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
           curlySvg.setAttribute("class", "curly-string-svg");
           curlySvg.setAttribute("viewBox", "0 0 16 40");
-          curlySvg.style.setProperty("--cdelay", `${(idx * 0.09).toFixed(2)}s`);
+          curlySvg.style.setProperty("--cdelay", `${(idx * 0.06).toFixed(2)}s`);
 
           const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
           path.setAttribute("d", "M 8 0 C 14 7, 2 14, 8 21 C 14 28, 2 34, 8 40");
@@ -1656,7 +1760,7 @@
           path.setAttribute("stroke-linecap", "round");
 
           curlySvg.appendChild(path);
-          unit.appendChild(bubble);
+          unit.appendChild(heartBody);
           unit.appendChild(curlySvg);
           group.appendChild(unit);
         });
@@ -1692,7 +1796,7 @@
           });
         });
 
-        const holdDuration = lineIdx === messageLines.length - 1 ? 3400 : 2500;
+        const holdDuration = lineIdx === 0 ? 3100 : 3500;
 
         lineLoopTimeout = setTimeout(() => {
           group.classList.remove("line-drift");
@@ -1702,7 +1806,7 @@
             if (group.parentNode) group.parentNode.removeChild(group);
             lineLoopTimeout = setTimeout(() => {
               runLineByLineLoop(lineIdx + 1);
-            }, 650);
+            }, 700);
           }, 850);
         }, holdDuration);
       }
@@ -1760,30 +1864,101 @@
         showScreen(screenClimax);
       });
 
-      /* ---------------- 4. BANGLA LETTER SCREEN ---------------- */
-      const letterLines = Array.from(document.querySelectorAll("#letter-card .letter-line"));
+      /* ---------------- 4. ENVELOPE -> UNFOLD PAPER -> HANDWRITING BANGLA ---------------- */
+      const envelopeWrap = document.getElementById("envelope-wrap");
+      const paperSheet = document.getElementById("paper-sheet");
+      const handwritingLines = Array.from(document.querySelectorAll("#paper-sheet .handwriting-line"));
       const letterNextWrap = document.getElementById("letter-next-wrap");
       const btnCholoSamne = document.getElementById("btn-cholo-samne");
-      let letterTimers = [];
 
-      function revealBanglaLetter() {
+      let letterTimers = [];
+      let letterTypingCancelled = false;
+
+      function clearLetterTimers() {
+        letterTypingCancelled = true;
         letterTimers.forEach((t) => clearTimeout(t));
         letterTimers = [];
-        letterLines.forEach((line) => line.classList.remove("show"));
-        letterNextWrap.classList.remove("visible");
+      }
 
-        letterLines.forEach((line, idx) => {
-          const timer = setTimeout(() => {
-            line.classList.add("show");
-            if (idx === letterLines.length - 1) {
-              const btnTimer = setTimeout(() => {
-                letterNextWrap.classList.add("visible");
-              }, 550);
-              letterTimers.push(btnTimer);
-            }
-          }, idx * 520);
-          letterTimers.push(timer);
+      function typeLineSlowly(lineEl, fullText, onComplete) {
+        lineEl.textContent = "";
+        const caret = document.createElement("span");
+        caret.className = "writing-caret";
+        lineEl.appendChild(caret);
+
+        const chars = Array.from(fullText);
+        let i = 0;
+
+        function stepChar() {
+          if (letterTypingCancelled) return;
+          if (i < chars.length) {
+            caret.insertAdjacentText("beforebegin", chars[i]);
+            i++;
+            const delay = chars[i - 1] === " " ? 38 : 68;
+            const tm = setTimeout(stepChar, delay);
+            letterTimers.push(tm);
+          } else {
+            if (caret.parentNode) caret.parentNode.removeChild(caret);
+            if (typeof onComplete === "function") onComplete();
+          }
+        }
+
+        stepChar();
+      }
+
+      function startEnvelopeAndPaperLetter() {
+        clearLetterTimers();
+        letterTypingCancelled = false;
+
+        envelopeWrap.classList.remove("open", "done");
+        paperSheet.classList.remove("emerged");
+        letterNextWrap.classList.remove("visible");
+        handwritingLines.forEach((el) => {
+          el.textContent = "";
         });
+
+        /* Step 1: Open envelope flap */
+        const t1 = setTimeout(() => {
+          if (letterTypingCancelled) return;
+          envelopeWrap.classList.add("open");
+        }, 450);
+
+        /* Step 2: Hide envelope & unfold paper emerging from envelope */
+        const t2 = setTimeout(() => {
+          if (letterTypingCancelled) return;
+          envelopeWrap.classList.add("done");
+          paperSheet.classList.add("emerged");
+        }, 1250);
+
+        /* Step 3: Slowly write each line like handwriting */
+        const t3 = setTimeout(() => {
+          if (letterTypingCancelled) return;
+
+          function writeNext(idx) {
+            if (letterTypingCancelled) return;
+            if (idx >= handwritingLines.length) {
+              const btnTm = setTimeout(() => {
+                if (!letterTypingCancelled) {
+                  letterNextWrap.classList.add("visible");
+                }
+              }, 450);
+              letterTimers.push(btnTm);
+              return;
+            }
+
+            const lineEl = handwritingLines[idx];
+            const text = lineEl.getAttribute("data-text") || "";
+            typeLineSlowly(lineEl, text, () => {
+              paperSheet.scrollTop = paperSheet.scrollHeight;
+              const gapTm = setTimeout(() => writeNext(idx + 1), 240);
+              letterTimers.push(gapTm);
+            });
+          }
+
+          writeNext(0);
+        }, 2050);
+
+        letterTimers.push(t1, t2, t3);
       }
 
       btnLetsForward.addEventListener("click", () => {
@@ -1792,10 +1967,11 @@
         clearTimeout(lineLoopTimeout);
         clearInterval(balloonRainInterval);
         showScreen(screenLetter);
-        revealBanglaLetter();
+        startEnvelopeAndPaperLetter();
       });
 
       btnCholoSamne.addEventListener("click", () => {
+        clearLetterTimers();
         showScreen(screenCountdown);
       });
     })();
