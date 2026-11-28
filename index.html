@@ -1111,6 +1111,24 @@
       text-align: center;
     }
 
+    .btn-drive-watch {
+      display: block;
+      text-align: center;
+      background: linear-gradient(135deg, #ff2e79, #ff7b00);
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      transition: transform 0.18s ease;
+    }
+
+    .btn-drive-watch:hover {
+      transform: scale(1.03);
+    }
+
     .memories-footer-actions {
       display: flex;
       flex-wrap: wrap;
@@ -1416,26 +1434,7 @@
 
       const allScreens = [screenCountdown, screenClimax, screenLetter, screenChoice, screenMemories];
 
-      function stopAllMemoryPlayers() {
-        document.querySelectorAll("#video-list iframe").forEach((fr) => {
-          const currentSrc = fr.getAttribute("data-src");
-          if (currentSrc) fr.src = "";
-        });
-      }
-
-      function restoreMemoryPlayers() {
-        document.querySelectorAll("#video-list iframe").forEach((fr) => {
-          const savedSrc = fr.getAttribute("data-src");
-          if (savedSrc && !fr.src) fr.src = savedSrc;
-        });
-      }
-
       function showScreen(targetScreen) {
-        if (targetScreen === screenMemories) {
-          restoreMemoryPlayers();
-        } else {
-          stopAllMemoryPlayers();
-        }
         allScreens.forEach((sc) => {
           sc.classList.toggle("active", sc === targetScreen);
         });
@@ -2230,15 +2229,15 @@
       const MEMORY_VIDEOS = [
         {
           title: "স্মৃতি ১",
-          driveFileId: "1_3i3qlO5VCm92d01qYvusdOhpO2uvP2W"
+          fileId: "1_3i3qlO5VCm92d01qYvusdOhpO2uvP2W"
         },
         {
           title: "স্মৃতি ২",
-          driveFileId: "1Bi7H3xCIhumAhwnvHYik84qrluc2FKKv"
+          fileId: "1Bi7H3xCIhumAhwnvHYik84qrluc2FKKv"
         },
         {
           title: "স্মৃতি ৩",
-          driveFileId: "1ZlAhA0q56NPg_hj_Vgo5inQd_mNUr5uu"
+          fileId: "1ZlAhA0q56NPg_hj_Vgo5inQd_mNUr5uu"
         }
       ];
 
@@ -2251,29 +2250,30 @@
       function renderMemoryVideos() {
         videoListEl.innerHTML = "";
         MEMORY_VIDEOS.forEach((item, index) => {
+          const cleanId = item.fileId.trim();
+          const previewUrl = `https://drive.google.com/file/d/${cleanId}/preview`;
+          const watchUrl = `https://drive.google.com/file/d/${cleanId}/view?usp=sharing`;
+
           const card = document.createElement("div");
           card.className = "video-card";
-
-          const frame = document.createElement("div");
-          frame.className = "video-frame";
-
-          if (item.driveFileId && item.driveFileId.trim() !== "") {
-            const embedUrl = `https://drive.google.com/file/d/${item.driveFileId.trim()}/preview`;
-            const iframe = document.createElement("iframe");
-            iframe.setAttribute("data-src", embedUrl);
-            iframe.src = embedUrl;
-            iframe.allow = "autoplay; fullscreen";
-            iframe.allowFullscreen = true;
-            iframe.loading = "lazy";
-            frame.appendChild(iframe);
-          }
-
-          const cap = document.createElement("div");
-          cap.className = "video-caption";
-          cap.textContent = item.title || `স্মৃতি ${index + 1}`;
-
-          card.appendChild(frame);
-          card.appendChild(cap);
+          card.innerHTML = `
+            <div class="video-frame">
+              <iframe
+                src="${previewUrl}"
+                allow="autoplay; fullscreen; encrypted-media"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="video-caption">${item.title || `স্মৃতি ${index + 1}`}</div>
+            <a
+              class="btn-drive-watch"
+              href="${watchUrl}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ▶ ভিডিও প্লে করুন
+            </a>
+          `;
           videoListEl.appendChild(card);
         });
       }
