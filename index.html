@@ -1047,7 +1047,7 @@
     }
 
     .memories-header {
-      width: min(760px, 95vw);
+      width: min(860px, 95vw);
       text-align: center;
       margin-bottom: 16px;
     }
@@ -1068,9 +1068,9 @@
     }
 
     .video-list {
-      width: min(760px, 95vw);
+      width: min(860px, 95vw);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
       margin-bottom: 22px;
     }
@@ -1095,26 +1095,12 @@
       overflow: hidden;
     }
 
+    .video-frame iframe,
     .video-frame video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      border: 0;
       display: block;
-    }
-
-    .video-empty-slot {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-      text-align: center;
-      color: #ffccd9;
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: 0.86rem;
-      gap: 4px;
     }
 
     .video-caption {
@@ -1122,6 +1108,7 @@
       font-size: 0.98rem;
       font-weight: 700;
       color: #fff6fa;
+      text-align: center;
     }
 
     .memories-footer-actions {
@@ -1408,7 +1395,7 @@
   <section id="screen-memories" class="screen">
     <div class="memories-header">
       <h2 class="memories-title">গত বছরের সৃতিচারণ 🎬</h2>
-      <p class="memories-note">কোডের MEMORY_VIDEOS অংশে তোমার ভিডিও ফাইল বা লিংক বসালেই এখানে চলবে।</p>
+      <p class="memories-note">গত বছরের বিশেষ কিছু মুহূর্ত</p>
     </div>
 
     <div id="video-list" class="video-list"></div>
@@ -1429,13 +1416,25 @@
 
       const allScreens = [screenCountdown, screenClimax, screenLetter, screenChoice, screenMemories];
 
-      function pauseAllMemoryVideos() {
-        document.querySelectorAll("#video-list video").forEach((v) => v.pause());
+      function stopAllMemoryPlayers() {
+        document.querySelectorAll("#video-list iframe").forEach((fr) => {
+          const currentSrc = fr.getAttribute("data-src");
+          if (currentSrc) fr.src = "";
+        });
+      }
+
+      function restoreMemoryPlayers() {
+        document.querySelectorAll("#video-list iframe").forEach((fr) => {
+          const savedSrc = fr.getAttribute("data-src");
+          if (savedSrc && !fr.src) fr.src = savedSrc;
+        });
       }
 
       function showScreen(targetScreen) {
-        if (targetScreen !== screenMemories) {
-          pauseAllMemoryVideos();
+        if (targetScreen === screenMemories) {
+          restoreMemoryPlayers();
+        } else {
+          stopAllMemoryPlayers();
         }
         allScreens.forEach((sc) => {
           sc.classList.toggle("active", sc === targetScreen);
@@ -2228,19 +2227,18 @@
       });
 
       /* ---------------- 5. CHOICE & LAST YEAR MEMORIES VIDEOS ---------------- */
-      /* এখানে নিজের ভিডিও ফাইলের পাথ বা সরাসরি MP4 লিংক বসাও */
       const MEMORY_VIDEOS = [
         {
           title: "স্মৃতি ১",
-          src: "" // উদাহরণ: "videos/memory1.mp4"
+          driveFileId: "1_3i3qlO5VCm92d01qYvusdOhpO2uvP2W"
         },
         {
           title: "স্মৃতি ২",
-          src: "" // উদাহরণ: "videos/memory2.mp4"
+          driveFileId: "1Bi7H3xCIhumAhwnvHYik84qrluc2FKKv"
         },
         {
           title: "স্মৃতি ৩",
-          src: "" // উদাহরণ: "videos/memory3.mp4"
+          driveFileId: "1ZlAhA0q56NPg_hj_Vgo5inQd_mNUr5uu"
         }
       ];
 
@@ -2259,21 +2257,15 @@
           const frame = document.createElement("div");
           frame.className = "video-frame";
 
-          if (item.src && item.src.trim() !== "") {
-            const vid = document.createElement("video");
-            vid.src = item.src.trim();
-            vid.controls = true;
-            vid.playsInline = true;
-            vid.preload = "metadata";
-            frame.appendChild(vid);
-          } else {
-            const slot = document.createElement("div");
-            slot.className = "video-empty-slot";
-            slot.innerHTML = `
-              <strong>ভিডিও স্লট #${index + 1}</strong>
-              <span>MEMORY_VIDEOS-এ src বসালে এখানে ভিডিও প্লে হবে</span>
-            `;
-            frame.appendChild(slot);
+          if (item.driveFileId && item.driveFileId.trim() !== "") {
+            const embedUrl = `https://drive.google.com/file/d/${item.driveFileId.trim()}/preview`;
+            const iframe = document.createElement("iframe");
+            iframe.setAttribute("data-src", embedUrl);
+            iframe.src = embedUrl;
+            iframe.allow = "autoplay; fullscreen";
+            iframe.allowFullscreen = true;
+            iframe.loading = "lazy";
+            frame.appendChild(iframe);
           }
 
           const cap = document.createElement("div");
@@ -2297,7 +2289,6 @@
       });
 
       function goAfterSkip() {
-        /* পরের চূড়ান্ত অংশের জন্য প্রস্তুত জায়গা */
         showScreen(screenCountdown);
       }
 
