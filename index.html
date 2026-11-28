@@ -1100,6 +1100,11 @@
       padding: 8px;
     }
 
+    .photo-frame {
+      aspect-ratio: 4 / 3;
+      padding: 0;
+    }
+
     .video-frame iframe,
     .video-frame video,
     .video-frame img {
@@ -1194,32 +1199,45 @@
       overflow-y: auto;
     }
 
+    .our-memories-banner {
+      width: min(960px, 95vw);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.14), rgba(255, 59, 127, 0.16));
+      border: 1.5px solid rgba(255, 215, 0, 0.45);
+      border-radius: 18px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .our-memories-banner-text {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(1.15rem, 3.6vw, 1.55rem);
+      font-weight: 700;
+      color: #ffd700;
+      letter-spacing: 0.4px;
+    }
+
     .our-memories-grid {
-      width: min(920px, 95vw);
+      width: min(960px, 95vw);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 18px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
     }
 
     .memory-note-box {
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(255, 215, 0, 0.28);
       border-radius: 12px;
-      padding: 9px 11px;
+      padding: 8px 11px;
       font-family: 'Hind Siliguri', sans-serif;
-      text-align: left;
-    }
-
-    .memory-note-label {
-      font-size: 0.86rem;
-      font-weight: 700;
-      color: #ffd700;
-      margin-bottom: 3px;
+      text-align: center;
     }
 
     .memory-note-text {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
+      font-weight: 600;
       line-height: 1.5;
       color: #fff2f7;
       white-space: pre-line;
@@ -1531,14 +1549,18 @@
     </div>
   </section>
 
-  <!-- ==================== SCREEN 8: "আমাদের সৃতি" (PHOTOS + VIDEOS + সৃতিঃ NOTES) ==================== -->
+  <!-- ==================== SCREEN 8: "আমাদের সৃতি" ==================== -->
   <section id="screen-our-memories" class="screen">
     <div class="memories-header">
       <h2 class="memories-title">আমাদের সৃতি 💖</h2>
-      <p class="memories-note">আমাদের ছবি ও ভিডিও—প্রতিটির নিচে সৃতিঃ নোট</p>
+      <p class="memories-note">৩০/১২/২০২৫ আমাদের কুয়াকাটা</p>
     </div>
 
     <div id="our-memories-list" class="our-memories-grid"></div>
+
+    <div class="our-memories-banner">
+      <div class="our-memories-banner-text">৩০/১২/২০২৫ আমাদের কুয়াকাটা</div>
+    </div>
 
     <div class="memories-footer-actions">
       <button id="btn-our-memories-back" class="btn-back-choice" type="button">পেছনে যাও</button>
@@ -2488,23 +2510,73 @@
         }
       ];
 
-      /* "আমাদের সৃতি"-এর ছবি ও ভিডিওর তালিকা (যতগুলো ইচ্ছা যোগ করা যাবে) */
-      const OUR_MEMORIES = [
-        {
-          type: "photo", // "photo" অথবা "video"
-          title: "আমাদের সৃতি ১",
-          fileId: "", // গুগল ড্রাইভ লিংক বা File ID দিতে পারেন
-          src: "", // সরাসরি ছবি/ভিডিওর লিংক বা ফাইল পাথ দিতে পারেন
-          memoryNote: "এখানে সৃতি নোট লিখুন..."
-        },
-        {
-          type: "video",
-          title: "আমাদের সৃতি ২",
-          fileId: "",
-          src: "",
-          memoryNote: "এখানে সৃতি নোট লিখুন..."
-        }
+      const KUAKATA_PHOTO_IDS = [
+        "1xkf4Tjqygah0krH0tZXCDMR8ynIsYn1L",
+        "1YT_EvMnOzAb22-g-A9oCgaHnWJY2OQrR",
+        "1Fo68R0X89B94oObB6_iqMF74XSF9l1bg",
+        "10VXTWA-zB2_soqOfE_Eqj1J02_lgE0Eg",
+        "1cKRRA-CyXD3NtSx1i9JCHyQsgwXtzuo_",
+        "1oYqLP0FKUVdJEgBVPM01JsR1uXaRRidC",
+        "1-bFDJPZYZwbM1TU0v3UfOf1HDdnrDAT2",
+        "14g2HIXTZm7NXIribAq3vtgtyCvAO1LaM",
+        "1yrQiscviZrBZDHXcq9FlNu1yN6GLZq3h",
+        "1NiK24yrjpK7KUtr8Qe4RpYN57s26h7GS",
+        "1JWs8jcG34VPbLP-DUuYMvl-n1US35R7f",
+        "1TCh1VJFsTJJv5s2aZrtuF5qkLO8iF3Gn",
+        "1hJLiLohj2NEbDBPaU8OgJ4plEvvJXCbR",
+        "1l2O-ZDl_e67qCQJZjgYLY9SeZF1NrF81",
+        "1XXmCLCtoFuS0rIDhj_w2BHIUCT-SZ_rq",
+        "1F3v3B2YH4QneeQR9MA_MJsyjAFIQcxwN",
+        "1e9iBoSf2B1wFiVJ3xU9o7KKanGhXc9rf",
+        "191zlnsvGOyvi44oE_ufYWjHp3htB3UOe",
+        "1KRfnAXiNWU_vr20B19HWWdaWL00DlHwh",
+        "1Kz1lphUl07PtB44jExastfObtyf6v9ZP",
+        "1RwVP3OQvpSPrN_KN3XpjBQ433FZOegzV",
+        "1fbauBQutWzDDkrST-YJB4Fc51CZPVgfw",
+        "1OJqHv9Hk0mGzjKGqPzeFEN5x5htREX3v",
+        "1Rb2e1JTtnG2oXGDu6qrkLBWIOVWmKNri",
+        "1XiHUF33t5VSeZDnyi8gUJHZcgYGhVw82",
+        "1JfR9ojFCe9RPHs8bLvL2iAUQsT7UDSN3",
+        "13pZwX_fCq_Pwv3Xf9B3SSEWB6gj23GZz",
+        "1lTb9XMlHp0D-_WmZxCAONiw4TXLrcWaW",
+        "1iqwy2MMQLBn6dTo7VQIUTKIrLsVeKfCW",
+        "1rmxiL37LiJ5yVLUqwg6UE2XNBrOqaKiI",
+        "1E_v1D4IBD47mU_U2B4vxp9nfUwUUDPFL",
+        "1oD1NLrBvOxazF5zklMixOfT7qMceJsxs",
+        "1U0EIjxnJIr5e330GFtaFoBSqlOGHeUuy",
+        "1c9TRFxc20UwtVaJvs5iUWyWrQ7-Y_wa2",
+        "14HZCyhmRkr-uQGBZiQ_TAT-B_i0glxcW",
+        "1ZUxZHGgsFSDM5V9MwUBI16mrdY-38cYp",
+        "1TiR9hy9QRPfOGCjwPc0SbasYjHX9xLaL",
+        "10bQxIeOxIx_AohtXoZFOOcX2vkwVjXhs",
+        "15kRybhfsEZreBLA4kNCABm7U0iHhDluq",
+        "19lP_qYRhrlwYyzBN49gtfyqPfjDLPuYm",
+        "1IgM6IYpRdW12ngbPfuV00OiPOlpMPt8x",
+        "1T_qcjxyR8SlJ5lIZsYIKEeGQLnZnXVHX",
+        "1RL_-b54_U6QsDkVIc55WQ99mgohIaW8Y",
+        "1OcoxRE33YJqSbbTD6RzeszBZgWBFFFJg",
+        "1iULBTV44gUCa_YGmeDPot09iaP6m5VsS",
+        "1RjjL4uoA07hN50LKmqvKdNupEZbV-HeX",
+        "1uhl6xHnpBVUxCz_fjtJNsYdU7IaQtQKG",
+        "1jYyj8J6v6qAZWLjQEqDzyppsJm95Diox",
+        "1PJlYpswZyaOa7QQz21iOFCP_KSuM7gAZ",
+        "1AIDLWsNG5wk9bN9xPPy1FkrpuhiSz0Sx",
+        "1yhVyaB4dGD3RjRkJpls7xl6sSugxX_VO",
+        "1UlH13-PEjUqyy29mPSZoRb33cqkCKNPi",
+        "1Vv3ZCZ4XV5-9u4NK8BcslBlDgukv3r1R",
+        "1dIZ9WYXHqMN70PBlxjQEzp8xm3VJfZbw",
+        "1bHnnXEIHqKgqCP66SJgQ6tcG0aXX7ncL",
+        "1zPKwemhouiPvhE_ukKpAG5kYpgZ2xFkh",
+        "1iwLQcscdj7MqAYx21dAjR9vfwo0ANTOj",
+        "1tYNrcS6CMy0mDgr85_WytaJu1i6sepGh"
       ];
+
+      const OUR_MEMORIES = KUAKATA_PHOTO_IDS.map((id, idx) => ({
+        type: "photo",
+        title: `কুয়াকাটা স্মৃতি ${idx + 1}`,
+        fileId: id,
+        memoryNote: "৩০/১২/২০২৫ আমাদের কুয়াকাটা"
+      }));
 
       const oldMeVideoListEl = document.getElementById("old-me-video-list");
       const ourMemoriesListEl = document.getElementById("our-memories-list");
@@ -2532,65 +2604,40 @@
           card.className = "video-card";
 
           const frame = document.createElement("div");
-          frame.className = "video-frame";
+          frame.className = "video-frame photo-frame";
 
           const cleanId = extractDriveId(item.fileId || item.driveLink || "");
-          const directUrl = (item.src || item.url || "").trim();
-          const mediaType = (item.type || "").toLowerCase();
+          const watchUrl = `https://drive.google.com/file/d/${cleanId}/view?usp=sharing`;
+          const thumbUrl = `https://drive.google.com/thumbnail?id=${cleanId}&sz=w1000`;
 
-          let watchUrl = "";
-          if (cleanId) {
-            watchUrl = `https://drive.google.com/file/d/${cleanId}/view?usp=sharing`;
+          const img = document.createElement("img");
+          img.src = thumbUrl;
+          img.alt = item.title || `কুয়াকাটা স্মৃতি ${index + 1}`;
+          img.loading = "lazy";
+          img.onerror = function () {
             frame.innerHTML = `
               <iframe
                 src="https://drive.google.com/file/d/${cleanId}/preview"
-                allow="autoplay; fullscreen; encrypted-media"
-                allowfullscreen
+                loading="lazy"
               ></iframe>
             `;
-          } else if (directUrl && mediaType === "photo") {
-            const img = document.createElement("img");
-            img.src = directUrl;
-            img.alt = item.title || `আমাদের সৃতি ${index + 1}`;
-            frame.appendChild(img);
-          } else if (directUrl) {
-            const vid = document.createElement("video");
-            vid.src = directUrl;
-            vid.controls = true;
-            vid.playsInline = true;
-            vid.preload = "metadata";
-            frame.appendChild(vid);
-          } else {
-            frame.innerHTML = `
-              <div style="color:#ffccd9;font-family:'Hind Siliguri',sans-serif;font-size:0.86rem;">
-                <strong>${mediaType === "photo" ? "ছবি স্লট" : "ভিডিও স্লট"} #${index + 1}</strong><br/>
-                <span>OUR_MEMORIES-এ লিংক বা fileId বসালে এখানে দেখাবে</span>
-              </div>
-            `;
-          }
+          };
+          frame.appendChild(img);
 
           card.appendChild(frame);
 
-          const cap = document.createElement("div");
-          cap.className = "video-caption";
-          cap.textContent = item.title || `আমাদের সৃতি ${index + 1}`;
-          card.appendChild(cap);
-
-          if (watchUrl) {
-            const watchBtn = document.createElement("a");
-            watchBtn.className = "btn-drive-watch";
-            watchBtn.href = watchUrl;
-            watchBtn.target = "_blank";
-            watchBtn.rel = "noopener noreferrer";
-            watchBtn.textContent = mediaType === "photo" ? "🖼 ছবি দেখুন" : "▶ ভিডিও প্লে করুন";
-            card.appendChild(watchBtn);
-          }
+          const watchBtn = document.createElement("a");
+          watchBtn.className = "btn-drive-watch";
+          watchBtn.href = watchUrl;
+          watchBtn.target = "_blank";
+          watchBtn.rel = "noopener noreferrer";
+          watchBtn.textContent = "🖼 বড় করে ছবি দেখুন";
+          card.appendChild(watchBtn);
 
           const noteBox = document.createElement("div");
           noteBox.className = "memory-note-box";
           noteBox.innerHTML = `
-            <div class="memory-note-label">সৃতিঃ</div>
-            <div class="memory-note-text">${item.memoryNote || ""}</div>
+            <div class="memory-note-text">${item.memoryNote || "৩০/১২/২০২৫ আমাদের কুয়াকাটা"}</div>
           `;
           card.appendChild(noteBox);
 
