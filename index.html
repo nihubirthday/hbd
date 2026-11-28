@@ -28,7 +28,8 @@
 
     html, body {
       width: 100%;
-      height: 100%;
+      min-height: 100dvh;
+      height: 100dvh;
       overflow: hidden;
       background: #06040a;
       color: #fff;
@@ -41,7 +42,7 @@
       position: fixed;
       inset: 0;
       width: 100%;
-      height: 100%;
+      height: 100dvh;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
@@ -523,7 +524,6 @@
       }
     }
 
-    /* Transparent Background "Happy Birthday" Heart Balloons */
     #heart-balloons-layer {
       position: fixed;
       inset: 0;
@@ -596,7 +596,6 @@
       background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.05));
     }
 
-    /* Larger & Vivid Foreground Heart-Shaped Letter-Balloons */
     #letter-balloons-stage {
       position: fixed;
       inset: 0;
@@ -708,7 +707,6 @@
       100% { transform: rotate(11deg); }
     }
 
-    /* Compact "LET'S FORWORD" button pinned cleanly at the very bottom */
     .lets-forward-wrap {
       position: fixed;
       bottom: 14px;
@@ -851,7 +849,7 @@
     .paper-sheet {
       position: relative;
       width: 100%;
-      max-height: 76vh;
+      max-height: 74dvh;
       overflow-y: auto;
       background:
         repeating-linear-gradient(
@@ -950,6 +948,230 @@
 
     .btn-cholo-samne:hover {
       transform: translateY(-2px) scale(1.04);
+    }
+
+    /* ==================== SCREEN 4: CHOICE PAGE ==================== */
+    #screen-choice {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background:
+        radial-gradient(circle at 50% 25%, rgba(255, 59, 127, 0.16), transparent 58%),
+        linear-gradient(160deg, #07040c 0%, #150720 55%, #050208 100%);
+      text-align: center;
+    }
+
+    .choice-card {
+      width: min(520px, 94vw);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid rgba(255, 215, 0, 0.35);
+      border-radius: 24px;
+      padding: clamp(24px, 5vw, 38px) 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+    }
+
+    .choice-title {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 700;
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+
+    .choice-sub {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(0.92rem, 2.7vw, 1.08rem);
+      color: #ffe8f1;
+      margin-bottom: 26px;
+      line-height: 1.6;
+    }
+
+    .choice-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn-choice-memory {
+      width: min(320px, 100%);
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #1f0526;
+      background: linear-gradient(135deg, #ffd700, #ff9f1c);
+      border: 2px solid #fff3b0;
+      border-radius: 999px;
+      padding: 12px 24px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(255, 215, 0, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .btn-choice-memory:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .btn-choice-skip {
+      width: min(320px, 100%);
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #ffeaf2;
+      background: rgba(255, 59, 127, 0.22);
+      border: 1.5px solid rgba(255, 133, 179, 0.65);
+      border-radius: 999px;
+      padding: 11px 24px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-choice-skip:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 59, 127, 0.35);
+    }
+
+    /* ==================== SCREEN 5: LAST YEAR MEMORIES & VIDEOS ==================== */
+    #screen-memories {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 14px 32px;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(255, 215, 0, 0.1), transparent 55%),
+        linear-gradient(165deg, #06030a 0%, #12071c 55%, #040207 100%);
+      overflow-y: auto;
+    }
+
+    .memories-header {
+      width: min(760px, 95vw);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .memories-title {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(1.35rem, 4.2vw, 1.95rem);
+      font-weight: 700;
+      color: #ffd700;
+    }
+
+    .memories-note {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(0.86rem, 2.5vw, 1rem);
+      color: #ffdce9;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+
+    .video-list {
+      width: min(760px, 95vw);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .video-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.2px solid rgba(255, 215, 0, 0.3);
+      border-radius: 18px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+    }
+
+    .video-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      background: #0b0612;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-empty-slot {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      text-align: center;
+      color: #ffccd9;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 0.86rem;
+      gap: 4px;
+    }
+
+    .video-caption {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #fff6fa;
+    }
+
+    .memories-footer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      padding-bottom: 16px;
+    }
+
+    .btn-back-choice {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffeaf2;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1.2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
+      padding: 9px 22px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .balloon-line-group {
+        gap: 3px;
+        width: 98vw;
+      }
+
+      .curly-string-svg {
+        height: 26px;
+      }
+
+      #bow-rig {
+        width: 124px;
+        height: 124px;
+        bottom: 14px;
+        left: 12px;
+      }
+
+      #target-heart-box {
+        width: 84px;
+        height: 78px;
+        top: 64px;
+        right: 14px;
+      }
+
+      .paper-sheet {
+        padding: 18px 16px;
+        max-height: 72dvh;
+      }
     }
   </style>
 </head>
@@ -1170,14 +1392,52 @@
     </div>
   </section>
 
+  <!-- ==================== SCREEN 4: CHOICE PAGE ==================== -->
+  <section id="screen-choice" class="screen">
+    <div class="choice-card">
+      <h2 class="choice-title">এরপর কী দেখতে চাও?</h2>
+      <p class="choice-sub">গত বছরের সুন্দর মুহূর্তগুলোর ভিডিও দেখতে পারো, অথবা সরাসরি সামনে যেতে পারো।</p>
+      <div class="choice-buttons">
+        <button id="btn-sriticharon" class="btn-choice-memory" type="button">গত বছরের সৃতিচারণ</button>
+        <button id="btn-skip-forward" class="btn-choice-skip" type="button">স্কিপ করে সামনে চলো</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCREEN 5: LAST YEAR MEMORIES & VIDEOS ==================== -->
+  <section id="screen-memories" class="screen">
+    <div class="memories-header">
+      <h2 class="memories-title">গত বছরের সৃতিচারণ 🎬</h2>
+      <p class="memories-note">কোডের MEMORY_VIDEOS অংশে তোমার ভিডিও ফাইল বা লিংক বসালেই এখানে চলবে।</p>
+    </div>
+
+    <div id="video-list" class="video-list"></div>
+
+    <div class="memories-footer-actions">
+      <button id="btn-back-to-choice" class="btn-back-choice" type="button">পেছনে যাও</button>
+      <button id="btn-memories-skip" class="btn-cholo-samne" type="button">স্কিপ করে সামনে চলো</button>
+    </div>
+  </section>
+
   <script>
     (function () {
       const screenCountdown = document.getElementById("screen-countdown");
       const screenClimax = document.getElementById("screen-climax");
       const screenLetter = document.getElementById("screen-letter");
+      const screenChoice = document.getElementById("screen-choice");
+      const screenMemories = document.getElementById("screen-memories");
+
+      const allScreens = [screenCountdown, screenClimax, screenLetter, screenChoice, screenMemories];
+
+      function pauseAllMemoryVideos() {
+        document.querySelectorAll("#video-list video").forEach((v) => v.pause());
+      }
 
       function showScreen(targetScreen) {
-        [screenCountdown, screenClimax, screenLetter].forEach((sc) => {
+        if (targetScreen !== screenMemories) {
+          pauseAllMemoryVideos();
+        }
+        allScreens.forEach((sc) => {
           sc.classList.toggle("active", sc === targetScreen);
         });
       }
@@ -1542,7 +1802,6 @@
         requestAnimationFrame(stepArrow);
       }
 
-      /* Golden Realistic Fireworks Engine */
       const sparks = [];
       const goldColors = ["#FFD700", "#FFE566", "#FFAE00", "#FFF3B0", "#FFA500", "#FFFFFF"];
 
@@ -1630,7 +1889,6 @@
       }
       requestAnimationFrame(tickGoldenFireworks);
 
-      /* Transparent Background "Happy Birthday" Heart Balloons */
       const transparentTints = [
         ["rgba(255, 182, 213, 0.22)", "rgba(255, 105, 165, 0.08)", "rgba(255, 220, 238, 0.55)"],
         ["rgba(255, 235, 175, 0.20)", "rgba(255, 215, 0, 0.06)", "rgba(255, 246, 200, 0.55)"],
@@ -1682,7 +1940,6 @@
         }, parseFloat(dur) * 1000 + 300);
       }
 
-      /* Larger & Vivid Foreground Heart-Shaped Letter-Balloons with Curly Strings */
       const messageLines = [
         "HAPPY BIRTHDAY TO NIHU",
         "MANY MANY HAPPY RETURNS OF THE DAY"
@@ -1967,8 +2224,85 @@
 
       btnCholoSamne.addEventListener("click", () => {
         clearLetterTimers();
-        showScreen(screenCountdown);
+        showScreen(screenChoice);
       });
+
+      /* ---------------- 5. CHOICE & LAST YEAR MEMORIES VIDEOS ---------------- */
+      /* এখানে নিজের ভিডিও ফাইলের পাথ বা সরাসরি MP4 লিংক বসাও */
+      const MEMORY_VIDEOS = [
+        {
+          title: "স্মৃতি ১",
+          src: "" // উদাহরণ: "videos/memory1.mp4"
+        },
+        {
+          title: "স্মৃতি ২",
+          src: "" // উদাহরণ: "videos/memory2.mp4"
+        },
+        {
+          title: "স্মৃতি ৩",
+          src: "" // উদাহরণ: "videos/memory3.mp4"
+        }
+      ];
+
+      const videoListEl = document.getElementById("video-list");
+      const btnSriticharon = document.getElementById("btn-sriticharon");
+      const btnSkipForward = document.getElementById("btn-skip-forward");
+      const btnBackToChoice = document.getElementById("btn-back-to-choice");
+      const btnMemoriesSkip = document.getElementById("btn-memories-skip");
+
+      function renderMemoryVideos() {
+        videoListEl.innerHTML = "";
+        MEMORY_VIDEOS.forEach((item, index) => {
+          const card = document.createElement("div");
+          card.className = "video-card";
+
+          const frame = document.createElement("div");
+          frame.className = "video-frame";
+
+          if (item.src && item.src.trim() !== "") {
+            const vid = document.createElement("video");
+            vid.src = item.src.trim();
+            vid.controls = true;
+            vid.playsInline = true;
+            vid.preload = "metadata";
+            frame.appendChild(vid);
+          } else {
+            const slot = document.createElement("div");
+            slot.className = "video-empty-slot";
+            slot.innerHTML = `
+              <strong>ভিডিও স্লট #${index + 1}</strong>
+              <span>MEMORY_VIDEOS-এ src বসালে এখানে ভিডিও প্লে হবে</span>
+            `;
+            frame.appendChild(slot);
+          }
+
+          const cap = document.createElement("div");
+          cap.className = "video-caption";
+          cap.textContent = item.title || `স্মৃতি ${index + 1}`;
+
+          card.appendChild(frame);
+          card.appendChild(cap);
+          videoListEl.appendChild(card);
+        });
+      }
+
+      renderMemoryVideos();
+
+      btnSriticharon.addEventListener("click", () => {
+        showScreen(screenMemories);
+      });
+
+      btnBackToChoice.addEventListener("click", () => {
+        showScreen(screenChoice);
+      });
+
+      function goAfterSkip() {
+        /* পরের চূড়ান্ত অংশের জন্য প্রস্তুত জায়গা */
+        showScreen(screenCountdown);
+      }
+
+      btnSkipForward.addEventListener("click", goAfterSkip);
+      btnMemoriesSkip.addEventListener("click", goAfterSkip);
     })();
   </script>
 </body>
