@@ -1093,14 +1093,22 @@
       background: #0b0612;
       border: 1px solid rgba(255, 255, 255, 0.12);
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
     }
 
     .video-frame iframe,
-    .video-frame video {
+    .video-frame video,
+    .video-frame img {
       width: 100%;
       height: 100%;
       border: 0;
       display: block;
+      object-fit: cover;
+      border-radius: 10px;
     }
 
     .video-caption {
@@ -1147,6 +1155,75 @@
       border-radius: 999px;
       padding: 9px 22px;
       cursor: pointer;
+    }
+
+    /* ==================== SCREEN 6: NEXT CHOICE ("পুরনো আমি" / "সামনে যাই") ==================== */
+    #screen-next-choice {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background:
+        radial-gradient(circle at 50% 28%, rgba(255, 215, 0, 0.14), transparent 58%),
+        linear-gradient(160deg, #06030b 0%, #160722 55%, #050208 100%);
+      text-align: center;
+    }
+
+    /* ==================== SCREEN 7: "পুরনো আমি" (4 VIDEOS) ==================== */
+    #screen-old-me {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 14px 32px;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(255, 59, 127, 0.14), transparent 55%),
+        linear-gradient(165deg, #06030a 0%, #13071d 55%, #040207 100%);
+      overflow-y: auto;
+    }
+
+    /* ==================== SCREEN 8: "সামনে যাই" + "আমাদের সৃতি" ==================== */
+    #screen-our-memories {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 14px 36px;
+      background:
+        radial-gradient(circle at 50% 12%, rgba(255, 215, 0, 0.14), transparent 55%),
+        linear-gradient(165deg, #06030a 0%, #150721 55%, #040207 100%);
+      overflow-y: auto;
+    }
+
+    .our-memories-grid {
+      width: min(920px, 95vw);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .memory-note-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 215, 0, 0.28);
+      border-radius: 12px;
+      padding: 9px 11px;
+      font-family: 'Hind Siliguri', sans-serif;
+      text-align: left;
+    }
+
+    .memory-note-label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #ffd700;
+      margin-bottom: 3px;
+    }
+
+    .memory-note-text {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: #fff2f7;
+      white-space: pre-line;
+      word-break: break-word;
     }
 
     @media (max-width: 600px) {
@@ -1424,6 +1501,51 @@
     </div>
   </section>
 
+  <!-- ==================== SCREEN 6: NEXT CHOICE ("পুরনো আমি" / "সামনে যাই") ==================== -->
+  <section id="screen-next-choice" class="screen">
+    <div class="choice-card">
+      <h2 class="choice-title">কোনদিকে যেতে চাও?</h2>
+      <p class="choice-sub">"পুরনো আমি"-এর ৪টি ভিডিও দেখতে পারো, অথবা "সামনে যাই" দিয়ে "আমাদের সৃতি"-তে যেতে পারো।</p>
+      <div class="choice-buttons">
+        <button id="btn-purono-ami" class="btn-choice-memory" type="button">পুরনো আমি</button>
+        <button id="btn-samne-jai" class="btn-choice-skip" type="button">সামনে যাই</button>
+      </div>
+      <div style="margin-top:16px;">
+        <button id="btn-back-from-next-choice" class="btn-back-choice" type="button">পেছনে যাও</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCREEN 7: "পুরনো আমি" (4 VIDEOS) ==================== -->
+  <section id="screen-old-me" class="screen">
+    <div class="memories-header">
+      <h2 class="memories-title">পুরনো আমি 🎥</h2>
+      <p class="memories-note">৪টি ভিডিওর স্লট (OLD_ME_VIDEOS-এ লিংক বা ড্রাইভ আইডি বসালেই চলবে)</p>
+    </div>
+
+    <div id="old-me-video-list" class="video-list"></div>
+
+    <div class="memories-footer-actions">
+      <button id="btn-old-me-back" class="btn-back-choice" type="button">পেছনে যাও</button>
+      <button id="btn-old-me-forward" class="btn-cholo-samne" type="button">সামনে যাই</button>
+    </div>
+  </section>
+
+  <!-- ==================== SCREEN 8: "আমাদের সৃতি" (PHOTOS + VIDEOS + সৃতিঃ NOTES) ==================== -->
+  <section id="screen-our-memories" class="screen">
+    <div class="memories-header">
+      <h2 class="memories-title">আমাদের সৃতি 💖</h2>
+      <p class="memories-note">আমাদের ছবি ও ভিডিও—প্রতিটির নিচে সৃতিঃ নোট</p>
+    </div>
+
+    <div id="our-memories-list" class="our-memories-grid"></div>
+
+    <div class="memories-footer-actions">
+      <button id="btn-our-memories-back" class="btn-back-choice" type="button">পেছনে যাও</button>
+      <button id="btn-restart-from-start" class="btn-cholo-samne" type="button">শুরুতে ফিরে যাও</button>
+    </div>
+  </section>
+
   <script>
     (function () {
       const screenCountdown = document.getElementById("screen-countdown");
@@ -1431,8 +1553,20 @@
       const screenLetter = document.getElementById("screen-letter");
       const screenChoice = document.getElementById("screen-choice");
       const screenMemories = document.getElementById("screen-memories");
+      const screenNextChoice = document.getElementById("screen-next-choice");
+      const screenOldMe = document.getElementById("screen-old-me");
+      const screenOurMemories = document.getElementById("screen-our-memories");
 
-      const allScreens = [screenCountdown, screenClimax, screenLetter, screenChoice, screenMemories];
+      const allScreens = [
+        screenCountdown,
+        screenClimax,
+        screenLetter,
+        screenChoice,
+        screenMemories,
+        screenNextChoice,
+        screenOldMe,
+        screenOurMemories
+      ];
 
       function showScreen(targetScreen) {
         allScreens.forEach((sc) => {
@@ -2226,6 +2360,76 @@
       });
 
       /* ---------------- 5. CHOICE & LAST YEAR MEMORIES VIDEOS ---------------- */
+      function extractDriveId(raw) {
+        if (!raw) return "";
+        const s = raw.trim();
+        const match = s.match(/\/d\/([a-zA-Z0-9_-]+)/) || s.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        return match ? match[1] : s;
+      }
+
+      function buildVideoCardElement(item, fallbackTitle) {
+        const card = document.createElement("div");
+        card.className = "video-card";
+
+        const frame = document.createElement("div");
+        frame.className = "video-frame";
+
+        const cleanId = extractDriveId(item.fileId || item.driveLink || "");
+        const directUrl = (item.src || item.url || "").trim();
+
+        if (cleanId) {
+          const previewUrl = `https://drive.google.com/file/d/${cleanId}/preview`;
+          const watchUrl = `https://drive.google.com/file/d/${cleanId}/view?usp=sharing`;
+          frame.innerHTML = `
+            <iframe
+              src="${previewUrl}"
+              allow="autoplay; fullscreen; encrypted-media"
+              allowfullscreen
+            ></iframe>
+          `;
+          card.appendChild(frame);
+
+          const cap = document.createElement("div");
+          cap.className = "video-caption";
+          cap.textContent = item.title || fallbackTitle;
+          card.appendChild(cap);
+
+          const watchBtn = document.createElement("a");
+          watchBtn.className = "btn-drive-watch";
+          watchBtn.href = watchUrl;
+          watchBtn.target = "_blank";
+          watchBtn.rel = "noopener noreferrer";
+          watchBtn.textContent = "▶ ভিডিও প্লে করুন";
+          card.appendChild(watchBtn);
+          return card;
+        }
+
+        if (directUrl) {
+          const vid = document.createElement("video");
+          vid.src = directUrl;
+          vid.controls = true;
+          vid.playsInline = true;
+          vid.preload = "metadata";
+          frame.appendChild(vid);
+        } else {
+          frame.innerHTML = `
+            <div style="color:#ffccd9;font-family:'Hind Siliguri',sans-serif;font-size:0.86rem;">
+              <strong>ভিডিও স্লট খালি</strong><br/>
+              <span>লিংক বা fileId বসালে এখানে ভিডিও আসবে</span>
+            </div>
+          `;
+        }
+
+        card.appendChild(frame);
+
+        const cap = document.createElement("div");
+        cap.className = "video-caption";
+        cap.textContent = item.title || fallbackTitle;
+        card.appendChild(cap);
+
+        return card;
+      }
+
       const MEMORY_VIDEOS = [
         {
           title: "স্মৃতি ১",
@@ -2250,31 +2454,7 @@
       function renderMemoryVideos() {
         videoListEl.innerHTML = "";
         MEMORY_VIDEOS.forEach((item, index) => {
-          const cleanId = item.fileId.trim();
-          const previewUrl = `https://drive.google.com/file/d/${cleanId}/preview`;
-          const watchUrl = `https://drive.google.com/file/d/${cleanId}/view?usp=sharing`;
-
-          const card = document.createElement("div");
-          card.className = "video-card";
-          card.innerHTML = `
-            <div class="video-frame">
-              <iframe
-                src="${previewUrl}"
-                allow="autoplay; fullscreen; encrypted-media"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <div class="video-caption">${item.title || `স্মৃতি ${index + 1}`}</div>
-            <a
-              class="btn-drive-watch"
-              href="${watchUrl}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ▶ ভিডিও প্লে করুন
-            </a>
-          `;
-          videoListEl.appendChild(card);
+          videoListEl.appendChild(buildVideoCardElement(item, `স্মৃতি ${index + 1}`));
         });
       }
 
@@ -2288,12 +2468,162 @@
         showScreen(screenChoice);
       });
 
-      function goAfterSkip() {
-        showScreen(screenCountdown);
+      /* ---------------- 6, 7 & 8. "পুরনো আমি", "সামনে যাই" & "আমাদের সৃতি" ---------------- */
+      /* "পুরনো আমি"-এর ৪টি ভিডিওর তালিকা */
+      const OLD_ME_VIDEOS = [
+        { title: "পুরনো আমি ১", fileId: "", src: "" },
+        { title: "পুরনো আমি ২", fileId: "", src: "" },
+        { title: "পুরনো আমি ৩", fileId: "", src: "" },
+        { title: "পুরনো আমি ৪", fileId: "", src: "" }
+      ];
+
+      /* "আমাদের সৃতি"-এর ছবি ও ভিডিওর তালিকা (যতগুলো ইচ্ছা যোগ করা যাবে) */
+      const OUR_MEMORIES = [
+        {
+          type: "photo", // "photo" অথবা "video"
+          title: "আমাদের সৃতি ১",
+          fileId: "", // গুগল ড্রাইভ লিংক বা File ID দিতে পারেন
+          src: "", // সরাসরি ছবি/ভিডিওর লিংক বা ফাইল পাথ দিতে পারেন
+          memoryNote: "এখানে সৃতি নোট লিখুন..."
+        },
+        {
+          type: "video",
+          title: "আমাদের সৃতি ২",
+          fileId: "",
+          src: "",
+          memoryNote: "এখানে সৃতি নোট লিখুন..."
+        }
+      ];
+
+      const oldMeVideoListEl = document.getElementById("old-me-video-list");
+      const ourMemoriesListEl = document.getElementById("our-memories-list");
+
+      const btnPuronoAmi = document.getElementById("btn-purono-ami");
+      const btnSamneJai = document.getElementById("btn-samne-jai");
+      const btnBackFromNextChoice = document.getElementById("btn-back-from-next-choice");
+      const btnOldMeBack = document.getElementById("btn-old-me-back");
+      const btnOldMeForward = document.getElementById("btn-old-me-forward");
+      const btnOurMemoriesBack = document.getElementById("btn-our-memories-back");
+      const btnRestartFromStart = document.getElementById("btn-restart-from-start");
+
+      function renderOldMeVideos() {
+        oldMeVideoListEl.innerHTML = "";
+        for (let i = 0; i < 4; i++) {
+          const item = OLD_ME_VIDEOS[i] || { title: `পুরনো আমি ${i + 1}`, fileId: "", src: "" };
+          oldMeVideoListEl.appendChild(buildVideoCardElement(item, `পুরনো আমি ${i + 1}`));
+        }
       }
 
-      btnSkipForward.addEventListener("click", goAfterSkip);
-      btnMemoriesSkip.addEventListener("click", goAfterSkip);
+      function renderOurMemories() {
+        ourMemoriesListEl.innerHTML = "";
+        OUR_MEMORIES.forEach((item, index) => {
+          const card = document.createElement("div");
+          card.className = "video-card";
+
+          const frame = document.createElement("div");
+          frame.className = "video-frame";
+
+          const cleanId = extractDriveId(item.fileId || item.driveLink || "");
+          const directUrl = (item.src || item.url || "").trim();
+          const mediaType = (item.type || "").toLowerCase();
+
+          let watchUrl = "";
+          if (cleanId) {
+            watchUrl = `https://drive.google.com/file/d/${cleanId}/view?usp=sharing`;
+            frame.innerHTML = `
+              <iframe
+                src="https://drive.google.com/file/d/${cleanId}/preview"
+                allow="autoplay; fullscreen; encrypted-media"
+                allowfullscreen
+              ></iframe>
+            `;
+          } else if (directUrl && mediaType === "photo") {
+            const img = document.createElement("img");
+            img.src = directUrl;
+            img.alt = item.title || `আমাদের সৃতি ${index + 1}`;
+            frame.appendChild(img);
+          } else if (directUrl) {
+            const vid = document.createElement("video");
+            vid.src = directUrl;
+            vid.controls = true;
+            vid.playsInline = true;
+            vid.preload = "metadata";
+            frame.appendChild(vid);
+          } else {
+            frame.innerHTML = `
+              <div style="color:#ffccd9;font-family:'Hind Siliguri',sans-serif;font-size:0.86rem;">
+                <strong>${mediaType === "photo" ? "ছবি স্লট" : "ভিডিও স্লট"} #${index + 1}</strong><br/>
+                <span>OUR_MEMORIES-এ লিংক বা fileId বসালে এখানে দেখাবে</span>
+              </div>
+            `;
+          }
+
+          card.appendChild(frame);
+
+          const cap = document.createElement("div");
+          cap.className = "video-caption";
+          cap.textContent = item.title || `আমাদের সৃতি ${index + 1}`;
+          card.appendChild(cap);
+
+          if (watchUrl) {
+            const watchBtn = document.createElement("a");
+            watchBtn.className = "btn-drive-watch";
+            watchBtn.href = watchUrl;
+            watchBtn.target = "_blank";
+            watchBtn.rel = "noopener noreferrer";
+            watchBtn.textContent = mediaType === "photo" ? "🖼 ছবি দেখুন" : "▶ ভিডিও প্লে করুন";
+            card.appendChild(watchBtn);
+          }
+
+          const noteBox = document.createElement("div");
+          noteBox.className = "memory-note-box";
+          noteBox.innerHTML = `
+            <div class="memory-note-label">সৃতিঃ</div>
+            <div class="memory-note-text">${item.memoryNote || ""}</div>
+          `;
+          card.appendChild(noteBox);
+
+          ourMemoriesListEl.appendChild(card);
+        });
+      }
+
+      renderOldMeVideos();
+      renderOurMemories();
+
+      function goToNextChoicePage() {
+        showScreen(screenNextChoice);
+      }
+
+      btnSkipForward.addEventListener("click", goToNextChoicePage);
+      btnMemoriesSkip.addEventListener("click", goToNextChoicePage);
+
+      btnBackFromNextChoice.addEventListener("click", () => {
+        showScreen(screenChoice);
+      });
+
+      btnPuronoAmi.addEventListener("click", () => {
+        showScreen(screenOldMe);
+      });
+
+      btnOldMeBack.addEventListener("click", () => {
+        showScreen(screenNextChoice);
+      });
+
+      btnSamneJai.addEventListener("click", () => {
+        showScreen(screenOurMemories);
+      });
+
+      btnOldMeForward.addEventListener("click", () => {
+        showScreen(screenOurMemories);
+      });
+
+      btnOurMemoriesBack.addEventListener("click", () => {
+        showScreen(screenNextChoice);
+      });
+
+      btnRestartFromStart.addEventListener("click", () => {
+        showScreen(screenCountdown);
+      });
     })();
   </script>
 </body>
